@@ -1,17 +1,12 @@
 const express = require('express');
 const user = express.Router();
+const controller = require('../controllers/userControllers');
 
-user.route('/me').get((req, res) => {
 
-})
+user.route('/me').get(controller.getCurrentUser)
 
-user.route('/:id').get((req, res) => {
+user.route('/:id').get(controller.getUserById)
 
-})
-
-user.route('/').post((req, res) => {
-
-})
 
 user.route('/:id').put((req, res) => {
 
