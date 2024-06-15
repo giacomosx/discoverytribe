@@ -33,10 +33,6 @@ const SuggestionsInputField = () => {
     }
 
     return (
-        <div className="App flex flex-col items-center justify-center bg-white dark:bg-gray-800 w-full">
-            <h1 className={'text-3xl text-zinc-800 dark:text-white'}>DiscoveryTribe</h1>
-
-
             <form className="container mx-auto mt-8 max-w-lg">
                 <div className="relative">
                     <TextInputField type={'search'} placeholder={'Search your next destination...'}
@@ -57,7 +53,7 @@ const SuggestionsInputField = () => {
                                 <li key={suggestion.place_id}>
                                     <button onClick={() => {
                                         setInputValue(suggestion.formatted)
-                                        setSuggestions(null)
+                                        setSuggestions([])
                                     }} type={'button'}
                                             className={'text-start w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'}>
                                         {suggestion.formatted}
@@ -68,7 +64,6 @@ const SuggestionsInputField = () => {
                     </div>
                 </div>
             </form>
-        </div>
     );
 };
 
