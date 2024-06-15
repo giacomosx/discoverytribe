@@ -28,7 +28,7 @@ server.use(errorHandler.notFoundErr)
 
 const startServer = async () => {
     try {
-        await mongoose.connect(process.env.MONGODB_URI + process.env.DB);
+        await mongoose.connect(process.env.MONGODB_URI + process.env.DB_NAME);
         await console.log('MongoDB Connected!');
 
         server.listen(PORT, () => {

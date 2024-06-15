@@ -14,7 +14,11 @@ const register = async (req, res, next) => {
                 if (err) return res.status(500).json({message: err.message});
 
                 try {
-                    const newUser = await new User({...req.body, password: hash})
+                    const newUser = await new User({
+                        ...req.body,
+                        password: hash,
+                        avatar: req.file.path
+                    });
                     await newUser.save();
 
                     res.status(201).json(newUser)

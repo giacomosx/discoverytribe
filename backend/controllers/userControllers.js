@@ -24,7 +24,6 @@ const getUserById = async (req, res, next) => {
     }
 }
 
-
 module.exports = {
     getCurrentUser,
     getUserById
