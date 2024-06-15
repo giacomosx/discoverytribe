@@ -16,13 +16,13 @@ const UserSchema = new mongoose.Schema({
     name: {
         type: String,
         required:
-            true,
+            false,
     }
     ,
     lastname: {
         type: String,
         required:
-            true,
+            false,
     }
     ,
     email: {
@@ -108,19 +108,23 @@ const UserSchema = new mongoose.Schema({
         }],
     followers:
         [{
-            type: mongoose.Schema.Types.ObjectId
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
         }],
     followings:
         [{
-            type: mongoose.Schema.Types.ObjectId
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
         }],
     liked_trips:
         [{
-            type: mongoose.Schema.Types.ObjectId
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Trip',
         }],
     liked_posts:
         [{
-            type: mongoose.Schema.Types.ObjectId
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Post',
         }],
 },
     {timestamps: true, strict: true},
