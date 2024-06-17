@@ -85,7 +85,7 @@ const deleteUser = async (req, res, next) => {
         res.status(200).json({message:"Successfully deleted user", user})
 
     } catch (e) {
-        next({statusCode: 500, message: e.message});
+        next({statusCode: 400, message: e.message});
     }
 }
 
@@ -97,10 +97,42 @@ const editUser = async (req, res, next) => {
 
         res.status(200).json({message:"Successfully edited user", editedUser})
     } catch (e) {
-
-        res.status(400).json({message: e.message});
+        next({statusCode: 400, message: e.message});
     }
 }
+
+const getUserTrips = async (req, res, next) => {
+    try {
+        const user = await User.findById(req.user.userId).populate('trips').select('trips')
+        res.status(200).json(user)
+
+    } catch (e) {
+        next({statusCode: 400, message: e.message});
+    }
+}
+
+const getUserPosts = async (req, res, next) => {
+    try {
+        const user = await User.findById(req.user.userId).populate('posts').select('posts')
+        res.status(200).json(user)
+    } catch (e) {
+        next({statusCode: 400, message: e.message});
+    }
+}
+
+const changeAvatar = async (req, res, next) => {
+    try {
+        const editedUser = await User.findByIdAndUpdate(req.user.userId, {
+            ...req.body,
+            avatar: req.file.path
+        }, {new: true})
+
+        res.status(201).json(editedUser)
+    } catch (e) {
+        next({statusCode: 400, message: e.message});
+    }
+}
+
 
 module.exports = {
     getCurrentUser,
@@ -110,5 +142,8 @@ module.exports = {
     getFollowers,
     unfollowUser,
     deleteUser,
-    editUser
+    editUser,
+    getUserTrips,
+    getUserPosts,
+    changeAvatar
 }

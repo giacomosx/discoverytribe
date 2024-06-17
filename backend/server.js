@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
+const postRoutes = require('./routes/post');
+const tripRoutes = require('./routes/trip');
 const geoApiRoutes = require('./routes/geoapify');
 const auth = require('./middlewares/tokenController');
 const errorHandler = require('./middlewares/errorHandlers');
@@ -20,6 +22,8 @@ server.use('/api/v1/auth', authRoutes);
 server.use(auth.verifyToken);
 
 server.use('/api/v1/user', userRoutes);
+server.use('/api/v1/posts', postRoutes );
+server.use('/api/v1/trips', tripRoutes);
 server.use('/api/v1/geoapi', geoApiRoutes);
 
 server.use(errorHandler.genericErr)
