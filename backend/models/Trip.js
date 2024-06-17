@@ -34,10 +34,10 @@ const Trip = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Milestone',
     }],
-    likes: {
+    likes: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-    },
+    }],
     suggestions: [{
         authorId: {
             type: String,

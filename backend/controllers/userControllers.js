@@ -27,6 +27,11 @@ const getUserById = async (req, res, next) => {
 const followUser = async (req, res, next) => {
     try {
         const user = await User.findById(req.user.userId)
+
+        if (user.followings.includes(req.params.id)) {
+            return res.status(401).send({message: "You already follow this user"})
+        }
+
         const userToFollow = await User.findById(req.params.id)
 
         user.followings.push(req.params.id);
@@ -60,7 +65,7 @@ const unfollowUser = async (req, res, next) => {
 
 const getFollowings = async (req, res, next) => {
     try {
-        const user = await User.findById(req.user.userId).populate('followings').select('followings')
+        const user = await User.findById(req.user.userId).populate({path: 'followings', select: 'username avatar name lastname'}).select('followings')
         res.status(200).json(user)
 
     } catch (e) {
@@ -70,7 +75,7 @@ const getFollowings = async (req, res, next) => {
 
 const getFollowers = async (req, res, next) => {
     try {
-        const user = await User.findById(req.user.userId).populate('followers').select('followers')
+        const user = await User.findById(req.user.userId).populate({path: 'followers', select: 'username avatar name lastname'}).select('followers')
         res.status(200).json(user)
 
     } catch (e) {
@@ -102,8 +107,12 @@ const editUser = async (req, res, next) => {
 }
 
 const getUserTrips = async (req, res, next) => {
+    const {id} = req.params
     try {
-        const user = await User.findById(req.user.userId).populate('trips').select('trips')
+        const user = await User.findById(id).populate('trips').select('trips')
+
+        if (!user) return res.status.status(404).send({message: "No user found with this id"})
+
         res.status(200).json(user)
 
     } catch (e) {
@@ -112,8 +121,12 @@ const getUserTrips = async (req, res, next) => {
 }
 
 const getUserPosts = async (req, res, next) => {
+    const {id} = req.params
     try {
-        const user = await User.findById(req.user.userId).populate('posts').select('posts')
+        const user = await User.findById(id).populate('posts').select('posts')
+
+        if (!user) return res.status.status(404).send({message: "No user found with this id"})
+
         res.status(200).json(user)
     } catch (e) {
         next({statusCode: 400, message: e.message});

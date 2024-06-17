@@ -44,7 +44,7 @@ const UserSchema = new mongoose.Schema({
         description: String,
         birth_date: String,
         location: {
-            destination_name: String,
+            location_name: String,
             latitude: Number,
             longitude: Number,
             place_id: String

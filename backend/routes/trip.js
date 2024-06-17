@@ -1,23 +1,17 @@
 const express = require('express');
 const trip = express.Router();
-const Trip = require('../models/Trip');
-const User = require('../models/User');
+const controller = require('../controllers/tripController');
 
-trip.route('/create').post(async (req, res, next) => {
-    try {
-        const trip = new Trip({
-            ...req.body,
-            userId: req.user.userId,
-        });
-        const relUser = await User.findById(req.user.userId)
-        await trip.save()
-        relUser.trips.push(trip._id)
-        await relUser.save()
-        res.status(201).json({message:"Successfully created trip", trip})
-    } catch (e) {
-        console.log(e)
-        next({statusCode: 500, message: e.message});
-    }
-})
+trip.route('/:id').get(controller.getTripById)
+
+trip.route('/create').post(controller.createTrip)
+
+trip.route('/:id/edit').patch(controller.editTrip)
+
+trip.route('/:id/delete').delete(controller.deleteTrip)
+
+trip.route('/:id/like').patch(controller.likeTrip)
+
+trip.route('/:id/unlike').patch(controller.unlikeTrip)
 
 module.exports = trip;
