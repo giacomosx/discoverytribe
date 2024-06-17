@@ -63,7 +63,7 @@ const getTripById = async (req, res, next) => {
     try {
         if (!id) return res.status(400).send({message: "No id found"})
 
-        const trip = await Trip.findById(id).populate({path: 'likes', select: 'avatar username'})
+        const trip = await Trip.findById(id).populate('milestones')
 
         if(!trip) return res.status(400).send({message: "No trip found"})
 
