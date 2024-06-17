@@ -48,6 +48,10 @@ const deleteTrip = async (req, res, next) => {
 
         if (String(trip.userId) !== req.user.userId) return res.status(401).json({message: "Unauthorized to delete"})
 
+        const relUser = await User.findById(req.user.userId)
+        relUser.trips.pull(trip._id)
+        await relUser.save()
+
         const deletedTrip = await Trip.findByIdAndDelete(id)
 
         res.status(200).json({message: "Successfully deleted trip", deletedTrip})

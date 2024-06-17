@@ -28,10 +28,10 @@ const Post = mongoose.Schema({
                 default: false
             }
         }],
-        likes: {
+        likes: [{
             type: mongoose.Schema.Types.ObjectId,
             rel: 'User'
-        },
+        }],
         public: {
             type: Boolean,
             default: false
