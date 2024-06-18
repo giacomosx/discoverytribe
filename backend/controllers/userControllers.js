@@ -34,6 +34,8 @@ const followUser = async (req, res, next) => {
 
         const userToFollow = await User.findById(req.params.id)
 
+        if(!userToFollow) return res.status(401).json({message:"Invalid user Id"})
+
         user.followings.push(req.params.id);
         userToFollow.followers.push(user._id);
 
@@ -50,6 +52,8 @@ const unfollowUser = async (req, res, next) => {
     try {
         const user = await User.findById(req.user.userId)
         const userToUnfollow = await User.findById(req.params.id)
+
+        if(!userToUnfollow) return res.status(401).json({message:"Invalid user Id"})
 
         user.followings.pull(req.params.id);
         userToUnfollow.followers.pull(user._id);
@@ -134,13 +138,29 @@ const getUserPosts = async (req, res, next) => {
 }
 
 const changeAvatar = async (req, res, next) => {
+    if (!req.file) return res.status(400).json({message: 'No file uploaded'});
     try {
         const editedUser = await User.findByIdAndUpdate(req.user.userId, {
             ...req.body,
             avatar: req.file.path
         }, {new: true})
 
-        res.status(201).json(editedUser)
+        res.status(201).json({message: 'Avatar successfully changed', editedUser})
+    } catch (e) {
+        next({statusCode: 400, message: e.message});
+    }
+}
+
+
+const changeCover = async (req, res, next) => {
+    if (!req.file) return res.status(400).json({message: 'No file uploaded'});
+    try {
+        const editedUser = await User.findByIdAndUpdate(req.user.userId, {
+            ...req.body,
+            cover: req.file.path
+        }, {new: true})
+
+        res.status(201).json({message: 'Cover successfully changed', editedUser})
     } catch (e) {
         next({statusCode: 400, message: e.message});
     }
@@ -158,5 +178,6 @@ module.exports = {
     editUser,
     getUserTrips,
     getUserPosts,
-    changeAvatar
+    changeAvatar,
+    changeCover
 }

@@ -1,7 +1,9 @@
 const Trip = require('../models/Trip');
 const User = require('../models/User');
+const Post = require('../models/Post');
 
 const createTrip = async (req, res, next) => {
+
     try {
         const trip = new Trip({
             ...req.body,
@@ -11,6 +13,14 @@ const createTrip = async (req, res, next) => {
         await trip.save()
         relUser.trips.push(trip._id)
         await relUser.save()
+        if (req.body.public === true) {
+            const post = new Post({
+                userId: req.user.userId,
+                content: 'I\'ve recently added a new trip in my profile, check it out',
+                public: true
+            })
+            await post.save()
+        }
         res.status(201).json({message: "Successfully created trip", trip})
     } catch (e) {
         console.log(e)
@@ -88,7 +98,7 @@ const likeTrip = async (req, res, next) => {
         const trip = await Trip.findById(id)
 
         if (trip.likes.includes(req.user.userId)) {
-            return res.status(401).send({message: "you already liked this trip"})
+            return res.status(401).send({message: "You already liked this trip"})
         }
 
         if(!trip) return res.status(400).send({message: "No trip found"})

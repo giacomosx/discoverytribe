@@ -7,10 +7,12 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const postRoutes = require('./routes/post');
 const tripRoutes = require('./routes/trip');
+const feedRoutes = require('./routes/feed');
 const milestoneRoutes = require('./routes/milestone');
 const geoApiRoutes = require('./routes/geoapify');
 const auth = require('./middlewares/tokenController');
 const errorHandler = require('./middlewares/errorHandlers');
+const feed = require("./routes/feed");
 
 const server = express();
 const PORT = process.env.PORT || 5000;
@@ -18,10 +20,12 @@ const PORT = process.env.PORT || 5000;
 server.use(cors());
 server.use(express.json());
 
+
 server.use('/api/v1/auth', authRoutes);
 
 server.use(auth.verifyToken);
 
+server.use('/api/v1/feed', feed);
 server.use('/api/v1/user', userRoutes);
 server.use('/api/v1/posts', postRoutes );
 server.use('/api/v1/trips', tripRoutes);

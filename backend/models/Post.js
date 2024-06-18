@@ -3,24 +3,22 @@ const mongoose = require('mongoose')
 const Post = mongoose.Schema({
         userId: {
             type: mongoose.Schema.Types.ObjectId,
-            rel: 'User',
+            ref: 'User',
         },
         title: String,
         content: String,
-        cover: {
-            type: String,
-            required: true,
-            default: 'http://placehold.it/600x400/',
+        media: {
+            type: String
         },
         tags: Array,
         trip: {
             type: mongoose.Schema.Types.ObjectId,
-            rel: 'Trip'
+            ref: 'Trip'
         },
         comments: [{
             authorId: {
                 type: mongoose.Schema.Types.ObjectId,
-                rel: 'User'
+                ref: 'User'
             },
             content: String,
             hidden: {
@@ -30,7 +28,7 @@ const Post = mongoose.Schema({
         }],
         likes: [{
             type: mongoose.Schema.Types.ObjectId,
-            rel: 'User'
+            ref: 'User'
         }],
         public: {
             type: Boolean,

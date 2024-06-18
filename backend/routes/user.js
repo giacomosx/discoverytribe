@@ -1,7 +1,7 @@
 const express = require('express');
 const user = express.Router();
 const controller = require('../controllers/userControllers');
-const { uploadAvatar } = require('../utils/uploadMedia');
+const { uploadAvatar, uploadCover } = require('../utils/uploadMedia');
 
 user.route('/me').get(controller.getCurrentUser)
 
@@ -14,6 +14,8 @@ user.route('/me/followings').get(controller.getFollowings)
 user.route('/me/followers').get(controller.getFollowers)
 
 user.route('/me/avatar').patch(uploadAvatar.single('avatar'), controller.changeAvatar)
+
+user.route('/me/cover').patch(uploadCover.single('cover'), controller.changeCover)
 
 user.route('/:id/trips').get(controller.getUserTrips)
 
