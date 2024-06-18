@@ -15,7 +15,7 @@ const cratePost = async  (req, res, next) => {
         await post.save()
         relUser.posts.push(post._id);
         await relUser.save()
-        res.status(201).json({message: "Successfully created post", post})
+        next()
     } catch (e) {
         console.log(e)
         next({statusCode: 400, message: e.message});

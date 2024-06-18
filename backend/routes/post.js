@@ -2,10 +2,11 @@ const express = require('express');
 const post = express.Router();
 const controller = require('../controllers/postController');
 const { uploadMedia } = require('../utils/uploadMedia');
+const sendEmail = require('../utils/sendEmail');
 
 post.route('/:id').get(controller.getPostById)
 
-post.route('/create').post(uploadMedia.single('media'), controller.cratePost)
+post.route('/create').post(uploadMedia.single('media'), controller.cratePost, sendEmail.newPost)
 
 post.route('/:id/edit').patch(controller.editPost)
 

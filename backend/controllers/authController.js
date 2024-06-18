@@ -21,7 +21,7 @@ const register = async (req, res, next) => {
                     });
                     await newUser.save();
 
-                    res.status(201).json(newUser)
+                    next()
                 } catch (e) {
                     res.status(400).json({message: e.message});
                 }
@@ -67,4 +67,29 @@ const login = async (req, res) => {
     }
 }
 
-module.exports = {login, register};
+const inviteUser = async (req, res, next) => {
+    const { email, name } = req.body;
+
+    try {
+        const user = await User.findOne({email})
+
+        if(user) return res.status(400).json({message: "User already exists"})
+
+        const token =  await jwt.sign({email,name},
+            process.env.JWT_SECRET_KEY,
+            {expiresIn: '5m'});
+
+        req.body = {
+            ...req.body,
+            token: token
+        };
+
+        next()
+
+    } catch (e) {
+        console.log(e)
+        res.status(500).json({message: e.message});
+    }
+}
+
+module.exports = {login, register, inviteUser};
