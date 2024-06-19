@@ -51,7 +51,7 @@ const inviteMail = async (req, res, next) => {
                 http://localhost:5000/auth/register?token=${req.body.token}
             `,
         html: `<strong>Hello ${req.body.name}, you was invited to become a DiscoveryTribe Member, click in the link below to complete the registration</strong>
-                http://localhost:5000/api/auth/register?token=${req.body.token}`,
+                http://localhost:5000/api/v1/auth/register?token=${req.body.token}`,
     };
     sgMail
         .send(msg)
