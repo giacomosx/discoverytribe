@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const manualToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjcxYmU5ZDg4OWZiY2Q5NTBkMzY3NGIiLCJlbWFpbCI6InRlc3QyQGdtYWlsLmNvbSIsImlhdCI6MTcxODk2MTE3NywiZXhwIjoxNzE4OTY0Nzc3fQ.oD-cnfyqk0MyHrGZsYI-flXNB56_lCX48nZ-oPQQa7E'
+const manualToken = ''
 
 class AxiosApi {
     constructor() {
