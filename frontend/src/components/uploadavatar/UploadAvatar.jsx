@@ -3,8 +3,8 @@ import React from 'react';
 const UploadAvatar = ({onChange, preview, onClick}) => {
     return (
         <>
-            <div className="flex items-center justify-center w-full flex-col space-y-6">
-                {!preview ? (
+            {!preview ? (
+                <>
                     <label htmlFor="dropzone-file"
                            className="flex flex-col items-center justify-center rounded-full w-52 h-52 border-2 border-gray-300 border-dashed cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                         <div className="flex flex-col items-center justify-center">
@@ -17,20 +17,23 @@ const UploadAvatar = ({onChange, preview, onClick}) => {
                         <p className="mb-2 text-sm text-gray-500 dark:text-gray-400 text-center"><span
                             className="font-semibold">Click to upload</span> or
                             drag and drop</p>
-                        <input id="dropzone-file" type="file" className="hidden" onChange={onChange} accept="image/*"/>
+                        <input id="dropzone-file" type="file" className="hidden" onChange={onChange} accept="image/*"
+                               required/>
                     </label>
-                ) : (
-                    <img className="w-48 h-48 mb-3 rounded-full shadow-lg"
-                         src={preview} alt="Avatar preview"/>
-                )}
-                {preview && (
-                    <button type={'button'}
-                            className="text-xs text-gray-800 dark:text-gray-400 underline font-semibold"
-                            onClick={onClick}>
+
+                    <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                </>
+            ) : (
+                <img className="w-52 h-52 rounded-full shadow-lg object-cover"
+                     src={preview} alt="Avatar preview"/>
+            )}
+            {preview && (
+                <button type={'button'}
+                        className="text-xs text-gray-800 dark:text-gray-400 underline font-semibold"
+                        onClick={onClick}>
                     Change Image </button>
-                )}
-                <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
-            </div>
+            )}
+
         </>
     )
         ;

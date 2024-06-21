@@ -55,7 +55,7 @@ const SuggestionsInputField = () => {
                                         setInputValue(suggestion.formatted)
                                         setSuggestions([])
                                     }} type={'button'}
-                                            className={'text-start w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'}>
+                                            className={'text-start w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white bg-white dark:bg-gray-800'}>
                                         {suggestion.formatted}
                                     </button>
                                 </li>
