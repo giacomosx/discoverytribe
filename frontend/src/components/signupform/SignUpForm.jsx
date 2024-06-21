@@ -8,6 +8,7 @@ import UploadAvatar from "../uploadavatar/UploadAvatar";
 import Stepper from "../stepper/Stepper";
 import AxiosApi from "../../api/axiosApi";
 import Spinner from "../spinner/Spinner";
+import Alerts from "../alerts/Alerts";
 
 const SignUpForm = () => {
     const api = new AxiosApi();
@@ -88,11 +89,11 @@ const SignUpForm = () => {
             setLoading(false)
             setError(true)
             if (e.response.data.error) {
-                setResponse(e.response.data.error.message)
+                setResponse(e.response.data.error)
             }
             if (e.response.data.errors) {
                 setError(true)
-                setResponse(e.response.statusText)
+                setResponse('Invalid email or password')
             }
             ;
         }
@@ -164,7 +165,7 @@ const SignUpForm = () => {
                                 </div>
                             )}
                             {loading && (
-                                <div className={'min-h-[322px] flex flex-col items-center'}>
+                                <div className={'min-h-[322px] flex flex-col justify-center'}>
                                     <Spinner/>
                                 </div>
                             )}
@@ -177,11 +178,12 @@ const SignUpForm = () => {
                                         className="text-sm text-gray-500 dark:text-gray-400">{user.email}</span>
                                     <div className="flex mt-4 md:mt-6 space-x-6">
                                         {success ? (
-                                            <p className={'text-gray-800 dark:text-gray-400'}>Cool news {user.username}.
+                                            <Alerts type={'success'}>
+                                                Cool news {user.username}.
                                                 Registration successfully complete. <br/>
                                                 Check your email and <Link to={'/login'}
-                                                                           className="text-purple-700 hover:underline dark:text-purple-600">login</Link>.
-                                            </p>
+                                                                           className=" font-semibold underline ">login</Link>.
+                                            </Alerts>
                                         ) : (
                                             <>
                                                 <Button type={'button'} variants={'rounded'} onClick={prevBtn}
@@ -194,13 +196,16 @@ const SignUpForm = () => {
                             )}
                             {activeTab === 2 && !loading && error && (
                                 <div className={'min-h-[322px] flex flex-col justify-center items-center'}>
-                                    <p className={'text-gray-800 dark:text-gray-400'}>{response}</p>
-                                    <p className={'underline cursor-pointer'} onClick={handleRetry}>Retry</p>
+                                    <Alerts type={'danger'}>
+                                        {response}
+                                        <p className={'underline cursor-pointer'} onClick={handleRetry}>Retry</p>
+                                    </Alerts>
+
                                 </div>
                             )}
                         </form>
 
-                        {!success && !error (<div className="text-sm font-medium text-gray-800 dark:text-white">
+                        {!success && !error && (<div className="text-sm font-medium text-gray-800 dark:text-white">
                             Do you already have an account? <Link to={'/'}
                                                                   className="text-purple-700 hover:underline dark:text-purple-600">Login</Link>
                         </div>)}
