@@ -42,7 +42,7 @@ const login = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        const user = await User.findOne({email})
+        const user = await User.findOne({email}).select('+password')
 
         if (!user) return res.status(401).json({message:"Invalid email or password"});
 
@@ -77,7 +77,7 @@ const inviteUser = async (req, res, next) => {
 
         const token =  await jwt.sign({email,name},
             process.env.JWT_SECRET_KEY,
-            {expiresIn: '5m'});
+            {expiresIn: '1d'});
 
         req.body = {
             ...req.body,

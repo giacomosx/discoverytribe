@@ -32,7 +32,7 @@ const Post = mongoose.Schema({
         }],
         public: {
             type: Boolean,
-            default: false
+            default: true
         }
     },
     {

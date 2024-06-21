@@ -21,7 +21,7 @@ const createTrip = async (req, res, next) => {
             })
             await post.save()
         }
-        res.status(201).json({message: "Successfully created trip", trip})
+        next()
     } catch (e) {
         console.log(e)
         next({statusCode: 500, message: e.message});
@@ -147,6 +147,29 @@ const unlikeTrip = async (req, res, next) => {
 
 }
 
+const changeCover = async (req, res, next) => {
+    const {id} = req.params
+
+    if (!req.file) return res.status(400).json({message: 'No file uploaded'});
+
+    try {
+        if (!id) return res.status(400).send({message: "No id found"})
+
+        const trip = await Trip.findById(id)
+
+        if (!trip) return res.status(400).send({message: "No trip found"})
+
+        const editedTrip = await Trip.findByIdAndUpdate(id, {
+            ...req.body,
+            cover: req.file.path
+        }, {new: true})
+
+        res.status(201).json(editedTrip)
+    } catch (e) {
+        next({statusCode: 400, message: e.message});
+    }
+}
+
 
 module.exports = {
     createTrip,
@@ -154,5 +177,6 @@ module.exports = {
     deleteTrip,
     getTripById,
     likeTrip,
-    unlikeTrip
+    unlikeTrip,
+    changeCover
 }
