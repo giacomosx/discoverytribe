@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 
-const HeroClaim = () => {
+const SignUpHero = () => {
     return (
         <div className="flex flex-col justify-center">
             <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Explore,
@@ -25,4 +25,4 @@ const HeroClaim = () => {
     );
 };
 
-export default HeroClaim;
+export default SignUpHero;

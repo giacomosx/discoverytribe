@@ -1,17 +1,17 @@
 import React from 'react';
-import SignUpForm from "../components/signupform/SignUpForm";
-import SignUpHero from "../components/signuphero/SignUpHero";
 import LandingLayout from "../layout/LandingLayout";
+import SignInForm from "../components/signinform/SignInForm";
+import SignInHero from "../components/signuinhero/SignInHero";
 
-const Registration = () => {
+const Login = () => {
     return (
         <LandingLayout>
             <section className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 grid lg:grid-cols-2 gap-8 lg:gap-16">
-                <SignUpHero />
-                <SignUpForm/>
+                <SignInHero />
+                <SignInForm />
             </section>
         </LandingLayout>
     );
 };
 
-export default Registration;
+export default Login;

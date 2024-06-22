@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Alerts = ({type, children}) => {
-    let alertStyles = `flex items-center p-4 mb-4 border-t-4 `;
+    let alertStyles = `flex items-center p-4 border-t-4 `;
 
     switch (type) {
         case 'success':
@@ -13,6 +13,8 @@ const Alerts = ({type, children}) => {
         case 'warning':
             alertStyles += `text-yellow-800 border-yellow-300 bg-yellow-50 dark:text-yellow-400 dark:bg-gray-800 dark:border-yellow-800`
             break;
+        default:
+            alertStyles += `text-purple-800 border-purple-300 bg-purple-50 dark:text-purple-400 dark:bg-gray-800 dark:border-purple-800`
     }
 
     return (

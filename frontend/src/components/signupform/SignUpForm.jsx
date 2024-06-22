@@ -3,12 +3,12 @@ import Label from "../label/Label";
 import TextInputField from "../textinputfield/TextInputField";
 import {Link} from "react-router-dom";
 import Button from "../button/Button";
-import HeroClaim from "../heroclaim/HeroClaim";
 import UploadAvatar from "../uploadavatar/UploadAvatar";
 import Stepper from "../stepper/Stepper";
 import AxiosApi from "../../api/axiosApi";
 import Spinner from "../spinner/Spinner";
 import Alerts from "../alerts/Alerts";
+import ProfileCard from "../profilecard/ProfileCard";
 
 const SignUpForm = () => {
     const api = new AxiosApi();
@@ -100,9 +100,6 @@ const SignUpForm = () => {
     }
 
     return (
-        <>
-            <section className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 grid lg:grid-cols-2 gap-8 lg:gap-16">
-                <HeroClaim/>
                 <div>
                     <div
                         className="w-full lg:max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow-xl dark:bg-gray-800 transition-all">
@@ -171,11 +168,7 @@ const SignUpForm = () => {
                             )}
                             {activeTab === 2 && !loading && !error && (
                                 <div className="flex flex-col items-center min-h-[322px] justify-between">
-                                    <img className="w-48 h-48 rounded-full shadow-lg object-cover"
-                                         src={preview} alt="Avatar preview"/>
-                                    <h5 className="mb-1 text-xl font-medium text-gray-800 dark:text-white">{user.username}</h5>
-                                    <span
-                                        className="text-sm text-gray-500 dark:text-gray-400">{user.email}</span>
+                                    <ProfileCard src={preview} username={user.username} email={user.email} />
                                     <div className="flex mt-4 md:mt-6 space-x-6">
                                         {success ? (
                                             <Alerts type={'success'}>
@@ -206,14 +199,12 @@ const SignUpForm = () => {
                         </form>
 
                         {!success && !error && (<div className="text-sm font-medium text-gray-800 dark:text-white">
-                            Do you already have an account? <Link to={'/'}
+                            Do you already have an account? <Link to={'/login'}
                                                                   className="text-purple-700 hover:underline dark:text-purple-600">Login</Link>
                         </div>)}
 
                     </div>
                 </div>
-            </section>
-        </>
     );
 };
 
