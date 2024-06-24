@@ -7,9 +7,9 @@ const getUserFeed = async (req, res, next) => {
     try {
         const user = await User.findById(userId)
 
-        if (user.followings.length === 0) return res.status(400).json({message:"You doesn't have any followings"});
+        if (user.followings.length === 0) return res.status(400).json({message:"You don't have any followings"});
 
-        const feed = await Post.find({userId: {$in: user.followings}})
+        const feed = await Post.find({userId: {$in: user.followings}}).populate('likes')
             .populate({path: 'userId', select: 'username avatar name' })
             .limit(size)
             .skip((page - 1) * size)

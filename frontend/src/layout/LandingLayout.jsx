@@ -1,15 +1,11 @@
 import React from 'react';
-import Main from "./main/Main";
 
 const LandingLayout = ({children}) => {
     return (
-        <>
-            <Main>
-
-                {children}
-
-            </Main>
-        </>
+        <div
+            className=" flex justify-center w-[calc(100vw - 256px)] min-h-[100vh-71px] p-8 mt-[71px] mx-auto">
+            {children}
+        </div>
     );
 };
 

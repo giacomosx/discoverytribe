@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-const manualToken = ''
-
 class AxiosApi {
     constructor() {
         const baseUrl = process.env.REACT_APP_BASE_SERVER_URL;
@@ -12,7 +10,7 @@ class AxiosApi {
             }
         })
         this.axiosInstance.interceptors.request.use((config) => {
-            const token = localStorage.getItem("token") || manualToken;
+            const token = localStorage.getItem("token");
             if (token) {
                 config.headers.Authorization = 'Bearer '+ token;
             }
@@ -37,14 +35,19 @@ class AxiosApi {
     }
 
     async post(url, body, config = {}) {
-        const response = await this.axiosInstance.post(url, body, {
-            ...config,
-            headers: {
-                ...this.axiosInstance.defaults.headers,
-                ...config.headers
-            }
-        });
-        return response.data;
+        try {
+            const response = await this.axiosInstance.post(url, body, {
+                ...config,
+                headers: {
+                    ...this.axiosInstance.defaults.headers,
+                    ...config.headers
+                }
+            });
+            return response.data;
+        } catch (e) {
+            return Promise.reject(e.response.data);
+        }
+
     }
 
     async put(url, body, config) {
@@ -52,9 +55,19 @@ class AxiosApi {
             return response.data;
     }
 
-    async patch(url, body, config) {
-        const response = await this.axiosInstance.post(url, body, config);
-        return response.data;
+    async patch(url, body, config = {}) {
+        try {
+            const response = await this.axiosInstance.patch(url, body, {
+                ...config,
+                headers: {
+                    ...this.axiosInstance.defaults.headers,
+                    ...config.headers
+                }
+            });
+            return response.data;
+        } catch (e) {
+            return Promise.reject(e.response.data);
+        }
     }
 
     async delete(url, config) {

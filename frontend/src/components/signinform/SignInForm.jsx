@@ -13,7 +13,6 @@ import {useDispatch} from "react-redux";
 const SignInForm = () => {
     const api = new AxiosApi();
     const [loading, setLoading] = useState(false);
-    const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
     const [user, setUser] = useState({});
     const [data, setData] = useState({});
@@ -36,7 +35,6 @@ const SignInForm = () => {
         try {
             const response = await api.post('/auth/login', user)
             setLoading(false);
-            setSuccess(true)
             setData(response)
 
             localStorage.setItem("token", response.token)
@@ -52,10 +50,9 @@ const SignInForm = () => {
 
     useEffect(() => {
         if (data) {
-            setTimeout(() => {
-                dispatch(login())
-                navigate('/me')
-            }, 1000)
+
+            dispatch(login())
+            navigate('/me')
         }
         // eslint-disable-next-line
     }, [data])
@@ -78,15 +75,7 @@ const SignInForm = () => {
                             <p className={'underline cursor-pointer'} onClick={handleRetry}>Retry</p>
                         </Alerts>
                     )}
-                    {success && (
-                        <>
-                            <ProfileCard src={data?.userData.avatar} variants={'mb-8'} size={'l'}/>
-                            <Alerts type={'success'}>
-                                Login successfully complete {data?.userData.username}.
-                            </Alerts>
-                        </>
-                    )}
-                    {!loading && !error && !success && (
+                    {!loading && !error && (
                         <div className={`space-y-6`}>
                             <div>
                                 <Label htmlFor={'email'}>Email</Label>

@@ -75,7 +75,7 @@ const getPostById = async (req, res, next) => {
     try {
         if (!id) return res.status(400).send({message: "No id found"})
 
-        const post = await Post.findById(id).populate('userId')
+        const post = await Post.findById(id).populate('userId likes')
 
         if(!post) return res.status(400).send({message: "No post found"})
 
@@ -96,7 +96,7 @@ const likePost = async (req, res, next) => {
         const post = await Post.findById(id)
 
         if (post.likes.includes(req.user.userId)) {
-            return res.status(401).send({message: "You already liked this post"})
+            return res.status(400).send({message: "You already liked this post"})
         }
 
         if(!post) return res.status(400).send({message: "No post found"})
@@ -108,7 +108,7 @@ const likePost = async (req, res, next) => {
         post.likes.push(user._id)
         post.save()
 
-        res.status(200).json({message: "Post successfully liked", post})
+        res.status(200).json({message: "Post successfully liked", likes: post.likes})
 
     } catch (e) {
         console.error(e)

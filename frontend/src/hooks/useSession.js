@@ -27,7 +27,7 @@ export const useSession = () => {
         if (expiredSession) {
             navigate("/login");
         }
-    }, [expiredSession, session, navigate]);
+    }, [session, navigate]);
 
 
     return {
