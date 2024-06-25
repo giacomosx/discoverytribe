@@ -1,12 +1,22 @@
 import React, {useState} from 'react';
 import Button from "../button/Button";
+import { NavLink} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {setPostModal} from "../../redux/postModalSlice";
 
 const NewButton = ({variants}) => {
     const [openMenu, setOpenMenu] = useState(false)
+    const dispatch = useDispatch();
 
     const handleOpenMenu = () => {
         setOpenMenu(!openMenu)
     }
+
+    const handlePostModal = () => {
+        dispatch(setPostModal(true))
+        setOpenMenu(!openMenu)
+    }
+
     return (
         <div className={`relative`}>
             <Button variants={`rounded ${variants}`} onClick={handleOpenMenu}>
@@ -24,7 +34,7 @@ const NewButton = ({variants}) => {
                 id="dropdown-user">
                 <ul className="py-1" role="none">
                     <li>
-                        <button
+                        <button onClick={handlePostModal}
                             className="gap-2 flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white text-start"
                             role="menuitem">
                             <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -37,7 +47,7 @@ const NewButton = ({variants}) => {
                         </button>
                     </li>
                     <li>
-                        <button
+                        <NavLink to={'/trip/create'}
                             className="gap-2 flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white text-start"
                             role="menuitem">
                             <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -47,7 +57,7 @@ const NewButton = ({variants}) => {
                                       d="m12 18-7 3 7-18 7 18-7-3Zm0 0v-5"/>
                             </svg>
                             Trip
-                        </button>
+                        </NavLink>
                     </li>
                 </ul>
             </div>

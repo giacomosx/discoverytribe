@@ -4,6 +4,7 @@ import {isSidebarOpen} from "../../redux/sidebarSlice";
 import SidebarMenuItem from "../../components/sidebarmenuitem/SidebarMenuItem";
 import Footer from "../footer/Footer";
 import NewButton from "../../components/newbutton/NewButton";
+import {Link} from "react-router-dom";
 
 
 const Sidebar = () => {
@@ -30,7 +31,7 @@ const Sidebar = () => {
                                       clipRule="evenodd"/>
                             </svg>
 
-                            <span className="ms-3">Feed</span>
+                            <Link to={'/me'} className={'ms-3'}>Feed</Link>
                         </SidebarMenuItem>
                         <SidebarMenuItem>
                             <svg

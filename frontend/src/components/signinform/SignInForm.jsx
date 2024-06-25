@@ -18,7 +18,6 @@ const SignInForm = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    console.log('primo')
 
     const handleChange = (e) => {
         setUser({
@@ -37,14 +36,12 @@ const SignInForm = () => {
             const response = await api.post('/auth/login', user)
             await setData(response)
             await setLoading(false);
-            console.log(data)
             localStorage.setItem("token", response.token)
             localStorage.setItem('userInfo', JSON.stringify(response.userData))
 
             if (response.token) {
                 dispatch(login())
                 navigate('/me')
-                console.log('token')
             }
 
         } catch (error) {

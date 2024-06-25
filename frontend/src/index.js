@@ -7,11 +7,14 @@ import {Provider} from 'react-redux';
 import sidebarReducer from './redux/sidebarSlice'
 import loginReducer from './redux/loginSlice'
 import feedReducer from './redux/userFeedSlice'
+import postModalReducer from './redux/postModalSlice'
 
 const rootReducer = combineReducers({
     sidebarState: sidebarReducer,
     loginState: loginReducer,
     feedState: feedReducer,
+    postModalState: postModalReducer,
+
 })
 
 const store = configureStore({
