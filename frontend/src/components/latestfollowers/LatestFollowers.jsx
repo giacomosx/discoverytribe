@@ -1,17 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import UserListCard from "../userlistcard/UserListCard";
 import axiosApi from "../../api/axiosApi";
-import Spinner from "../spinner/Spinner";
 import Alerts from "../alerts/Alerts";
-import {useDispatch} from "react-redux";
-import {getFollowings} from "../../redux/actions/userActions";
+import ListSkeleton from "../listskeleton/ListSkeleton";
 
 const LatestFollowers = () => {
     const api = new axiosApi()
     const [followers, setFollowers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null)
-    const dispatch = useDispatch()
 
     const getFollowers = async () => {
         try {
@@ -27,14 +24,13 @@ const LatestFollowers = () => {
 
 
     useEffect(() => {
-        dispatch(getFollowings())
         getFollowers()
         // eslint-disable-next-line
     }, [])
 
     return (
         <div className="flow-root min-w-52">
-            {loading && <Spinner/>}
+            {loading && <ListSkeleton/>}
             {error && <Alerts type={'danger'}>Something went wrong!</Alerts>}
             {!loading && followers.length === 0 ? (
                 'No followers yet'

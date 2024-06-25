@@ -5,7 +5,7 @@ import RightSidebarElement from "../../components/rightsidebarelement/RightSideb
 
 const RightSidebar = () => {
     return (
-        <aside className={'hidden lg:block space-y-6 ps-8 max-w-sm'}>
+        <aside className={'hidden lg:block space-y-6 ps-8 max-w-sm min-w-96'}>
             <RightSidebarElement title={'Latest Followers'}>
                 <LatestFollowers />
             </RightSidebarElement>

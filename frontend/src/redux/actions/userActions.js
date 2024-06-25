@@ -3,10 +3,9 @@ import axiosApi from "../../api/axiosApi";
 
 const api = new axiosApi()
 
-export const getFollowings = createAsyncThunk('userFollowings/GET', async () => {
+export const getUserInfo = createAsyncThunk('userFollowings/GET', async () => {
     try {
-        const user =  await api.get('/user/me')
-        return user.followings
+        return await api.get('/user/me')
     } catch (error) {
         console.error(error)
         return error.message

@@ -3,7 +3,7 @@ import FeedPost from "../feedpost/FeedPost";
 import {useSelector} from "react-redux";
 import {useDispatch} from "react-redux";
 import {getUserFeed} from "../../redux/actions/feedAction";
-import {dataFeed, isErrorFeed, isLoadingFeed} from "../../redux/userFeddSlice";
+import {dataFeed, isErrorFeed, isLoadingFeed} from "../../redux/userFeedSlice";
 import Spinner from "../spinner/Spinner";
 import Alerts from "../alerts/Alerts";
 

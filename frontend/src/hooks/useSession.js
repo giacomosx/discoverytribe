@@ -27,6 +27,7 @@ export const useSession = () => {
         if (expiredSession) {
             navigate("/login");
         }
+        // eslint-disable-next-line
     }, [session, navigate]);
 
 

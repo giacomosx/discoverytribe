@@ -1,23 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import Button from "../button/Button";
 import {Link} from "react-router-dom";
-import {followingState} from "../../redux/loginSlice";
-import {useDispatch, useSelector} from "react-redux";
-import {getUserFeed} from "../../redux/actions/feedAction";
+import {userState} from "../../redux/loginSlice";
+import {useSelector} from "react-redux";
 import axiosApi from "../../api/axiosApi";
 
 const UserListCard = ({avatar, username, userId}) => {
     const api = new axiosApi()
-    const followings = useSelector(followingState)
+    const user = useSelector(userState)
     const [alreadyFollowing, setAlreadyFollowing] = useState(false);
-    const dispatch = useDispatch()
 
     const followUser = async () => {
         try {
             const response = await api.patch(`/user/${userId}/follow`)
             if (response) {
                 setAlreadyFollowing(true)
-                dispatch(getUserFeed())
             }
         } catch (e) {
             console.error(e)
@@ -29,7 +26,6 @@ const UserListCard = ({avatar, username, userId}) => {
             const response = await api.patch(`/user/${userId}/unfollow`)
             if (response) {
                 setAlreadyFollowing(false)
-                dispatch(getUserFeed())
             }
         } catch (e) {
             console.error(e)
@@ -37,17 +33,17 @@ const UserListCard = ({avatar, username, userId}) => {
     }
 
     useEffect(() => {
-        if (followings.includes(userId)) {
+        if (user.followings?.includes(userId)) {
             setAlreadyFollowing(true)
         }
         // eslint-disable-next-line
-    }, [followings, api])
+    }, [])
 
     return (
         <li className="py-3 sm:py-4">
             <div className="flex items-center">
                 <div className="flex-shrink-0">
-                    <Link to={'/'}>
+                    <Link to={`/user/${userId}`}>
                         <img className="w-12 h-12 rounded-full" src={avatar} alt={username}/>
                     </Link>
                 </div>

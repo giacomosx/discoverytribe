@@ -5,7 +5,6 @@ import Button from "../button/Button";
 import Spinner from "../spinner/Spinner";
 import Alerts from "../alerts/Alerts";
 import AxiosApi from "../../api/axiosApi";
-import ProfileCard from "../profilecard/ProfileCard";
 import { useNavigate} from "react-router-dom";
 import {login} from "../../redux/loginSlice";
 import {useDispatch} from "react-redux";
@@ -18,6 +17,8 @@ const SignInForm = () => {
     const [data, setData] = useState({});
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    console.log('primo')
 
     const handleChange = (e) => {
         setUser({
@@ -34,12 +35,17 @@ const SignInForm = () => {
         setLoading(true);
         try {
             const response = await api.post('/auth/login', user)
-            setLoading(false);
-            setData(response)
-
+            await setData(response)
+            await setLoading(false);
+            console.log(data)
             localStorage.setItem("token", response.token)
-            localStorage.setItem('userData', JSON.stringify(response.userData))
+            localStorage.setItem('userInfo', JSON.stringify(response.userData))
 
+            if (response.token) {
+                dispatch(login())
+                navigate('/me')
+                console.log('token')
+            }
 
         } catch (error) {
             console.log(error)
@@ -47,15 +53,6 @@ const SignInForm = () => {
             setError(true);
         }
     }
-
-    useEffect(() => {
-        if (data) {
-
-            dispatch(login())
-            navigate('/me')
-        }
-        // eslint-disable-next-line
-    }, [data])
 
     return (
         <div>
