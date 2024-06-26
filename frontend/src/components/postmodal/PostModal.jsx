@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import {useSelector, useDispatch} from "react-redux";
 import {setPostModal, postModal} from "../../redux/postModalSlice";
+import {getPosts} from "../../redux/actions/postsActions";
+import {userState} from "../../redux/loginSlice";
 import Button from "../button/Button";
 import Label from "../label/Label";
 import axiosApi from "../../api/axiosApi";
@@ -10,30 +12,32 @@ const PostModal = () => {
     const api = new axiosApi();
     const dispatch = useDispatch();
     const modalState = useSelector(postModal)
-    const [content, setContent] = useState(null);
+    const [content, setContent] = useState('');
     const [tags, setTags] = useState([]);
     const [media, setMedia] = useState(null);
-    const [success, setSuccess] = useState(false);
     const [preview, setPreview] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [response, setResponse] = useState(null);
+    const user = useSelector(userState);
 
     const handleClose = () => {
         dispatch(setPostModal(false))
-        setContent(null)
+        setContent('')
         setMedia(null)
         setPreview(null)
         setTags(null)
+        setResponse(null)
+        dispatch(getPosts(user._id))
     }
 
     const handleContent = (e) => {
         setContent(e.target.value);
     }
-    const extractHashtags = async (string) => {
+    const extractHashtags = (string) => {
 
         const regex = /#\w+/g;
-        const matches = await string.match(regex);
+        const matches = string.match(regex);
         const hashtags = matches ? matches : [];
         setTags(hashtags);
     }
@@ -57,12 +61,12 @@ const PostModal = () => {
         e.preventDefault();
 
         try {
-            extractHashtags(content)
             setLoading(true);
+            extractHashtags(content)
             const formData = new FormData();
             formData.append("media", media);
             formData.append("content", content);
-            if (tags && tags.length > 0) {
+            if (tags.length > 0) {
                 formData.append("tags", tags)
             }
             const createPost = await api.post('/posts/create', formData, {
@@ -71,7 +75,7 @@ const PostModal = () => {
                 }
             })
             if (createPost) {
-                setSuccess(true)
+                setResponse('Post successfully published!')
             }
 
         } catch (e) {
@@ -83,7 +87,8 @@ const PostModal = () => {
             if (e.response.data.errors) {
                 setError(true)
                 setResponse('Something went wrong!')
-            };
+            }
+            ;
         } finally {
             setLoading(false)
         }
@@ -150,17 +155,38 @@ const PostModal = () => {
                                           placeholder="Write your post content here"></textarea>
                             </div>
                         </div>
-                        <Button variants={'rounded flex'} type={'submit'}>
-                            {loading ? <Spinner/> : (
+                        <div className={'flex items-center justify-between'}>
+                            <Button variants={'rounded flex'} type={'submit'}>
                                 <svg className="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path fillRule="evenodd"
                                           d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                                           clipRule="evenodd"></path>
                                 </svg>
+                                <span>Add new post</span>
+                            </Button>
+                            {loading && <Spinner size={'w-6 h-6'}/>}
+                            {!error && response && (
+                                <span className={'text-green-800 dark:text-green-400 text-sm flex items-center gap-2'} >
+                                    <svg className="flex-shrink-0 w-4 h-4" aria-hidden="true"
+                                         xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path
+                                            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                                    </svg>
+                                    {response}
+                                </span>
                             )}
-                            <span>Add new post</span>
-                        </Button>
+                            {error && (
+                                <span className={'text-red-800 dark:text-red-400 text-sm'}>
+                                    <svg className="flex-shrink-0 w-4 h-4" aria-hidden="true"
+                                         xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path
+                                            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                                    </svg>
+                                    {response}
+                                </span>
+                            )}
+                        </div>
                     </form>
                 </div>
             </div>

@@ -67,7 +67,7 @@ const FeedPost = ({content, avatar, username, media, initLikes, id, date}) => {
                     <time className="text-xs text-gray-400 sm:mb-0 min-w-fit">{postDate.getDay() === currentTime.getDay() ? 'today' : `${postDate.toDateString()}`}</time>
                 </div>
                 <div className="text-sm text-gray-700 dark:text-gray-300 space-y-4">
-                    <img src={media} alt={content} className="rounded-lg max-h-80 w-full object-cover" />
+                    <img src={media} alt={content} className="rounded-lg w-full max-h-[600px] object-cover" />
                     <p className={''}>{content}</p>
                 </div>
                 <div className={`flex items-center justify-between`}>

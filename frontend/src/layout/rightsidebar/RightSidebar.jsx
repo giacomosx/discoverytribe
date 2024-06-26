@@ -22,7 +22,7 @@ const RightSidebar = () => {
                     <UpcomingTrips />
                 </RightSidebarElement>
             )}
-            <RightSidebarElement title={'About your travels'}>
+            <RightSidebarElement title={'About your journey'}>
                 <StatisticsCard />
             </RightSidebarElement>
             <RightSidebarElement title={'Latest Followers'} viewAllUrl={'/me/followers'}>

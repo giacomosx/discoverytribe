@@ -58,7 +58,7 @@ const Sidebar = () => {
                                     d="M368 160H144a16 16 0 010-32h224a16 16 0 010 32zM384 224H128a16 16 0 010-32h256a16 16 0 010 32z"/>
                             </svg>
 
-                            <span className="ms-3">My Posts</span>
+                            <Link to={'/posts'} className={'ms-3'}>My Posts</Link>
                         </SidebarMenuItem>
                         <SidebarMenuItem>
                             <svg

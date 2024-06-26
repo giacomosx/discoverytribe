@@ -8,12 +8,14 @@ import sidebarReducer from './redux/sidebarSlice'
 import loginReducer from './redux/loginSlice'
 import feedReducer from './redux/userFeedSlice'
 import postModalReducer from './redux/postModalSlice'
+import postsReducer from './redux/postsSlice'
 
 const rootReducer = combineReducers({
     sidebarState: sidebarReducer,
     loginState: loginReducer,
     feedState: feedReducer,
     postModalState: postModalReducer,
+    postsState: postsReducer,
 
 })
 
