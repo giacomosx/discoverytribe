@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import AxiosApi from "../../api/axiosApi";
 import {useDebouncedCallback} from "use-debounce";
 
-const LocationInputField = ({formClass}) => {
+const LocationInputField = ({formClass, setLocation}) => {
     const api = new AxiosApi();
     const [inputValue, setInputValue] = useState('');
     const [suggestions, setSuggestions] = useState([]);
@@ -30,10 +30,11 @@ const LocationInputField = ({formClass}) => {
             setSuggestions([])
         }
     }
+
     return (
         <>
             <div className="relative">
-                <form className={formClass}>
+                <div className={formClass}>
                     <label htmlFor="topbar-search" className="sr-only">Search</label>
                     <div className="relative mt-1 lg:w-96">
                         <div
@@ -45,20 +46,26 @@ const LocationInputField = ({formClass}) => {
                             </svg>
                         </div>
                         <input onChange={handelChange}
-                               type="text" name="email" id="topbar-search"
-                               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-9 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                               placeholder="Search"
+                               type="text" name="destination"
+                               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full max-w-[307px] pl-9 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
+                               placeholder="Search a location"
                                value={inputValue}
                         />
                     </div>
-                </form>
+                </div>
                 {suggestions.length !== 0 && (
-                    <div className="absolute suggestions-list w-full shadow-lg rounded-lg">
+                    <div className="absolute suggestions-list w-full shadow-lg rounded-lg z-50">
                         <ul className="py-2 text-sm text-gray-700 dark:text-gray-200 w-full">
                             {suggestions.length !== 0 && suggestions.map(suggestion => (
                                 <li key={suggestion.place_id}>
                                     <button onClick={() => {
                                         setInputValue(suggestion.formatted)
+                                        setLocation({
+                                            destination_name: suggestion.formatted,
+                                            latitude: suggestion.lat,
+                                            longitude: suggestion.lon,
+                                            place_id: suggestion.place_id,
+                                        })
                                         setSuggestions([])
                                     }} type={'button'}
                                             className={'text-start w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white bg-white dark:bg-gray-800'}>

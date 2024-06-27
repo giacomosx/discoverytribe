@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from "react-redux";
 import {setPostModal, postModal} from "../../redux/postModalSlice";
 import {getPosts} from "../../redux/actions/postsActions";
@@ -7,6 +7,8 @@ import Button from "../button/Button";
 import Label from "../label/Label";
 import axiosApi from "../../api/axiosApi";
 import Spinner from "../spinner/Spinner";
+import {useLocation} from "react-router-dom";
+import {getUserFeed} from "../../redux/actions/feedAction";
 
 const PostModal = () => {
     const api = new axiosApi();
@@ -20,24 +22,30 @@ const PostModal = () => {
     const [error, setError] = useState(null);
     const [response, setResponse] = useState(null);
     const user = useSelector(userState);
+    const location = useLocation();
 
     const handleClose = () => {
+        if (location.pathname === "/posts" && response) {
+            dispatch(getPosts(user._id))
+        }
+        if (location.pathname === "/me" && response) {
+            dispatch(getUserFeed())
+        }
         dispatch(setPostModal(false))
         setContent('')
         setMedia(null)
         setPreview(null)
         setTags(null)
         setResponse(null)
-        dispatch(getPosts(user._id))
     }
 
     const handleContent = (e) => {
         setContent(e.target.value);
     }
-    const extractHashtags = (string) => {
+    const extractHashtags = async (string) => {
 
         const regex = /#\w+/g;
-        const matches = string.match(regex);
+        const matches = await string.match(regex);
         const hashtags = matches ? matches : [];
         setTags(hashtags);
     }
@@ -57,12 +65,10 @@ const PostModal = () => {
         }
     }
     const handleSubmit = async (e) => {
-
         e.preventDefault();
-
+        extractHashtags(content)
         try {
             setLoading(true);
-            extractHashtags(content)
             const formData = new FormData();
             formData.append("media", media);
             formData.append("content", content);
@@ -93,6 +99,7 @@ const PostModal = () => {
             setLoading(false)
         }
     }
+
 
     return (
         <div aria-hidden="true"
@@ -138,7 +145,7 @@ const PostModal = () => {
                                                accept="image/*" required/>
                                     </label>
                                     <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX.
-                                        800x400px)</p>
+                                        600x600px)</p>
                                 </>
                             ) : (
                                 <img className="rounded-lg max-h-64 object-cover w-full overflow-hidden" src={preview}

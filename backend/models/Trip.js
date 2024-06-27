@@ -60,7 +60,7 @@ const Trip = new mongoose.Schema({
     },
     public: {
         type: Boolean,
-        default: false,
+        default: true,
     },
     rel_posts: [{
         type: mongoose.Schema.Types.ObjectId,

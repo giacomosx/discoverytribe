@@ -17,7 +17,7 @@ const Posts = () => {
 
     useEffect(() => {
         dispatch(getPosts(user._id))
-    }, [dispatch]);
+    }, [user, dispatch])
 
     return (
         <Layout>

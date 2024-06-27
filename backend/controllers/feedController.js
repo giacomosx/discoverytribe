@@ -2,10 +2,12 @@ const User = require('../models/User');
 const Post = require('../models/Post');
 
 const getUserFeed = async (req, res, next) => {
-    const {page = 1, size = 10} = req.query;
+    const {page = 1, size = 25} = req.query;
     const userId = req.user.userId;
     try {
         const user = await User.findById(userId)
+
+        user.followings.push(req.user.userId);
 
         if (user.followings.length === 0) return res.status(400).json({message:"You don't have any followings"});
 

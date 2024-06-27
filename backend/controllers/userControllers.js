@@ -113,7 +113,10 @@ const editUser = async (req, res, next) => {
 const getUserTrips = async (req, res, next) => {
     const {id} = req.params
     try {
-        const user = await User.findById(id).populate('trips').select('trips')
+        const user = await User.findById(id).populate({
+            path: 'trips',
+            options: { sort: { createdAt: -1 } }
+        }).select('trips')
 
         if (!user) return res.status.status(404).send({message: "No user found with this id"})
 
@@ -127,7 +130,10 @@ const getUserTrips = async (req, res, next) => {
 const getUserPosts = async (req, res, next) => {
     const {id} = req.params
     try {
-        const user = await User.findById(id).populate('posts').select('posts')
+        const user = await User.findById(id).populate({
+            path: 'posts',
+            options: { sort: { createdAt: -1 } }
+        }).select('posts')
 
         if (!user) return res.status.status(404).send({message: "No user found with this id"})
 

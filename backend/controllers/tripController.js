@@ -3,7 +3,7 @@ const User = require('../models/User');
 const Post = require('../models/Post');
 
 const createTrip = async (req, res, next) => {
-
+    console.log(req.body)
     try {
         const trip = new Trip({
             ...req.body,

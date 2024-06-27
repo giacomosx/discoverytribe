@@ -2,6 +2,10 @@ import React from 'react';
 import {Link} from "react-router-dom";
 
 const TripCard = ({trip}) => {
+
+    const startDate = new Date(trip.start_date).toDateString();
+    const endDate = new Date(trip.start_date).toDateString()
+
     return (
         <li className={'pt-8'}>
             <article className={'space-y-3.5'}>
@@ -28,7 +32,7 @@ const TripCard = ({trip}) => {
                             <path
                                 d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
                         </svg>
-                        From {trip.start_date} to {trip.end_date}
+                        From {startDate} to {endDate}
                     </li>
                     <li className="flex items-center">
                         <svg className="w-3 h-3 me-2" aria-hidden="true"

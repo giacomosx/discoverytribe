@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Label = ({children, htmlFor}) => {
+const Label = ({children, htmlFor, variants}) => {
     return (
             <label htmlFor={htmlFor}
-                   className="block mb-2 text-sm font-medium text-gray-800 dark:text-white">
+                   className={`block mb-2 text-gray-800 dark:text-white font-medium text-sm ${variants ? variants : ''}`}>
                 {children}
             </label>
     );
