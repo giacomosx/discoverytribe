@@ -25,7 +25,7 @@ const TripCard = ({trip, variants, description, moreButton}) => {
                         </svg>
                         <span className={'truncate'}>{trip.destination.destination_name}</span>
                     </div>
-                    {description && <p className={'text-sm text-gray-700 mt-2'}>{trip.description}</p>}
+                    {description && <p className={'text-sm text-gray-700 dark:text-gray-300 mt-2'}>{trip.description}</p>}
                 </div>
                 <ul className="text-sm text-gray-500 dark:text-gray-400 ps-1">
                     <li className="flex items-center">

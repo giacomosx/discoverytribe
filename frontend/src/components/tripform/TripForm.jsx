@@ -10,7 +10,7 @@ import Button from "../button/Button";
 import AxiosApi from "../../api/axiosApi";
 import Spinner from "../spinner/Spinner";
 import Alerts from "../alerts/Alerts";
-import {useNavigate} from "react-router-dom";
+import Timeline from "../timeline/Timeline";
 
 const TripForm = () => {
     const api = new AxiosApi();
@@ -29,6 +29,7 @@ const TripForm = () => {
     const [milestoneDescription, setMilestoneDescription] = useState('');
     const [milestoneStartDate, setMilestoneStartDate] = useState(new Date());
     const [milestoneEndDate, setMilestoneEndDate] = useState(new Date());
+    const [milestonesCreated, setMilestonesCreated] = useState([]);
 
     const tripTypes = ['relax', 'sport', 'job', 'family', 'honeymoon', 'adventure', 'shopping']
 
@@ -47,7 +48,17 @@ const TripForm = () => {
             setLoading(true);
             const tripData = {
                 ...infoTrip,
-                destination: destination,
+                destination: {
+                    destination_formatted: destination.formatted,
+                    destination_name: destination.name || destination.address_line1,
+                    destination_city: destination.city,
+                    destination_state: destination.state,
+                    destination_country: destination.country,
+                    destination_zipcode: destination.postcode,
+                    latitude: destination.latitude,
+                    longitude: destination.longitude,
+                    place_id: destination.place_id,
+                },
                 start_date: startDate,
                 end_date: endDate,
                 type: tripTypeSelected,
@@ -63,14 +74,6 @@ const TripForm = () => {
             console.log(e)
             setError(true)
             setResponse('Something went wrong!')
-            /*if (e.response.data.error) {
-                setResponse(e.response.data.error)
-            }
-            if (e.response.data.errors) {
-                setError(true)
-                setResponse('Something went wrong!')
-            }*/
-            ;
         } finally {
             setLoading(false)
         }
@@ -87,13 +90,27 @@ const TripForm = () => {
             const milestoneData = {
                 rel_trip: tripId,
                 description: milestoneDescription,
-                destination: milestoneDestination,
+                destination: {
+                    destination_formatted: destination.formatted,
+                    destination_name: destination.name || destination.address_line1,
+                    destination_city: destination.city,
+                    destination_state: destination.state,
+                    destination_country: destination.country,
+                    destination_zipcode: destination.postcode,
+                    latitude: destination.latitude,
+                    longitude: destination.longitude,
+                    place_id: destination.place_id,
+                },
                 start_date: milestoneStartDate,
                 end_date: milestoneEndDate,
             }
             const createMilestone = await api.post('/milestones/create', milestoneData)
             if (createMilestone) {
                 console.log(createMilestone);
+                setMilestonesCreated([
+                    ...milestonesCreated,
+                    createMilestone
+                ]);
             }
 
         } catch (e) {
@@ -113,12 +130,14 @@ const TripForm = () => {
         }
     }
 
+    console.log(tripCreated)
+
     return (
         <div className={'container max-w-2xl'}>
             {tripCreated && (
                 <>
                     <div className={'trip-info mb-4'}>
-                        <h1 className={'text-2xl text-gray-800 font-semibold ps-1'}>{tripCreated.name}</h1>
+                        <h1 className={'text-2xl text-gray-800 dark:text-white font-semibold ps-1'}>{tripCreated.name}</h1>
                         <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 ">
                             <svg className="min-w-4 h-4" aria-hidden="true"
                                  xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
@@ -243,6 +262,11 @@ const TripForm = () => {
 
                 )}
             </section>
+
+            {milestonesCreated && (
+                <Timeline milestones={milestonesCreated}/>
+            )}
+
         </div>
     );
 };

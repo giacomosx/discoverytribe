@@ -1,11 +1,20 @@
 const Trip = require('../models/Trip');
 const User = require('../models/User');
 const Post = require('../models/Post');
+const axios = require('axios');
 
 const createTrip = async (req, res, next) => {
     try {
+        const getCoverFromPexels = await axios.get(`https://api.pexels.com/v1/search?query=${req.body.destination.destination_city} landscape`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': process.env.PEXELS_API_KEY,
+            }
+        })
+        const data = await getCoverFromPexels.data.photos[0].src.landscape;
         const trip = new Trip({
             ...req.body,
+            cover: data,
             userId: req.user.userId,
         });
         const relUser = await User.findById(req.user.userId)

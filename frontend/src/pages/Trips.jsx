@@ -40,7 +40,7 @@ const Trips = () => {
                 <ul className={'grid grid-cols-1 gap-8 xl:grid-cols-2'}>
                     {!loading && trips.length > 0 && (
                         trips.map(trip => {
-                            return <TripCard trip={trip} key={trip._id} variants={'bg-white p-2 border rounded-lg'} moreButton/>
+                            return <TripCard trip={trip} key={trip._id} variants={'bg-white p-2 border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700'} moreButton/>
                         })
                     )}
                 </ul>

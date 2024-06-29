@@ -7,8 +7,6 @@ const LocationInputField = ({formClass, setLocation, variants}) => {
     const [inputValue, setInputValue] = useState('');
     const [suggestions, setSuggestions] = useState([]);
 
-    console.log(suggestions)
-
     const debounced = useDebouncedCallback(async () => {
 
         try {
@@ -31,6 +29,8 @@ const LocationInputField = ({formClass, setLocation, variants}) => {
             setSuggestions([])
         }
     }
+
+    console.log(suggestions)
 
     return (
         <>
@@ -61,12 +61,7 @@ const LocationInputField = ({formClass, setLocation, variants}) => {
                                 <li key={suggestion.place_id}>
                                     <button onClick={() => {
                                         setInputValue(suggestion.formatted)
-                                        setLocation({
-                                            destination_name: suggestion.formatted,
-                                            latitude: suggestion.lat,
-                                            longitude: suggestion.lon,
-                                            place_id: suggestion.place_id,
-                                        })
+                                        setLocation(suggestion)
                                         setSuggestions([])
                                     }} type={'button'}
                                             className={'text-start w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white bg-white dark:bg-gray-800'}>

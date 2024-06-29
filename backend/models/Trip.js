@@ -22,10 +22,12 @@ const Trip = new mongoose.Schema({
         required: true,
     },
     destination: {
-        destination_name: {
-            type: String,
-            required: true,
-        },
+        destination_formatted: String,
+        destination_name: String,
+        destination_city: String,
+        destination_state: String,
+        destination_country: String,
+        destination_zipcode: String,
         latitude: Number,
         longitude: Number,
         place_id: String

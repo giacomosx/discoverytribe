@@ -9,7 +9,7 @@ const PostCard = ({post}) => {
             <div>
                 <img className="rounded-t-lg w-full object-cover h-80" src={post.media} alt={post.content}/>
             </div>
-            <div className={'px-2 text-sm text-gray-700 flex flex-col justify-between space-y-4'}>
+            <div className={'px-2 text-sm text-gray-700 dark:text-gray-300 flex flex-col justify-between space-y-4'}>
             <p className="truncate">{post.content}</p>
                 <div className={'flex items-center justify-between'}>
                     <span className={'block text-xs text-gray-500 dark:text-gray-400'}>Likes: {post.likes.length}</span>

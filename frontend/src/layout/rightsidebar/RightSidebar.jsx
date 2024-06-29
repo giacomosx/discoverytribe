@@ -21,14 +21,14 @@ const RightSidebar = () => {
                 </CtaCard>
             )}
             {user.trips?.length > 0 && location.pathname !== '/trips' && (
-                <RightSidebarElement title={'Upcoming Trips'} viewAllUrl={'/me/trips'}>
+                <RightSidebarElement title={'Upcoming Trips'} viewAllUrl={'/trips'}>
                     <UpcomingTrips />
                 </RightSidebarElement>
             )}
             <RightSidebarElement title={'About your journey'}>
                 <StatisticsCard />
             </RightSidebarElement>
-            <RightSidebarElement title={'Latest Followers'} viewAllUrl={'/me/followers'}>
+            <RightSidebarElement title={'Latest Followers'} viewAllUrl={'/followers'}>
                 <LatestFollowers />
             </RightSidebarElement>
         </aside>
