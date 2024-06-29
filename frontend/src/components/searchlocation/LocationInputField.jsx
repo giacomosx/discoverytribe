@@ -2,11 +2,12 @@ import React, {useState} from 'react';
 import AxiosApi from "../../api/axiosApi";
 import {useDebouncedCallback} from "use-debounce";
 
-const LocationInputField = ({formClass, setLocation}) => {
+const LocationInputField = ({formClass, setLocation, variants}) => {
     const api = new AxiosApi();
     const [inputValue, setInputValue] = useState('');
     const [suggestions, setSuggestions] = useState([]);
 
+    console.log(suggestions)
 
     const debounced = useDebouncedCallback(async () => {
 
@@ -36,7 +37,7 @@ const LocationInputField = ({formClass, setLocation}) => {
             <div className="relative">
                 <div className={formClass}>
                     <label htmlFor="topbar-search" className="sr-only">Search</label>
-                    <div className="relative mt-1 lg:w-96">
+                    <div className="relative mt-1 ">
                         <div
                             className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                             <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
@@ -47,7 +48,7 @@ const LocationInputField = ({formClass, setLocation}) => {
                         </div>
                         <input onChange={handelChange}
                                type="text" name="destination"
-                               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full max-w-[307px] pl-9 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
+                               className={`${variants ? variants : ''} bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block pl-9 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500`}
                                placeholder="Search a location"
                                value={inputValue}
                         />

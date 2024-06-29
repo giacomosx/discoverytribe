@@ -1,28 +1,31 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import MoreDropDown from "../moredropdown/MoreDropDown";
+import {useSession} from "../../hooks/useSession";
 
-const TripCard = ({trip}) => {
-
+const TripCard = ({trip, variants, description, moreButton}) => {
+    const user= useSession()
     const startDate = new Date(trip.start_date).toDateString();
     const endDate = new Date(trip.start_date).toDateString()
 
+
     return (
-        <li className={'pt-8'}>
-            <article className={'space-y-3.5'}>
-                <img src={trip.cover} className={'w-full rounded-lg'} alt={trip.name}/>
+        <li className={`${variants ? variants : ""}`}>
+            <div className={'space-y-3.5 flex flex-col justify-between h-full'}>
+                <img src={trip.cover} className={'w-full rounded-lg h-48 object-cover'} alt={trip.name}/>
                 <div className="font-medium dark:text-white ps-1">
                     <h3 className={'-mt-2'}>{trip.name}</h3>
                     <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
-                        <svg className="w-4 h-4 me-1" aria-hidden="true"
+                        <svg className="min-w-4 h-4 me-1" aria-hidden="true"
                              xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                                   d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                                   d="M17.8 13.938h-.011a7 7 0 1 0-11.464.144h-.016l.14.171c.1.127.2.251.3.371L12 21l5.13-6.248c.194-.209.374-.429.54-.659l.13-.155Z"/>
                         </svg>
-                        {trip.destination.destination_name}
+                        <span className={'truncate'}>{trip.destination.destination_name}</span>
                     </div>
-                    <p className={'text-sm text-gray-700 mt-2'}>{trip.description}</p>
+                    {description && <p className={'text-sm text-gray-700 mt-2'}>{trip.description}</p>}
                 </div>
                 <ul className="text-sm text-gray-500 dark:text-gray-400 ps-1">
                     <li className="flex items-center">
@@ -46,16 +49,21 @@ const TripCard = ({trip}) => {
                         {trip.type}
                     </li>
                 </ul>
-                <Link to={`/trips/${trip._id}`}
-                   className="inline-flex items-center font-medium text-sm text-purple-600 hover:text-purple-800 dark:text-purple-500 dark:hover:text-purple-700">
-                    View trip
-                    <svg className=" w-2.5 h-2.5 ms-2 rtl:rotate-180" aria-hidden="true"
-                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                              d="m1 9 4-4-4-4"/>
-                    </svg>
-                </Link>
-            </article>
+                <div className="flex items-center justify-between">
+                    <Link to={`/trips/${trip._id}`}
+                          className="inline-flex items-center font-medium text-sm text-purple-600 hover:text-purple-800 dark:text-purple-500 dark:hover:text-purple-700">
+                        View trip
+                        <svg className=" w-2.5 h-2.5 ms-2 rtl:rotate-180" aria-hidden="true"
+                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                                  d="m1 9 4-4-4-4"/>
+                        </svg>
+                    </Link>
+                    {moreButton && trip.userId === user.decodedSession.userId && (
+                        <MoreDropDown editUrl={`/trips/${trip._id}/edit`}/>
+                    )}
+                </div>
+            </div>
         </li>
     );
 };

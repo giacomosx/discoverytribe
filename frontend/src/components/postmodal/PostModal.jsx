@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {useSelector, useDispatch} from "react-redux";
 import {setPostModal, postModal} from "../../redux/postModalSlice";
 import {getPosts} from "../../redux/actions/postsActions";
@@ -103,7 +103,7 @@ const PostModal = () => {
 
     return (
         <div aria-hidden="true"
-             className={`${modalState ? 'visible' : 'hidden'} fixed z-50 w-full top-0 left-0 h-full bg-black bg-opacity-80 `}>
+             className={`${modalState ? 'visible' : 'hidden'} fixed z-[100] w-full top-0 left-0 h-full bg-black bg-opacity-80 `}>
             <div className="p-4 flex justify-center items-center h-full">
                 <div className="relative bg-white rounded-lg shadow dark:bg-gray-700 w-full sm:max-w-md">
                     <div

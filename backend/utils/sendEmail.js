@@ -27,7 +27,7 @@ const newPost = async (req, res, next) => {
     const msg = {
         to: user.email,
         from: "giacomo.bartoli@me.com",
-        subject: "Post published",
+        subject: "Post published 🚀",
         text: `Good news ${user.username}, you're post has been published! `,
         html: `Good news ${user.username}, <strong>you're post has been published!</strong>`,
     };
@@ -42,19 +42,20 @@ const newPost = async (req, res, next) => {
 };
 
 const newTrip = async (req, res, next) => {
+    console.log(req.body);
     const user = await User.findById(req.user.userId);
 
     const msg = {
         to: user.email,
         from: "giacomo.bartoli@me.com",
-        subject: "Trip published",
-        text: `Good news ${user.username}, you're trip has been published! `,
-        html: `Good news ${user.username}, <strong>you're trip has been published!</strong>`,
+        subject: "Trip published 🚀",
+        text: `Good news ${user.username}, you're trip ${req.body.name} has been published! `,
+        html: `Good news ${user.username}, you're trip <strong>${req.body.name}</strong> has been published!`,
     };
     sgMail
         .send(msg)
         .then(() => {
-            res.status(201).json({message: 'Email sent'})
+            res.status(201).json({message: 'Email sent', trip: req.body })
         })
         .catch((error) => {
             res.status(500).json(error.message);

@@ -15,13 +15,15 @@ const Milestone = new mongoose.Schema({
         required: true,
     },
     image: String,
-    location_name: {
-        type: String,
-        required: true,
+    destination: {
+        destination_name: {
+            type: String,
+            required: true,
+        },
+        latitude: Number,
+        longitude: Number,
+        place_id: String
     },
-    latitude: Number,
-    longitude: Number,
-    place_id: String,
     start_date: {
         type: String,
         required: true

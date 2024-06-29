@@ -1,6 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {getPosts} from "./actions/postsActions";
-import {getUserFeed} from "./actions/feedAction";
 
 const initialState = {
     posts: [],
@@ -20,7 +19,7 @@ const postsSlice = createSlice({
                 state.loading = false;
                 state.posts = action.payload;
             })
-            .addCase(getUserFeed.rejected, (state, action) => {
+            .addCase(getPosts.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
             })

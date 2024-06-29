@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Spinner = ({size = 'w-8 h-8'}) => {
+const Spinner = ({size = 'w-8 h-8', variants}) => {
     return (
-        <div className="text-center">
+        <div className={`${variants ? variants : ''} text-center`}>
             <div role="status">
                 <svg aria-hidden="true"
                      className={`inline ${size} text-gray-200 animate-spin dark:text-gray-600 fill-purple-800 dark:fill-purple-600`}

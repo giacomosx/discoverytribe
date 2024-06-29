@@ -4,8 +4,11 @@ import Registration from "./pages/Registration";
 import Login from "./pages/Login";
 import Me from "./pages/Me";
 import ProtectedRoutes from "./middlewares/ProtectedRoutes";
-import Trip from "./pages/Trip";
+import CreateTrip from "./pages/CreateTrip";
 import Posts from "./pages/Posts";
+import Trip from "./pages/Trip";
+import Trips from "./pages/Trips";
+import EditTrip from "./pages/EditTrip";
 
 const App = () => {
     return (
@@ -16,7 +19,10 @@ const App = () => {
                 <Route element={<ProtectedRoutes />}>
                     <Route path={'/me'} element={<Me />} />
                     <Route path={'/posts'} element={<Posts />} />
-                    <Route path={'/trip/create'} element={<Trip />} />
+                    <Route path={'/trips'} element={<Trips />} />
+                    <Route path={'/trip/create'} element={<CreateTrip />} />
+                    <Route path={'/trips/:id'} element={<Trip />} />
+                    <Route path={'/trips/:id/edit'} element={<EditTrip />} />
                 </Route>
             </Routes>
         </BrowserRouter>

@@ -3,7 +3,6 @@ const User = require('../models/User');
 const Post = require('../models/Post');
 
 const createTrip = async (req, res, next) => {
-    console.log(req.body)
     try {
         const trip = new Trip({
             ...req.body,
@@ -20,6 +19,10 @@ const createTrip = async (req, res, next) => {
                 public: true
             })
             await post.save()
+        }
+        req.body = {
+            ...req.body,
+            tripId: trip._id,
         }
         next()
     } catch (e) {
@@ -77,7 +80,7 @@ const getTripById = async (req, res, next) => {
     try {
         if (!id) return res.status(400).send({message: "No id found"})
 
-        const trip = await Trip.findById(id).populate('milestones')
+        const trip = await Trip.findById(id).populate('milestones userId')
 
         if(!trip) return res.status(400).send({message: "No trip found"})
 

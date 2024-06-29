@@ -32,8 +32,8 @@ const UpcomingTrips = () => {
         <ul className={'space-y-6 divide-y -mt-4'}>
             {loading && <CardSkeleton/>}
             {!loading && trips.length > 0 && (
-                trips.map(trip => {
-                    return <TripCard trip={trip} key={trip._id} />
+                trips.slice(0,3).map(trip => {
+                    return <TripCard trip={trip} key={trip._id} variants={'pt-8'} description={'false'}/>
                 })
             )}
         </ul>
