@@ -5,7 +5,7 @@ const axios = require('axios');
 
 const createTrip = async (req, res, next) => {
     try {
-        const getCoverFromPexels = await axios.get(`https://api.pexels.com/v1/search?query=${req.body.destination.destination_city} landscape`, {
+        const getCoverFromPexels = await axios.get(`https://api.pexels.com/v1/search?query=${req.body.destination.destination_city || req.body.destination.destination_name} random skyline`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': process.env.PEXELS_API_KEY,
@@ -14,7 +14,7 @@ const createTrip = async (req, res, next) => {
         const data = await getCoverFromPexels.data.photos[0].src.landscape;
         const trip = new Trip({
             ...req.body,
-            cover: data,
+            cover: data || 'http://placehold.it/600x400/',
             userId: req.user.userId,
         });
         const relUser = await User.findById(req.user.userId)

@@ -56,10 +56,7 @@ const Trip = new mongoose.Schema({
         type: String,
         enum: ['relax', 'sport', 'job', 'family', 'honeymoon', 'adventure', 'shopping']
     },
-    cover: {
-        type: String,
-        default: 'http://placehold.it/600x400/',
-    },
+    cover: String,
     public: {
         type: Boolean,
         default: true,

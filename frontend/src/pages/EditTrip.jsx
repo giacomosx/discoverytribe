@@ -109,16 +109,8 @@ const EditTrip = () => {
                         <h1 className={'text-2xl text-gray-800 dark:text-white font-semibold'}>Edit {mod.name} trip</h1>
                         <div
                             className={'cover p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700'}>
-                            <div className={' flex items-center justify-between mb-2'}>
-                                <h2 className="text-xl font-bold text-gray-900 dark:text-white">Change cover</h2>
-                                <button
-                                    className={'text-sm text-purple-600 hover:text-purple-800 dark:text-purple-500 dark:hover:text-purple-700'}
-                                    onClick={() => {
-                                        setEditCover(!editCover)
-                                    }}>Edit
-                                </button>
-                            </div>
-                            <UploadCover preview={mod.cover} edit={editCover}/>
+
+                            <UploadCover preview={mod.cover} tripId={params.id}/>
                         </div>
                         <div
                             className={`details p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 ${editDetails ? 'h-fit' : 'h-20 overflow-hidden'}`}>
@@ -285,7 +277,7 @@ const EditTrip = () => {
                                 </dl>
                             )}
 
-                            <h2 className="mb-4 text-md font-bold text-gray-900 dark:text-white ">Or add a new
+                            <h2 className="mb-4 text-md font-bold text-gray-900 dark:text-white mt-4">Or add a new
                                 milestone</h2>
 
                             <form className={'space-y-6'}>

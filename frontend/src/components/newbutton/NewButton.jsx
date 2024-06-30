@@ -34,7 +34,7 @@ const NewButton = ({variants}) => {
                 id="dropdown-user">
                 <ul className="py-1" role="none">
                     <li>
-                        <button onClick={handlePostModal}
+                        <NavLink to={'/post/create'}
                             className="gap-2 flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white text-start"
                             role="menuitem">
                             <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -44,7 +44,7 @@ const NewButton = ({variants}) => {
                                       d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
                             </svg>
                             Post
-                        </button>
+                        </NavLink>
                     </li>
                     <li>
                         <NavLink to={'/trip/create'}

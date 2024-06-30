@@ -4,12 +4,12 @@ import Main from "./main/Main";
 import Navbar from "../components/navbar/Navbar";
 import Sidebar from "./sidebar/Sidebar";
 import RightSidebar from "./rightsidebar/RightSidebar";
-import PostModal from "../components/postmodal/PostModal";
+import Modal from "../components/modal/Modal";
 
 const Layout = ({children}) => {
     return (
         <>
-            <PostModal/>
+            <Modal />
             <Header>
                 <Navbar />
             </Header>

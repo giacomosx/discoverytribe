@@ -9,6 +9,7 @@ import Posts from "./pages/Posts";
 import Trip from "./pages/Trip";
 import Trips from "./pages/Trips";
 import EditTrip from "./pages/EditTrip";
+import Post from "./pages/Post";
 
 const App = () => {
     return (
@@ -19,6 +20,7 @@ const App = () => {
                 <Route element={<ProtectedRoutes />}>
                     <Route path={'/me'} element={<Me />} />
                     <Route path={'/posts'} element={<Posts />} />
+                    <Route path={'/post/create'} element={<Post />} />
                     <Route path={'/trips'} element={<Trips />} />
                     <Route path={'/trip/create'} element={<CreateTrip />} />
                     <Route path={'/trips/:id'} element={<Trip />} />
