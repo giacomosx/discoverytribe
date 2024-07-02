@@ -80,13 +80,13 @@ const PostForm = () => {
     return (
         <section
             className="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700  h-fit container max-w-2xl">
-            <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">Create a new trip</h2>
+            <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">Create a new post</h2>
             <form className="p-4 md:p-5 space-y-6" onSubmit={handleSubmit}>
                 <div className="space-y-4">
                     {!preview ? (
                         <>
                             <label htmlFor="dropzone-file"
-                                   className="h-96 flex flex-col items-center justify-center rounded-lg border-2 border-gray-300 border-dashed cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                   className="h-64 flex flex-col items-center justify-center rounded-lg border-2 border-gray-300 border-dashed cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                 <div className="flex flex-col items-center justify-center">
                                     <svg className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
                                          aria-hidden="true"

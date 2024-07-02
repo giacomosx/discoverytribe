@@ -119,15 +119,7 @@ const TripForm = () => {
         } catch (e) {
             console.log(e)
             setError(true)
-            setResponse('Something went wrong!')
-            /*if (e.response.data.error) {
-                setResponse(e.response.data.error)
-            }
-            if (e.response.data.errors) {
-                setError(true)
-                setResponse('Something went wrong!')
-            }*/
-            ;
+            setResponse('Something went wrong!');
         } finally {
             setLoading(false)
         }

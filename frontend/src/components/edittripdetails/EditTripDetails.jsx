@@ -10,8 +10,8 @@ const EditTripDetails = ({tripId, mod}) => {
     const api = new AxiosApi()
     const [editDetails, setEditDetails] = useState(false);
     const [tripTypeSelected, setTripTypeSelected] = useState(mod.type);
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
+    const [startDate, setStartDate] = useState(mod.start_date);
+    const [endDate, setEndDate] = useState(mod.end_date);
     const [response, setResponse] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -75,7 +75,7 @@ const EditTripDetails = ({tripId, mod}) => {
                 </div>
                 {!editDetails && (
                     <div>
-                        <p className={'text-sm text-gray-400 dark:text-gray-100'}>(Name, description,
+                        <p className={'text-sm text-gray-400 dark:text-gray-400'}>(Name, description,
                             budget, dates and type)</p>
                     </div>
                 )}
@@ -113,14 +113,14 @@ const EditTripDetails = ({tripId, mod}) => {
                     <div>
                         <Label htmlFor={'startDate'}>Start date</Label>
                         <DatePicker onChange={setStartDate}
-                                    selected={modDetails?.start_date}
+                                    selected={startDate}
                                     name={'startDate'}
                                     onSelect={setStartDate}/>
                     </div>
                     <div>
                         <Label htmlFor={'startDate'}>End date</Label>
                         <DatePicker onChange={setEndDate}
-                                    selected={modDetails?.end_date}
+                                    selected={endDate}
                                     name={'endDate'}
                                     onSelect={setEndDate}/>
                     </div>
