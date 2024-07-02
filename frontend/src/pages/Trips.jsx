@@ -1,37 +1,27 @@
 import React, {useEffect, useState} from 'react';
 import {useSession} from "../hooks/useSession";
-import axiosApi from "../api/axiosApi";
 import Spinner from "../components/spinner/Spinner";
 import TripCard from "../components/tripcard/TripCard";
 import Alerts from "../components/alerts/Alerts";
 import Layout from "../layout/Layout";
+import {useDispatch, useSelector} from "react-redux";
+import {userState} from "../redux/loginSlice";
+import {getTrips} from "../redux/actions/tripsActions";
+import {errorTripsState, loadingTripsState, userTripsState} from "../redux/tripsSlice";
 
 const Trips = () => {
-    const {decodedSession} = useSession()
-    const [trips, setTrips] = useState([])
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(null)
-    const api = new axiosApi()
+    const user = useSelector(userState)
+    const trips = useSelector(userTripsState);
+    const error = useSelector(errorTripsState);
+    const loading = useSelector(loadingTripsState);
+    const dispatch = useDispatch();
 
-    const upcomingTrips = async () => {
-        setLoading(true)
-        try {
-            const response = await api.get(`/user/${decodedSession.userId}/trips`)
-            setTrips(response.trips)
-        } catch (error) {
-            console.error(error)
-            setError(true)
-        } finally {
-            setLoading(false)
-        }
-    }
-
+    console.log(user)
     useEffect(() => {
-        upcomingTrips()
-        // eslint-disable-next-line
-    }, [])
+        dispatch(getTrips(user._id))
+    }, [user, dispatch])
 
-
+    console.log(trips)
     return (
         <Layout>
             <section

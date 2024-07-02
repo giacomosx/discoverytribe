@@ -1,19 +1,11 @@
 import React, {useState} from 'react';
 import Button from "../button/Button";
 import { NavLink} from "react-router-dom";
-import {useDispatch} from "react-redux";
-import {setPostModal} from "../../redux/postModalSlice";
 
 const NewButton = ({variants}) => {
     const [openMenu, setOpenMenu] = useState(false)
-    const dispatch = useDispatch();
 
     const handleOpenMenu = () => {
-        setOpenMenu(!openMenu)
-    }
-
-    const handlePostModal = () => {
-        dispatch(setPostModal(true))
         setOpenMenu(!openMenu)
     }
 

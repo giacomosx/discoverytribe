@@ -7,15 +7,17 @@ import {Provider} from 'react-redux';
 import sidebarReducer from './redux/sidebarSlice'
 import loginReducer from './redux/loginSlice'
 import feedReducer from './redux/userFeedSlice'
-import postModalReducer from './redux/postModalSlice'
+import modalReducer from './redux/modalSlice'
 import postsReducer from './redux/postsSlice'
+import tripsReducer from './redux/tripsSlice'
 
 const rootReducer = combineReducers({
     sidebarState: sidebarReducer,
     loginState: loginReducer,
     feedState: feedReducer,
-    postModalState: postModalReducer,
+    modalState: modalReducer,
     postsState: postsReducer,
+    tripsState: tripsReducer,
 
 })
 

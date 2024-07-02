@@ -59,7 +59,7 @@ const TripCard = ({trip, variants, description, moreButton}) => {
                         </svg>
                     </NavLink>
                     {moreButton && trip.userId === user.decodedSession.userId && (
-                        <MoreDropDown editUrl={`/trips/${trip._id}/edit`}/>
+                        <MoreDropDown editUrl={`/trips/${trip._id}/edit`} itemId={trip._id} typeItem={'trips'}/>
                     )}
                 </div>
             </div>

@@ -1,100 +1,48 @@
 import React, {useState} from 'react';
 import {useSelector, useDispatch} from "react-redux";
-import {setPostModal, postModal} from "../../redux/postModalSlice";
-import {getPosts} from "../../redux/actions/postsActions";
-import {userState} from "../../redux/loginSlice";
-import Button from "../button/Button";
-import Label from "../label/Label";
+import {setModalOpen, isModalOpen, itemIdToDelete, typeItemToDelete} from "../../redux/modalSlice";
 import axiosApi from "../../api/axiosApi";
 import Spinner from "../spinner/Spinner";
 import {useLocation} from "react-router-dom";
-import {getUserFeed} from "../../redux/actions/feedAction";
+import Alerts from "../alerts/Alerts";
+import {getPosts} from "../../redux/actions/postsActions";
+import {getTrips} from "../../redux/actions/tripsActions";
+import {useSession} from "../../hooks/useSession";
 
 const Modal = () => {
     const api = new axiosApi();
     const dispatch = useDispatch();
-    const modalState = useSelector(postModal)
-    const [content, setContent] = useState('');
-    const [tags, setTags] = useState([]);
-    const [media, setMedia] = useState(null);
-    const [preview, setPreview] = useState(null);
+    const modal = useSelector(isModalOpen)
+    const item = useSelector(itemIdToDelete);
+    const type = useSelector(typeItemToDelete);
+    const location = useLocation();
+    const {decodedSession} = useSession()
+
+
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [response, setResponse] = useState(null);
-    const user = useSelector(userState);
-    const location = useLocation();
 
     const handleClose = () => {
-        if (location.pathname === "/posts" && response) {
-            dispatch(getPosts(user._id))
+        dispatch(setModalOpen(!modal))
+        if (location.pathname.includes('posts') && response) {
+            dispatch(getPosts(decodedSession.userId))
         }
-        if (location.pathname === "/me" && response) {
-            dispatch(getUserFeed())
-        }
-        dispatch(setPostModal(false))
-        setContent('')
-        setMedia(null)
-        setPreview(null)
-        setTags(null)
-        setResponse(null)
-    }
 
-    const handleContent = (e) => {
-        setContent(e.target.value);
-    }
-    const extractHashtags = async (string) => {
-
-        const regex = /#\w+/g;
-        const matches = await string.match(regex);
-        const hashtags = matches ? matches : [];
-        setTags(hashtags);
-    }
-    const handleFile = (e) => {
-
-        const file = e.target.files[0];
-        if (file && file.type.startsWith('image/')) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                setPreview(e.target.result);
-                setMedia(file);
-            };
-            reader.readAsDataURL(file);
-        } else {
-            setPreview(null);
-            setMedia(null);
+        if (location.pathname.includes('trips') && response) {
+            dispatch(getTrips(decodedSession.userId))
         }
     }
+
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        extractHashtags(content)
         try {
             setLoading(true);
-            const formData = new FormData();
-            formData.append("media", media);
-            formData.append("content", content);
-            if (tags.length > 0) {
-                formData.append("tags", tags)
-            }
-            const createPost = await api.post('/posts/create', formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                }
-            })
-            if (createPost) {
-                setResponse('Post successfully published!')
-            }
-
+            const deleteItem = await api.delete(`/${type}/${item}/delete`)
+            setResponse('Item successfully deleted!')
         } catch (e) {
             console.log(e)
             setError(true)
-            if (e.response.data.error) {
-                setResponse(e.response.data.error)
-            }
-            if (e.response.data.errors) {
-                setError(true)
-                setResponse('Something went wrong!')
-            }
-            ;
+            setResponse('Something went wrong!')
         } finally {
             setLoading(false)
         }
@@ -103,30 +51,60 @@ const Modal = () => {
 
     return (
         <div aria-hidden="true"
-             className={`${modalState ? 'visible' : 'hidden'} fixed z-[100] w-full top-0 left-0 h-full bg-black bg-opacity-80 `}>
-            <div className="p-4 flex justify-center items-center h-full">
-                <div className="relative bg-white rounded-lg shadow dark:bg-gray-700 w-full sm:max-w-md">
-                    <div
-                        className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                            Create a new post
-                        </h3>
-                        <button onClick={handleClose}
-                                type="button"
-                                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                data-modal-toggle="crud-modal">
-                            <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                 viewBox="0 0 14 14">
-                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+             className={`${modal ? 'visible' : 'hidden'} fixed z-[100] w-full top-0 left-0 h-full bg-black bg-opacity-80 flex justify-center items-center`}>
+                    <div className="p-4 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5 max-w-md relative mb-8">
+                        <button type="button"
+                                onClick={handleClose}
+                                className="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                data-modal-toggle="deleteModal">
+                            <svg aria-hidden="true" className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path fillRule="evenodd"
+                                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                      clipRule="evenodd"></path>
                             </svg>
                             <span className="sr-only">Close modal</span>
                         </button>
+                        {loading && <Spinner />}
+                        {!loading && !response ? (
+                            <form onSubmit={handleSubmit}>
+                                <svg className="text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto"
+                                     aria-hidden="true"
+                                     fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fillRule="evenodd"
+                                          d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                          clipRule="evenodd"></path>
+                                </svg>
+                                <p className="mb-4 text-gray-500 dark:text-gray-300">Are you sure you want to delete
+                                    this
+                                    item?</p>
+                                <div className="flex justify-center items-center space-x-4">
+                                    <button data-modal-toggle="deleteModal" type="button"
+                                            onClick={handleClose}
+                                            className="py-2 px-3 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                                        No, cancel
+                                    </button>
+                                    <button type="submit"
+                                            className="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
+                                        Yes, I'm sure
+                                    </button>
+                                </div>
+                            </form>
+                        ) : (
+                            <>
+                                {error && (
+                                    <Alerts type={'danger'}>{response}</Alerts>
+                                )}
+
+                                {!error && (
+                                    <Alerts type={'success'}>{response}</Alerts>
+                                )}
+                            </>
+                        )}
                     </div>
 
-                </div>
-            </div>
         </div>
+
 
     );
 };

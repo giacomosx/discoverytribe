@@ -50,11 +50,6 @@ class AxiosApi {
 
     }
 
-    async put(url, body, config) {
-            const response = await this.axiosInstance.post(url, body, config);
-            return response.data;
-    }
-
     async patch(url, body, config = {}) {
         try {
             const response = await this.axiosInstance.patch(url, body, {
@@ -70,10 +65,20 @@ class AxiosApi {
         }
     }
 
-    async delete(url, config) {
-            const response = await this.axiosInstance.post(url, config);
+    async delete(url, config = {}) {
+        try {
+            const response = await this.axiosInstance.delete(url, {
+                ...config,
+                headers: {
+                    ...this.axiosInstance.defaults.headers,
+                    ...config.headers
+                }
+            });
             return response.data;
+        } catch (e) {
+            return Promise.reject(e.response.data);
         }
+    }
 }
 
 export default AxiosApi;
