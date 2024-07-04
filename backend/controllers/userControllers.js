@@ -143,6 +143,38 @@ const getUserPosts = async (req, res, next) => {
     }
 }
 
+const getLikedPosts = async (req, res, next) => {
+    const {id} = req.params
+    try {
+        const user = await User.findById(id).populate({
+            path: 'liked_posts',
+            options: { sort: { createdAt: -1 } }
+        }).select('liked_posts')
+
+        if (!user) return res.status.status(404).send({message: "No user found with this id"})
+
+        res.status(200).json(user)
+    } catch (e) {
+        next({statusCode: 400, message: e.message});
+    }
+}
+
+const getLikedTrips = async (req, res, next) => {
+    const {id} = req.params
+    try {
+        const user = await User.findById(id).populate({
+            path: 'liked_trips',
+            options: { sort: { createdAt: -1 } }
+        }).select('liked_trips')
+
+        if (!user) return res.status.status(404).send({message: "No user found with this id"})
+
+        res.status(200).json(user)
+    } catch (e) {
+        next({statusCode: 400, message: e.message});
+    }
+}
+
 const changeAvatar = async (req, res, next) => {
     if (!req.file) return res.status(400).json({message: 'No file uploaded'});
     try {
@@ -185,5 +217,7 @@ module.exports = {
     getUserTrips,
     getUserPosts,
     changeAvatar,
-    changeCover
+    changeCover,
+    getLikedPosts,
+    getLikedTrips
 }

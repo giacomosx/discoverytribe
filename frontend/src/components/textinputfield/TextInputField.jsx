@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TextInputField = ({onChange, value, required, type, placeholder, variants, label, name, disabled}) => {
+const TextInputField = ({onChange, value, required, type, placeholder, variants, label, name, disabled, defaultValue}) => {
     return (
         <input type={type}
                aria-label={label}
@@ -8,6 +8,7 @@ const TextInputField = ({onChange, value, required, type, placeholder, variants,
                placeholder={placeholder}
                onChange={onChange}
                value={value}
+               defaultValue={defaultValue}
                required={required}
                disabled={disabled}
                name={name}/>

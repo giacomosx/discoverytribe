@@ -21,6 +21,10 @@ user.route('/:id/trips').get(controller.getUserTrips)
 
 user.route('/:id/posts').get(controller.getUserPosts)
 
+user.route('/:id/liked-posts').get(controller.getLikedPosts)
+
+user.route('/:id/liked-trips').get(controller.getLikedTrips)
+
 user.route('/:id/follow').patch(controller.followUser)
 
 user.route('/:id/unfollow').patch(controller.unfollowUser)

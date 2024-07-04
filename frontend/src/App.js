@@ -10,6 +10,9 @@ import Trip from "./pages/Trip";
 import Trips from "./pages/Trips";
 import EditTrip from "./pages/EditTrip";
 import Post from "./pages/Post";
+import LikedPosts from "./pages/LikedPosts";
+import LikedTrips from "./pages/LikedTrips";
+import EditUser from "./pages/EditUser";
 
 const App = () => {
     return (
@@ -19,12 +22,15 @@ const App = () => {
                 <Route path={'/login'} element={<Login />} />
                 <Route element={<ProtectedRoutes />}>
                     <Route path={'/me'} element={<Me />} />
+                    <Route path={'/me/settings'} element={<EditUser />} />
                     <Route path={'/posts'} element={<Posts />} />
                     <Route path={'/post/create'} element={<Post />} />
+                    <Route path={'/posts/liked'} element={<LikedPosts />} />
                     <Route path={'/trips'} element={<Trips />} />
                     <Route path={'/trips/:id'} element={<Trip />} />
                     <Route path={'/trip/create'} element={<CreateTrip />} />
                     <Route path={'/trips/:id/edit'} element={<EditTrip />} />
+                    <Route path={'/trips/saved'} element={<LikedTrips />} />
                 </Route>
             </Routes>
         </BrowserRouter>

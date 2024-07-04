@@ -21,15 +21,20 @@ const Trip = () => {
         const [response, setResponse] = useState(null);
         const startDate = new Date(data.start_date).toDateString();
         const endDate = new Date(data.start_date).toDateString()
+        const [likeCount, setLikeCount] = useState(0);
+        //const [alreadyLikes, setAlreadyLikes] = useState(false);
 
         const getTrip = async () => {
             setLoading(true);
             try {
                 const trip = await api.get('/trips/' + params.id);
                 setData(trip)
+                setLikeCount(trip.likes.length)
                 if (user.liked_trips.includes(trip._id)) {
                     setAlreadyLike(true)
                 }
+
+                console.log(trip.likes.length)
             } catch (error) {
                 console.log(error);
                 setError(true)
@@ -37,14 +42,41 @@ const Trip = () => {
             } finally {
                 setLoading(false);
             }
+
+
         }
 
         useEffect(() => {
             getTrip()
         }, [params])
 
-    console.log(data)
+        console.log(data)
+        const handleLike = async () => {
+            setLikeCount(likeCount + 1)
+            setAlreadyLike(true)
+            try {
 
+                const response = await api.patch(`/trips/${params.id}/like`)
+            } catch (error) {
+                console.error(error)
+                setLikeCount(likeCount - 1)
+                setAlreadyLike(false)
+            }
+
+        }
+        const handleUnLike = async () => {
+            setAlreadyLike(false)
+            setLikeCount(likeCount - 1)
+            try {
+                const response = await api.patch(`/trips/${params.id}/unlike`)
+
+            } catch (error) {
+                console.error(error)
+                setLikeCount(likeCount + 1)
+                setAlreadyLike(true)
+            }
+
+        }
         return (
             <Layout>
                 <div className={'space-y-12 max-w-2xl container'}>
@@ -72,7 +104,8 @@ const Trip = () => {
                                                       strokeWidth="2"
                                                       d="M17.8 13.938h-.011a7 7 0 1 0-11.464.144h-.016l.14.171c.1.127.2.251.3.371L12 21l5.13-6.248c.194-.209.374-.429.54-.659l.13-.155Z"/>
                                             </svg>
-                                            <span className={'truncate max-w-xs me-4'}>{data.destination?.destination_name}</span>
+                                            <span
+                                                className={'truncate max-w-xs me-4'}>{data.destination?.destination_name}</span>
                                         </div>
                                         <div
                                             className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mt-2">
@@ -112,10 +145,11 @@ const Trip = () => {
                                     <div>
                                         {alreadyLike ? (
                                             <button
+                                                onClick={handleUnLike}
                                                 className={'ms-2 float-end flex items-center justify-center text-gray-400 hover:text-gray-800 dark:hover:text-white transition-all'}>
-                                                <span className="text-xs ">0 Saved</span>
+                                                <span className="text-xs ">{likeCount} Saved</span>
                                                 <svg
-                                                    className="w-6 h-6 text-xs font-normal text-red-400 hover:text-red-800 dark:hover:text-white transition-all"
+                                                    className="w-6 h-6 text-xs font-normal text-yellow-400 hover:text-yellow-800 dark:hover:text-white transition-all"
                                                     aria-hidden="true"
                                                     xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                     fill="currentColor"
@@ -126,8 +160,9 @@ const Trip = () => {
                                             </button>
                                         ) : (
                                             <button
+                                                onClick={handleLike}
                                                 className={'ms-2 float-end flex items-center justify-center text-gray-400 hover:text-gray-800 dark:hover:text-white transition-all'}>
-                                                <span className="text-xs invisible sm:visible">0 Saved</span>
+                                                <span className="text-xs invisible sm:visible">{likeCount} Saved</span>
                                                 <svg
                                                     className="w-6 h-6 text-xs font-normal "
                                                     aria-hidden="true"
@@ -148,7 +183,7 @@ const Trip = () => {
                     </section>
                     {data.milestones && (
                         <section className={'px-4'}>
-                            <Timeline milestones={data.milestones} />
+                            <Timeline milestones={data.milestones}/>
                         </section>
                     )}
                 </div>

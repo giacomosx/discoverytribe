@@ -26,6 +26,8 @@ const Trips = () => {
             <section
                 className="container max-w-2xl h-fit">
                 {loading && <Spinner/>}
+                {!loading && !error && !trips && <Alerts type={'danger'}>Something went wrong!</Alerts>}
+                {!loading && error && <Alerts type={'danger'}>Something went wrong!</Alerts>}
                 <ul className={'grid grid-cols-1 gap-8 xl:grid-cols-2'}>
                     {!loading && trips.length > 0 && (
                         trips.map(trip => {
@@ -38,8 +40,6 @@ const Trips = () => {
                         <Alerts>Nothing to see yet!</Alerts>
                     </div>)
                 }
-                {!loading && error && <Alerts type={'danger'}>Something went wrong!</Alerts>}
-
             </section>
         </Layout>
     )

@@ -7,6 +7,7 @@ import StatisticsCard from "../../components/statisticscard/StatisticsCard";
 import {useSelector} from "react-redux";
 import {userState} from "../../redux/loginSlice";
 import {useLocation} from "react-router-dom";
+import LatestTrips from "../../components/latesttrips/LatestTrips";
 
 const RightSidebar = () => {
     const user  = useSelector(userState)
@@ -21,8 +22,8 @@ const RightSidebar = () => {
                 </CtaCard>
             )}
             {user.trips?.length > 0 && location.pathname !== '/trips' && (
-                <RightSidebarElement title={'Upcoming Trips'} viewAllUrl={'/trips'}>
-                    <UpcomingTrips />
+                <RightSidebarElement title={'Latest Trips'} viewAllUrl={'/trips'}>
+                    <LatestTrips/>
                 </RightSidebarElement>
             )}
             <RightSidebarElement title={'About your journey'}>

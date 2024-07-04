@@ -63,14 +63,7 @@ const PostForm = () => {
         } catch (e) {
             console.log(e)
             setError(true)
-            if (e.response.data.error) {
-                setResponse(e.response.data.error)
-            }
-            if (e.response.data.errors) {
-                setError(true)
-                setResponse('Something went wrong!')
-            }
-            ;
+            setResponse('Something went wrong!');
         } finally {
             setLoading(false)
         }
@@ -120,37 +113,41 @@ const PostForm = () => {
                                   placeholder="Write your post content here"></textarea>
                     </div>
                 </div>
-                <div className={'flex items-center justify-between'}>
-                    <Button variants={'rounded flex'} type={'submit'}>
-                        <svg className="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path fillRule="evenodd"
-                                  d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                                  clipRule="evenodd"></path>
-                        </svg>
-                        <span>Add new post</span>
-                    </Button>
-                    {loading && <Spinner size={'w-6 h-6'}/>}
-                    {!error && response && (
-                        <span className={'text-green-800 dark:text-green-400 text-sm flex items-center gap-2'}>
+                <div className={'flex items-center justify-between flex-wrap gap-4 columns-2'}>
+                    <div className={'max-w-xs'}>
+                        <Button variants={'rounded flex'} type={'submit'}>
+                            <svg className="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path fillRule="evenodd"
+                                      d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                      clipRule="evenodd"></path>
+                            </svg>
+                            <span>Add new post</span>
+                        </Button>
+                    </div>
+                   <div className={'max-w-xs'}>
+                       {loading && <Spinner size={'w-6 h-6'}/>}
+                       {!error && response && (
+                           <span className={'text-green-800 dark:text-green-400 text-sm flex items-center gap-2'}>
                                     <svg className="flex-shrink-0 w-4 h-4" aria-hidden="true"
                                          xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                         <path
                                             d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
                                     </svg>
-                            {response}
+                               {response}
                                 </span>
-                    )}
-                    {error && (
-                        <span className={'text-red-800 dark:text-red-400 text-sm'}>
+                       )}
+                       {error && (
+                           <span className={'text-red-800 dark:text-red-400 text-sm'}>
                                     <svg className="flex-shrink-0 w-4 h-4" aria-hidden="true"
                                          xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                         <path
                                             d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
                                     </svg>
-                            {response}
+                               {response}
                                 </span>
-                    )}
+                       )}
+                   </div>
                 </div>
             </form>
 
