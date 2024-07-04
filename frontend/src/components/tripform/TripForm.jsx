@@ -34,7 +34,7 @@ const TripForm = () => {
 
     const navigate = useNavigate();
 
-    const tripTypes = ['relax', 'sport', 'job', 'family', 'honeymoon', 'adventure', 'shopping']
+    const tripTypes = ['relax', 'sport', 'job', 'family', 'honeymoon', 'adventure', 'shopping', 'fun']
 
     const handleTripTypeChange = (e) => {
         setTripTypeSelected(e.target.innerText)

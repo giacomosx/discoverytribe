@@ -55,7 +55,7 @@ const deleteMilestone = async (req, res, next) => {
         res.status(201).json({message: "success delete", deleteMilestone});
     } catch (e) {
         console.log(e)
-        next({statusCode: 400, message: e.message})
+        next({statusCode: 400, message: e})
     }
 }
 

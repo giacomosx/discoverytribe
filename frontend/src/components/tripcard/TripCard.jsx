@@ -25,7 +25,7 @@ const TripCard = ({trip, variants, description, moreButton}) => {
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                                   d="M17.8 13.938h-.011a7 7 0 1 0-11.464.144h-.016l.14.171c.1.127.2.251.3.371L12 21l5.13-6.248c.194-.209.374-.429.54-.659l.13-.155Z"/>
                         </svg>
-                        <span className={'truncate'}>{trip.destination.destination_name}</span>
+                        <span className={'truncate'}>{trip.destination?.destination_name}</span>
                     </div>
                     {description && <p className={'text-sm text-gray-700 dark:text-gray-300 mt-2'}>{trip.description}</p>}
                 </div>

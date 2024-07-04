@@ -32,6 +32,10 @@ const Modal = () => {
         if (location.pathname.includes('trips') && response) {
             dispatch(getTrips(decodedSession.userId))
         }
+
+        if (location.pathname.includes('edit') && response) {
+            window.location.reload(true)
+        }
     }
 
     const handleSubmit = async (e) => {
@@ -91,7 +95,7 @@ const Modal = () => {
                                 </div>
                             </form>
                         ) : (
-                            <>
+                            <div className={'px-8'}>
                                 {error && (
                                     <Alerts type={'danger'}>{response}</Alerts>
                                 )}
@@ -99,7 +103,7 @@ const Modal = () => {
                                 {!error && (
                                     <Alerts type={'success'}>{response}</Alerts>
                                 )}
-                            </>
+                            </div>
                         )}
                     </div>
 

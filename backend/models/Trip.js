@@ -54,7 +54,7 @@ const Trip = new mongoose.Schema({
     budget: Number,
     type: {
         type: String,
-        enum: ['relax', 'sport', 'job', 'family', 'honeymoon', 'adventure', 'shopping']
+        enum: ['relax', 'sport', 'job', 'family', 'honeymoon', 'adventure', 'shopping', 'fun']
     },
     cover: String,
     public: {

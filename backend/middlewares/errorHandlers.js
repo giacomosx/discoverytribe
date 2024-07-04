@@ -3,9 +3,10 @@ const notFoundErr = (req, res) => {
 }
 
 const genericErr = (err, req, res) => {
-    const errorStatus = err.statusCode || 500;
-    const errorMessage = err.message || 'Something went wrong';
-    res.status(errorStatus).json({error: errorMessage});
+    /*const errorStatus = err.statusCode || 500;
+    const errorMessage = err.message || 'Something went wrong';*/
+    res.status(500).json({error: err
+    });
 }
 
 module.exports = {

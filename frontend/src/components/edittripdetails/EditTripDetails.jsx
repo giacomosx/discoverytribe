@@ -17,7 +17,7 @@ const EditTripDetails = ({tripId, mod}) => {
     const [error, setError] = useState(null);
     const [modDetails, setModDetails] = useState(mod);
 
-    const tripTypes = ['relax', 'sport', 'job', 'family', 'honeymoon', 'adventure', 'shopping']
+    const tripTypes = ['relax', 'sport', 'job', 'family', 'honeymoon', 'adventure', 'shopping', 'fun']
 
     const handleTripTypeChange = (e) => {
         setTripTypeSelected(e.target.innerText)

@@ -6,6 +6,8 @@ import DatePicker from "react-datepicker";
 import AxiosApi from "../../api/axiosApi";
 import Spinner from "../spinner/Spinner";
 import EditMileStoneForm from "../editmilestoneform/EditMilestoneForm";
+import {setItemId, setItemType, setModalOpen} from "../../redux/modalSlice";
+import {useDispatch} from "react-redux";
 
 const EditTripMilestones = ({mod, tripId}) => {
     const api = new AxiosApi();
@@ -20,6 +22,7 @@ const EditTripMilestones = ({mod, tripId}) => {
     const [response, setResponse] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null)
+    const dispatch = useDispatch();
 
     console.log(milestonesCreated);
 
@@ -79,6 +82,13 @@ const EditTripMilestones = ({mod, tripId}) => {
         }
     }
 
+    const handleModal = (itemId, typeItem) => {
+        dispatch(setModalOpen());
+        dispatch(setItemId(itemId));
+        dispatch(setItemType(typeItem))
+
+    }
+
     return (
         <div
             className={`milestones p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 ${editMilestones ? 'h-fit' : 'h-20 overflow-hidden'}`}>
@@ -124,6 +134,10 @@ const EditTripMilestones = ({mod, tripId}) => {
 
                                             </button>
                                             <button
+                                                onClick={() => {
+                                                    handleModal(milestone._id, 'milestones')
+                                                    console.log(milestone)
+                                                }}
                                                 className={'text-gray-500 text-base dark:text-gray-400 hover:text-gray-800 dark:hover:text-white transition-all'}>
                                                 <svg className=" w-5 h-5 "
                                                      aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
