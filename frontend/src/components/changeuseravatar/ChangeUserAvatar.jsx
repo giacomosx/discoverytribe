@@ -17,12 +17,6 @@ const ChangeUserAvatar = ({data}) => {
     const [response, setResponse] = useState(null);
     const dispatch = useDispatch();
 
-    const handleRetry = () => {
-        setError(null)
-        setResponse(null)
-        setLoading(false)
-        resetPreview()
-    }
     const resetPreview = () => {
         setAvatar(null);
         setPreview(null);
