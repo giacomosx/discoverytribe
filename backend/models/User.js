@@ -41,14 +41,19 @@ const UserSchema = new mongoose.Schema({
             minlength:
                 6,
         },
-        hobbies: [ String],
+        hobbies: Array,
         description: String,
         birth_date: String,
         location: {
+            location_formatted: String,
             location_name: String,
+            location_city: String,
+            location_state: String,
+            location_country: String,
+            location_zipcode: String,
             latitude: Number,
             longitude: Number,
-            place_id: String
+            place_id: String,
         },
         verified: {
             type: Boolean,

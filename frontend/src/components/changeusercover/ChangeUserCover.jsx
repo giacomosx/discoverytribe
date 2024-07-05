@@ -47,7 +47,6 @@ const ChangeUserCover = ({preview}) => {
             setLoading(false);
             return;
         }
-
         try {
             const formData = new FormData();
             formData.append("cover", cover);
@@ -78,14 +77,14 @@ const ChangeUserCover = ({preview}) => {
             <div className="flex items-center justify-between mb-2">
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white">Change cover</h2>
                 <button
-                    className="text-sm text-purple-600 hover:text-purple-800 dark:text-purple-500 dark:hover:text-purple-700"
+                    className="text-xs text-gray-800 dark:text-gray-400 underline font-semibold"
                     onClick={() => {
                         setEditCover(!editCover)
                         setPreviewImage(null)
                     }
                     }
                 >
-                    Edit
+                    Change image
                 </button>
             </div>
             {!loading && previewImage && !editCover && (

@@ -2,9 +2,10 @@ import React, {useState} from 'react';
 import AxiosApi from "../../api/axiosApi";
 import {useDebouncedCallback} from "use-debounce";
 
-const LocationInputField = ({formClass, setLocation, variants, required}) => {
+const LocationInputField = ({formClass, setLocation, variants, required, defaultValue}) => {
     const api = new AxiosApi();
-    const [inputValue, setInputValue] = useState('');
+    const defaultValues = defaultValue || '';
+    const [inputValue, setInputValue] = useState(defaultValues);
     const [suggestions, setSuggestions] = useState([]);
 
     const debounced = useDebouncedCallback(async () => {

@@ -64,7 +64,7 @@ const EditTripLocation = ({mod, tripId}) => {
             </div>
             <form className={'space-y-6'} onSubmit={handleSubmit}>
                 <div className="flex items-center justify-between">
-                    <LocationInputField setLocation={setDestination}/>
+                    <LocationInputField setLocation={setDestination} location={destination} defaultValue={mod.destination?.destination_formatted}/>
                     <Button variants={'rounded'} type={'submit'}>Update</Button>
                 </div>
                 <div className={'flex justify-end'}>

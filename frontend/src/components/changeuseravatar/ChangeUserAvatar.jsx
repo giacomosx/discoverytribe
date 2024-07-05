@@ -73,7 +73,7 @@ const ChangeUserAvatar = ({data}) => {
                 <form onSubmit={handleSubmit}>
                     <div className="flex justify-center flex-col items-center mb-2 space-y-2">
                         <UploadAvatar preview={preview} onChange={handleFile} onClick={resetPreview}/>
-                        <Button type={'submit'} variants={'rounded'}>Update</Button>
+                        {avatar && <Button type={'submit'} variants={'rounded'}>Update</Button>}
                     </div>
                 </form>
             )

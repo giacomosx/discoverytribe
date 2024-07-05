@@ -9,7 +9,7 @@ import Posts from "./pages/Posts";
 import Trip from "./pages/Trip";
 import Trips from "./pages/Trips";
 import EditTrip from "./pages/EditTrip";
-import Post from "./pages/Post";
+import CreatePost from "./pages/CreatePost";
 import LikedPosts from "./pages/LikedPosts";
 import LikedTrips from "./pages/LikedTrips";
 import EditUser from "./pages/EditUser";
@@ -24,7 +24,7 @@ const App = () => {
                     <Route path={'/me'} element={<Me />} />
                     <Route path={'/me/settings'} element={<EditUser />} />
                     <Route path={'/posts'} element={<Posts />} />
-                    <Route path={'/post/create'} element={<Post />} />
+                    <Route path={'/post/create'} element={<CreatePost />} />
                     <Route path={'/posts/liked'} element={<LikedPosts />} />
                     <Route path={'/trips'} element={<Trips />} />
                     <Route path={'/trips/:id'} element={<Trip />} />

@@ -5,15 +5,14 @@ import Alerts from "../components/alerts/Alerts";
 import Button from "../components/button/Button";
 import {useSelector} from "react-redux";
 import {userErrorState, userLoadingState, userState} from "../redux/loginSlice";
-import ChangeUserCover from "../components/changeusercover/ChangeUserCover";
-import ChangeUserAvatar from "../components/changeuseravatar/ChangeUserAvatar";
-import EditUserInfo from "../components/edituserinfo/EditUserInfo";
 import Tabs from "../components/tabs/Tabs";
+import {useNavigate} from "react-router-dom";
 
 const EditUser = () => {
     const user = useSelector(userState)
     const loading = useSelector(userLoadingState)
     const error = useSelector(userErrorState)
+    const navigate = useNavigate();
 
     console.log(user)
 
@@ -25,12 +24,15 @@ const EditUser = () => {
                 {loading && <Spinner/>}
                 {!loading && error && <Alerts type={'danger'}>Something went wrong!</Alerts>}
                 {!loading && !error && (
-                    <>
-                        <h1 className={'text-2xl text-gray-800 dark:text-white font-semibold'}>@{user.username}'s
-                            settings</h1>
-                        <Tabs user={user}/>
-                    </>
+                    <Tabs user={user}/>
                 )}
+                <div
+                    className="flex justify-end items-center mt-8 border-t border-gray-300 pt-8 dark:border-gray-500">
+                    <Button onClick={() => {
+                        navigate(`/me`);
+                    }}
+                            variants={'rounded'}>Finish</Button>
+                </div>
             </section>
         </Layout>
     )
