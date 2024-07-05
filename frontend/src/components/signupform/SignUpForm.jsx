@@ -123,7 +123,7 @@ const SignUpForm = () => {
                         )}
 
                         <Stepper tabIndex={activeTab}/>
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit} >
                             {activeTab === 0 && (
                                 <div className={`space-y-6 min-h-[322px]`}>
                                     <div>

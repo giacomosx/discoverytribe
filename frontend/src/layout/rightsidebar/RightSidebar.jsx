@@ -1,6 +1,5 @@
 import React from 'react';
 import LatestFollowers from "../../components/latestfollowers/LatestFollowers";
-import UpcomingTrips from "../../components/upcomingtrips/UpcomingTrips";
 import RightSidebarElement from "../../components/rightsidebarelement/RightSidebarElement";
 import CtaCard from "../../components/ctacard/CtaCard";
 import StatisticsCard from "../../components/statisticscard/StatisticsCard";
@@ -8,6 +7,7 @@ import {useSelector} from "react-redux";
 import {userState} from "../../redux/loginSlice";
 import {useLocation} from "react-router-dom";
 import LatestTrips from "../../components/latesttrips/LatestTrips";
+import SavedTripsWidget from "../../components/savedtripswidget/SavedTripsWidget";
 
 const RightSidebar = () => {
     const user  = useSelector(userState)
@@ -21,11 +21,14 @@ const RightSidebar = () => {
                     Share your stories and inspire others with your unique adventures.
                 </CtaCard>
             )}
-            {user.trips?.length > 0 && location.pathname !== '/trips' && (
+            {/*{user.trips?.length > 0 && location.pathname !== '/trips' && (
                 <RightSidebarElement title={'Latest Trips'} viewAllUrl={'/trips'}>
                     <LatestTrips/>
                 </RightSidebarElement>
-            )}
+            )}*/}
+            <RightSidebarElement title={'Favorite trips'} viewAllUrl={'/trips/saved'}>
+                <SavedTripsWidget />
+            </RightSidebarElement>
             <RightSidebarElement title={'About your journey'}>
                 <StatisticsCard />
             </RightSidebarElement>

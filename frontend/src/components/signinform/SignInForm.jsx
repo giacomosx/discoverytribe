@@ -52,7 +52,7 @@ const SignInForm = () => {
     }
 
     return (
-        <div>
+        <div className={'h-full flex flex-col items-center justify-center'}>
             <div
                 className="w-full lg:max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow-xl dark:bg-gray-800 transition-all">
                 <h2 className="text-2xl font-bold text-gray-800 dark:text-white">

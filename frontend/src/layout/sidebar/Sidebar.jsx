@@ -98,7 +98,7 @@ const Sidebar = () => {
                         </SidebarMenuItem>
                     </ul>
                 </div>
-                <Footer/>
+                <Footer variants={'flex flex-col gap-4'} logged/>
             </div>
         </aside>
     );

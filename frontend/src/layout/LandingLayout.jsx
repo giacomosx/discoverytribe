@@ -1,11 +1,20 @@
 import React from 'react';
+import Header from "./header/Header";
+import Navbar from "../components/navbar/Navbar";
+import Footer from "./footer/Footer";
 
 const LandingLayout = ({children}) => {
     return (
-        <div
-            className=" flex justify-center w-[calc(100vw - 256px)] min-h-[100vh-71px] p-8 mt-[71px] mx-auto">
-            {children}
-        </div>
+        <>
+            <Header>
+                <Navbar />
+            </Header>
+            <div
+                className=" flex justify-center p-8 mt-[71px] mx-auto landing-body min-h-[calc(100vh-150px)]">
+                {children}
+            </div>
+            <Footer variants={'flex justify-center gap-4'} />
+        </>
     );
 };
 
