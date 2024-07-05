@@ -8,6 +8,7 @@ import {userErrorState, userLoadingState, userState} from "../redux/loginSlice";
 import ChangeUserCover from "../components/changeusercover/ChangeUserCover";
 import ChangeUserAvatar from "../components/changeuseravatar/ChangeUserAvatar";
 import EditUserInfo from "../components/edituserinfo/EditUserInfo";
+import Tabs from "../components/tabs/Tabs";
 
 const EditUser = () => {
     const user = useSelector(userState)
@@ -27,13 +28,7 @@ const EditUser = () => {
                     <>
                         <h1 className={'text-2xl text-gray-800 dark:text-white font-semibold'}>@{user.username}'s
                             settings</h1>
-
-                        <ChangeUserCover preview={user.cover}/>
-                        <div className={'y items-center justify-center flex flex-wrap p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 md:gap-16 gap-8'}>
-                            <ChangeUserAvatar data={user.avatar}/>
-                            <EditUserInfo user={user} />
-                        </div>
-
+                        <Tabs user={user}/>
                     </>
                 )}
             </section>

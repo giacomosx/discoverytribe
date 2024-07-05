@@ -6,6 +6,7 @@ import {useDispatch} from "react-redux";
 import {getUserInfo} from "../../redux/actions/userActions";
 
 const ChangeUserCover = ({preview}) => {
+    console.log(preview)
     const api = new AxiosApi();
     const [cover, setCover] = useState(null);
     const [previewImage, setPreviewImage] = useState(preview);

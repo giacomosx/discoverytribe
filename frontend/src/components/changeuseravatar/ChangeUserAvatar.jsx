@@ -71,8 +71,8 @@ const ChangeUserAvatar = ({data}) => {
 
     return (
         <div
-            className={'avatar'}>
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4 text-center">Change avatar</h2>
+            className={'avatar p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700'}>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Change avatar</h2>
             {loading && <Spinner/>}
             {!loading && error && <Alerts type={'danger'}>{response}</Alerts>}
             {!loading && !error && (
