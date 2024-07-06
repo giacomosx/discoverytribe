@@ -36,11 +36,11 @@ const LikedPosts = () => {
     return (
         <Layout>
             <section
-                className="h-fit container max-w-2xl">
+                className="h-fit container max-w-5xl">
                 {loading && <Spinner />}
                 {!loading && error && <Alerts type="danger">{response}</Alerts>}
                 {!loading && !error && posts.length > 0 && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 xl:grid-cols-3">
                         {/* eslint-disable-next-line array-callback-return */}
                         {posts.map((post) => {
                             if (post.media) {

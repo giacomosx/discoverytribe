@@ -13,7 +13,7 @@ const LandingLayout = ({children}) => {
                 className=" flex justify-center p-8 mt-[71px] mx-auto landing-body min-h-[calc(100vh-150px)]">
                 {children}
             </div>
-            <Footer variants={'flex justify-center gap-4 border-t border-gray-700 pt-4'} />
+            <Footer variants={'flex justify-center gap-4 border-t dark:border-gray-700 pt-4'} />
         </>
     );
 };

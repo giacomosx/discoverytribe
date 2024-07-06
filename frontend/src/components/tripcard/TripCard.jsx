@@ -9,7 +9,7 @@ const TripCard = ({trip, variants, description, moreButton}) => {
     const user= useSession()
     const startDate = new Date(trip.start_date).toDateString();
     const endDate = new Date(trip.start_date).toDateString()
-
+    const navLinkUrl = trip.userId === user.decodedSession.userId ? `/trips/${trip._id}` : `/user/${trip.userId}/trip/${trip._id}`;
 
     return (
         <li className={`${variants ? variants : ""}`}>
@@ -49,7 +49,7 @@ const TripCard = ({trip, variants, description, moreButton}) => {
                     </li>
                 </ul>
                 <div className="flex items-center justify-between">
-                    <NavLink to={`/trips/${trip._id}`}
+                    <NavLink to={navLinkUrl}
                           className="inline-flex items-center font-medium text-sm text-purple-600 hover:text-purple-800 dark:text-purple-500 dark:hover:text-purple-700">
                         View trip
                         <svg className=" w-2.5 h-2.5 ms-2 rtl:rotate-180" aria-hidden="true"

@@ -5,8 +5,13 @@ import Navbar from "../components/navbar/Navbar";
 import Sidebar from "./sidebar/Sidebar";
 import RightSidebar from "./rightsidebar/RightSidebar";
 import Modal from "../components/modal/Modal";
+import PersonalComps from "./personalcomps/PersonalComps";
+import ProfileComps from "./profilecomps/ProfileComps";
+import {useLocation} from "react-router-dom";
 
-const Layout = ({children}) => {
+
+const Layout = ({children, profileLayout, user}) => {
+const location = useLocation();
     return (
         <>
             <Modal />
@@ -16,7 +21,16 @@ const Layout = ({children}) => {
             <Sidebar />
             <Main>
                 {children}
-                <RightSidebar />
+                {location.pathname !== "/posts/liked" && location.pathname !== "/trips/saved" && (
+                    <RightSidebar>
+                        {profileLayout ? (
+                            <ProfileComps userId={user}/>
+                        ) : (
+                            <PersonalComps />
+                        )}
+
+                    </RightSidebar>
+                )}
             </Main>
         </>
     );

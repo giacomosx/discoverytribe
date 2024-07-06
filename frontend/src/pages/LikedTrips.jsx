@@ -36,12 +36,12 @@ const LikedPosts = () => {
     return (
         <Layout>
             <section
-                className="h-fit container max-w-2xl">
+                className="h-fit container max-w-5xl">
                 {loading && <Spinner/>}
                 {!loading && error && <Alerts type="danger">{response}</Alerts>}
                 {!loading && error && !trips && <Alerts>No trips founded!</Alerts>}
                 {!loading && trips.length > 0 && (
-                    <ul className={'grid grid-cols-1 gap-8 xl:grid-cols-2'}>
+                    <ul className={'grid grid-cols-1 gap-8 lg:grid-cols-2 xl:grid-cols-3'}>
                         {!loading && trips.length > 0 && (
                             trips.map(trip => {
                                 return <TripCard trip={trip} key={trip._id}

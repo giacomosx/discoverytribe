@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {useSession} from "../../hooks/useSession";
-import axiosApi from "../../api/axiosApi";
 import CardSkeleton from "../cardskeleton/CardSkeleton";
 import TripCard from "../tripcard/TripCard";
 import AxiosApi from "../../api/axiosApi";

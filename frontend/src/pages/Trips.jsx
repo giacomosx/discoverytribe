@@ -16,10 +16,10 @@ const Trips = () => {
     const loading = useSelector(loadingTripsState);
     const dispatch = useDispatch();
 
+
     useEffect(() => {
         dispatch(getTrips(user._id))
     }, [user, dispatch])
-
 
     return (
         <Layout>

@@ -9,7 +9,7 @@ import {userState} from "../../redux/loginSlice";
 const LatestTrips = () => {
     const params = useParams();
     const user = useSelector(userState)
-    const userId = params.id || user.userId
+    const userId = params.userId || params.id
     const [trips, setTrips] = useState([])
     const [loading, setLoading] = useState(false)
     const api = new axiosApi()
