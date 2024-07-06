@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 
 const Footer = ({variants, logged}) => {
     return (
-        <footer className=" m-4 dark:bg-gray-800 pt-4">
+        <footer className=" pt-4">
             <div className={`${variants ? variants: ''} w-full`}>
                 <span className="text-sm text-gray-500 dark:text-gray-400">© 2024 <Link to={'/'}
                                                                                                                className="hover:underline">DiscoveryTribe™</Link>. All Rights Reserved.</span>

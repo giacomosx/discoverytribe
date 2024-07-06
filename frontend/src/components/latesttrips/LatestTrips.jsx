@@ -1,11 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {useSession} from "../../hooks/useSession";
 import axiosApi from "../../api/axiosApi";
 import CardSkeleton from "../cardskeleton/CardSkeleton";
 import TripCard from "../tripcard/TripCard";
+import {useParams} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {userState} from "../../redux/loginSlice";
 
 const LatestTrips = () => {
-    const {decodedSession} = useSession()
+    const params = useParams();
+    const user = useSelector(userState)
+    const userId = params.id || user.userId
     const [trips, setTrips] = useState([])
     const [loading, setLoading] = useState(false)
     const api = new axiosApi()
@@ -13,7 +17,7 @@ const LatestTrips = () => {
     const latestTrips = async () => {
         setLoading(true)
         try {
-            const response = await api.get(`/user/${decodedSession.userId}/trips`)
+            const response = await api.get(`/user/${userId}/trips`)
             setTrips(response.trips)
         } catch (error) {
             console.error(error)

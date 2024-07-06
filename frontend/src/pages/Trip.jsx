@@ -109,12 +109,12 @@ const Trip = () => {
                                         </div>
                                         <div
                                             className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mt-2">
-                                            <Link to={'/'}>
+                                            <Link to={`/user/${data.userId?._id}`}>
                                                 <img
                                                     className="w-8 h-8 border-2 border-white dark:border-gray-800 rounded-full"
                                                     src={data.userId?.avatar} alt=""/>
                                             </Link>
-                                            <Link to={'/'} className={'hover:underline'}>{data.userId?.username}</Link>
+                                            <Link to={`/user/${data.userId?._id}`} className={'hover:underline'}>{data.userId?.username}</Link>
                                         </div>
 
                                     </div>

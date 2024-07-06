@@ -37,7 +37,7 @@ const UserListCard = ({avatar, username, userId}) => {
             setAlreadyFollowing(true)
         }
         // eslint-disable-next-line
-    }, [])
+    }, [userId])
 
     return (
         <li className="py-3 sm:py-4">
@@ -48,7 +48,7 @@ const UserListCard = ({avatar, username, userId}) => {
                     </Link>
                 </div>
                 <div className="flex-1 min-w-0 ms-4">
-                    <Link to={'/'} className={'hover:underline'}>
+                    <Link to={`/user/${userId}`} className={'hover:underline'}>
                         <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
                             {username}
                         </p>

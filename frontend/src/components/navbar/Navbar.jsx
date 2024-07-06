@@ -23,7 +23,7 @@ const Navbar = () => {
 
     return (
         <nav
-            className={`bg-white border-b border-gray-200 fixed flex-grow top-0 z-50 w-full ${location.pathname === '/' ? '' : ' dark:bg-gray-800 dark:border-gray-700'}`}>
+            className={`bg-white border-b border-gray-200 fixed flex-grow top-0 z-50 w-full  dark:bg-gray-800 dark:border-gray-700`}>
             <div className="px-3 py-3 lg:px-5 lg:pl-3">
                 <div className="flex items-center justify-between flex-wrap">
                     <div className="flex items-center justify-start rtl:justify-end">
@@ -51,7 +51,6 @@ const Navbar = () => {
                         {decodedSession ? (
                             <div className="flex items-center lg:order-2 space-x-6">
                                 <NewButton variants={'hidden md:flex'}/>
-                                <NotificationMenu/>
                                 <UserMenu/>
                             </div>
                         ) : (
@@ -60,37 +59,43 @@ const Navbar = () => {
                         )}
 
                     </div>
-                    <button data-collapse-toggle="navbar-hamburger" type="button"
-                            className="md:hidden inline-flex items-center justify-center p-2 w-10 h-10 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                            aria-controls="navbar-hamburger" aria-expanded="false">
-                        <span className="sr-only">Open main menu</span>
-                        <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                             viewBox="0 0 17 14">
-                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                                  d="M1 1h15M1 7h15M1 13h15"/>
-                        </svg>
-                    </button>
-                    <div className="hidden w-auto md:block" id="navbar-hamburger">
-                        <ul className="flex flex-col md:flex-row font-medium mt-4 md:mt-0 rounded-lg dark:border-gray-700">
-                            <li>
-                                <Link to="/"
-                                      className="block py-2 px-3 text-white bg-purple-700 rounded dark:bg-purple-600"
-                                      aria-current="page">Home</Link>
-                            </li>
-                            <li>
-                                <Link to={'/'}
-                                      className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">About</Link>
-                            </li>
-                            <li>
-                                <Link to={'/'}
-                                      className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Contact</Link>
-                            </li>
-                            <li className={'md:hidden'}>
-                                <Link to={'/login'}
-                                      className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Login</Link>
-                            </li>
-                        </ul>
-                    </div>
+                    {!decodedSession && (
+                        <>
+                            <button data-collapse-toggle="navbar-hamburger" type="button"
+                                    className="md:hidden inline-flex items-center justify-center p-2 w-10 h-10 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                                    aria-controls="navbar-hamburger" aria-expanded="false">
+                                <span className="sr-only">Open main menu</span>
+                                <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                     fill="none"
+                                     viewBox="0 0 17 14">
+                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"
+                                          strokeWidth="2"
+                                          d="M1 1h15M1 7h15M1 13h15"/>
+                                </svg>
+                            </button>
+                            <div className="hidden w-auto md:block" id="navbar-hamburger">
+                                <ul className="flex flex-col md:flex-row font-medium mt-4 md:mt-0 rounded-lg dark:border-gray-700">
+                                    <li>
+                                        <Link to="/"
+                                              className="block py-2 px-3 text-white bg-purple-700 rounded dark:bg-purple-600"
+                                              aria-current="page">Home</Link>
+                                    </li>
+                                    <li>
+                                        <Link to={'/'}
+                                              className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">About</Link>
+                                    </li>
+                                    <li>
+                                        <Link to={'/'}
+                                              className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Contact</Link>
+                                    </li>
+                                    <li className={'md:hidden'}>
+                                        <Link to={'/login'}
+                                              className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Login</Link>
+                                    </li>
+                                </ul>
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
         </nav>

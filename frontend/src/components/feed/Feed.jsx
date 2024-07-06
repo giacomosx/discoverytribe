@@ -32,11 +32,11 @@ const Feed = () => {
                 <ol className="relative border-s border-gray-200 dark:border-gray-700">
                     {data.posts.map((feed) => (
                         <FeedPost key={feed._id}
+                                  postUser={feed.userId}
                                   date={feed.createdAt}
                                   id={feed._id}
                                   initLikes={feed.likes}
                                   avatar={feed.userId.avatar}
-                                  username={feed.userId.username}
                                   content={feed.content}
                                   media={feed.media}/>
                     ))}

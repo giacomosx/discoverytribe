@@ -8,6 +8,7 @@ import {userState} from "../../redux/loginSlice";
 import {useLocation} from "react-router-dom";
 import LatestTrips from "../../components/latesttrips/LatestTrips";
 import SavedTripsWidget from "../../components/savedtripswidget/SavedTripsWidget";
+import PersonalComps from "../personalcomps/PersonalComps";
 
 const RightSidebar = () => {
     const user  = useSelector(userState)
@@ -21,20 +22,14 @@ const RightSidebar = () => {
                     Share your stories and inspire others with your unique adventures.
                 </CtaCard>
             )}
-            {/*{user.trips?.length > 0 && location.pathname !== '/trips' && (
+            {location.pathname.includes('user') && (
                 <RightSidebarElement title={'Latest Trips'} viewAllUrl={'/trips'}>
                     <LatestTrips/>
                 </RightSidebarElement>
-            )}*/}
-            <RightSidebarElement title={'Favorite trips'} viewAllUrl={'/trips/saved'}>
-                <SavedTripsWidget />
-            </RightSidebarElement>
-            <RightSidebarElement title={'About your journey'}>
-                <StatisticsCard />
-            </RightSidebarElement>
-            <RightSidebarElement title={'Latest Followers'} viewAllUrl={'/followers'}>
-                <LatestFollowers />
-            </RightSidebarElement>
+            )}
+            {!location.pathname.includes('user') && (
+                <PersonalComps />
+            )}
         </aside>
     );
 };

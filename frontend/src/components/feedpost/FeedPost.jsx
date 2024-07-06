@@ -3,8 +3,9 @@ import axiosApi from "../../api/axiosApi";
 import {userState} from "../../redux/loginSlice";
 import {useSelector} from "react-redux";
 import Spinner from "../spinner/Spinner";
+import {Link} from "react-router-dom";
 
-const FeedPost = ({content, avatar, username, media, initLikes, id, date}) => {
+const FeedPost = ({content, avatar, postUser, media, initLikes, id, date}) => {
     const api = new axiosApi()
     const [likes, setLikes] = useState(initLikes);
     const user = useSelector(userState)
@@ -58,12 +59,12 @@ const FeedPost = ({content, avatar, username, media, initLikes, id, date}) => {
         <li className="mb-10 ms-6">
             <span
                 className="absolute overflow-hidden flex items-center justify-center w-8 h-8 bg-purple-100 rounded-full -start-4 ring-2 ring-purple-600 dark:ring-gray-900 dark:bg-purple-900">
-                <img className="rounded-full shadow-lg" src={avatar} alt="Bonnie"/>
+                <Link to={`/user/${postUser._id}`}><img className="rounded-full shadow-lg" src={avatar} alt="Bonnie"/></Link>
             </span>
             <div
                 className="items-center justify-between px-4 py-2 space-y-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-600">
                 <div className="flex items-center justify-between">
-                    <span className={'text-gray-500 dark:text-gray-400 text-sm'}>@{username}</span>
+                    <span className={'text-gray-500 dark:text-gray-400 text-sm'}><Link to={`/user/${postUser._id}`} className={'hover:underline'}>{postUser.username}</Link></span>
                     <time className="text-xs text-gray-400 sm:mb-0 min-w-fit">{postDate.getDay() === currentTime.getDay() ? 'today' : `${postDate.toDateString()}`}</time>
                 </div>
                 <div className="text-sm text-gray-700 dark:text-gray-300 space-y-4">
