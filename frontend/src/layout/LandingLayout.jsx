@@ -10,10 +10,10 @@ const LandingLayout = ({children}) => {
                 <Navbar />
             </Header>
             <div
-                className=" flex justify-center p-8 mt-[71px] mx-auto landing-body min-h-[calc(100vh-150px)] landing-bg bg-center bg-cover">
+                className=" flex justify-center p-8 mt-[60px] mx-auto landing-body min-h-[calc(100vh-150px)] landing-bg">
                 {children}
             </div>
-            <Footer variants={'flex justify-center gap-4 border-t dark:border-gray-700 pt-4'} />
+            <Footer variants={'flex justify-center gap-4 border-t dark:border-gray-700 pt-4 ps-2'} />
         </>
     );
 };

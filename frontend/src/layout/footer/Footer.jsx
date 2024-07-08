@@ -22,7 +22,7 @@ const Footer = ({variants, logged}) => {
                     </li>
                 </ul>
             </div>
-            <span className={`text-xs text-gray-500 block ${logged ? 'mt-4' : ''}`}>Created with 💜 by <Link to={'https://github.com/giacomosx'} className={'underline'}>@giacomosx</Link> </span>
+            <span className={`text-xs text-gray-500 block ${logged ? 'mt-4' : 'ms-4 mb-2'}`}>Created with 💜 by <Link to={'https://github.com/giacomosx'} className={'underline'}>@giacomosx</Link> </span>
         </footer>
     );
 };
