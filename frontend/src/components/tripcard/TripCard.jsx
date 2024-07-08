@@ -9,8 +9,8 @@ const TripCard = ({trip, variants, description, moreButton}) => {
     const user= useSession()
     const startDate = new Date(trip.start_date).toDateString();
     const endDate = new Date(trip.start_date).toDateString()
-    const navLinkUrl = trip.userId === user.decodedSession.userId ? `/trips/${trip._id}` : `/user/${trip.userId}/trip/${trip._id}`;
-
+    const navLinkUrl = trip.userId._id === user.decodedSession.userId ? `/trips/${trip._id}` : `/user/${trip.userId._id}/trip/${trip._id}`;
+    console.log(trip);
     return (
         <li className={`${variants ? variants : ""}`}>
             <div className={'space-y-3.5 flex flex-col justify-between h-full'}>
@@ -25,7 +25,7 @@ const TripCard = ({trip, variants, description, moreButton}) => {
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                                   d="M17.8 13.938h-.011a7 7 0 1 0-11.464.144h-.016l.14.171c.1.127.2.251.3.371L12 21l5.13-6.248c.194-.209.374-.429.54-.659l.13-.155Z"/>
                         </svg>
-                        <span className={'truncate'}>{trip.destination?.destination_name}</span>
+                        <span className={'truncate'}>{trip.destination?.destination_city}, {trip.destination?.destination_country} </span>
                     </div>
                     {description && <p className={'text-sm text-gray-700 dark:text-gray-300 mt-2'}>{trip.description}</p>}
                 </div>

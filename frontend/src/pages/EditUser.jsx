@@ -14,9 +14,6 @@ const EditUser = () => {
     const error = useSelector(userErrorState)
     const navigate = useNavigate();
 
-    console.log(user)
-
-
     return (
         <Layout>
             <section

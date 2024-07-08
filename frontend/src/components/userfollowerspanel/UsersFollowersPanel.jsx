@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import UserListCard from "../userlistcard/UserListCard";
 import axiosApi from "../../api/axiosApi";
-import Alerts from "../alerts/Alerts";
 import ListSkeleton from "../listskeleton/ListSkeleton";
+import Alerts from "../alerts/Alerts";
+import UserListCard from "../userlistcard/UserListCard";
 
-const LatestFollowers = () => {
+const UsersFollowersPanel = () => {
     const api = new axiosApi()
     const [followers, setFollowers] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -29,14 +29,14 @@ const LatestFollowers = () => {
     }, [])
 
     return (
-        <div className="flow-root min-w-52">
+        <>
             {loading && <ListSkeleton/>}
             {error && <Alerts type={'danger'}>Something went wrong!</Alerts>}
             {!loading && !error && followers.length === 0 ? (
                 <Alerts>Nobody followers yet!</Alerts>
             ) : (
                 <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-                    {followers.length > 0 && followers.slice(0,5).map((follower) => (
+                    {followers.length > 0 && followers.map((follower) => (
                         <UserListCard key={follower._id}
                                       userId={follower._id}
                                       username={follower.username}
@@ -45,8 +45,8 @@ const LatestFollowers = () => {
                     ))}
                 </ul>
             )}
-        </div>
+        </>
     );
 };
 
-export default LatestFollowers;
+export default UsersFollowersPanel;

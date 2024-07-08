@@ -78,7 +78,7 @@ const UserTrip = () => {
 
         }
         return (
-            <Layout profileLayout user={params.userId}>
+            <Layout profileLayout user={data.userId?._id} username={data.userId?.username}>
                 <div className={'space-y-12 max-w-2xl container'}>
                     <section
                         className="bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700  h-fit overflow-hidden">

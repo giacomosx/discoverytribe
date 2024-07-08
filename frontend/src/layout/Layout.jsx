@@ -10,8 +10,9 @@ import ProfileComps from "./profilecomps/ProfileComps";
 import {useLocation} from "react-router-dom";
 
 
-const Layout = ({children, profileLayout, user}) => {
+const Layout = ({children, profileLayout, user, username}) => {
 const location = useLocation();
+
     return (
         <>
             <Modal />
@@ -24,7 +25,7 @@ const location = useLocation();
                 {location.pathname !== "/posts/liked" && location.pathname !== "/trips/saved" && (
                     <RightSidebar>
                         {profileLayout ? (
-                            <ProfileComps userId={user}/>
+                            <ProfileComps userId={user} username={username} />
                         ) : (
                             <PersonalComps />
                         )}

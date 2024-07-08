@@ -91,7 +91,7 @@ const getTripById = async (req, res, next) => {
 
         const trip = await Trip.findById(id).populate('milestones userId')
 
-        if(!trip) return res.status(400).send({message: "No trip found"})
+        if (!trip) return res.status(400).send({message: "No trip found"})
 
         res.status(200).json(trip)
 
@@ -113,7 +113,7 @@ const likeTrip = async (req, res, next) => {
             return res.status(401).send({message: "You already liked this trip"})
         }
 
-        if(!trip) return res.status(400).send({message: "No trip found"})
+        if (!trip) return res.status(400).send({message: "No trip found"})
 
         const user = await User.findById(req.user.userId)
         user.liked_trips.push(trip._id)
@@ -140,7 +140,7 @@ const unlikeTrip = async (req, res, next) => {
 
         const trip = await Trip.findById(id)
 
-        if(!trip) return res.status(400).send({message: "No trip found"})
+        if (!trip) return res.status(400).send({message: "No trip found"})
 
         const user = await User.findById(req.user.userId)
 
@@ -182,6 +182,41 @@ const changeCover = async (req, res, next) => {
     }
 }
 
+const getAllTrips = async (req, res, next) => {
+    const query = req.query
+    try {
+
+        if (query.country || query.tripType) {
+            const complexQuery = {
+                'destination.destination_country' : { $regex: query.country, $options: 'i' },
+                type : { $regex: query.tripType, $options: 'i' }
+            };
+            const results = await Trip.find(complexQuery)
+                .populate({path: 'userId', select: 'username avatar name'})
+            return res.status(200).json(results)
+        } else {
+            const results = await Trip.find()
+                .populate({path: 'userId', select: 'username avatar name'})
+            return res.status(200).json(results)
+        }
+
+    } catch (e) {
+        console.error(e)
+        return res.status(404).send({message: e})
+    }
+}
+
+const getMostLikedTrips = async (req, res, next) => {
+    try {
+        const results = await Trip.find().populate({path: 'userId', select: 'username avatar name'}).sort({likes: -1})
+        return res.status(200).json(results)
+
+    } catch (e) {
+        console.error(e)
+        return res.status(404).send({message: e})
+    }
+}
+
 
 module.exports = {
     createTrip,
@@ -190,5 +225,7 @@ module.exports = {
     getTripById,
     likeTrip,
     unlikeTrip,
-    changeCover
+    changeCover,
+    getAllTrips,
+    getMostLikedTrips
 }

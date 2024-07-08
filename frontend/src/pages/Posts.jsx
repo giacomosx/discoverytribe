@@ -19,21 +19,23 @@ const Posts = () => {
         dispatch(getPosts(user._id))
     }, [user, dispatch])
 
+    console.log(posts)
+
     return (
         <Layout>
             <section
                 className="container max-w-2xl h-fit">
                 {loading && <Spinner/>}
+                {!loading && error && <Alerts type={'danger'}>Something went wrong!</Alerts>}
                 <div className={'grid grid-cols-1 gap-8 lg:grid-cols-2 '}>
                     {!loading && posts.length > 0 && posts.map(post => {
                         return <PostCard key={post._id} post={post}/>
                     })}
-                    {!loading && posts.length === 0 && (
+                    {!loading && posts && (
                         <div className={'w-full col-span-4'}>
                             <Alerts>Nothing to see yet!</Alerts>
                         </div>)
                     }
-                    {!loading && error && <Alerts type={'danger'}>Something went wrong!</Alerts>}
                 </div>
             </section>
         </Layout>

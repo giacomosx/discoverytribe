@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Milestone = require('../models/Milestone');
 
 const getCurrentUser = async (req, res, next) => {
     try {
@@ -80,6 +81,17 @@ const getFollowings = async (req, res, next) => {
 const getFollowers = async (req, res, next) => {
     try {
         const user = await User.findById(req.user.userId).populate({path: 'followers', select: 'username avatar name lastname'}).select('followers')
+        res.status(200).json(user)
+
+    } catch (e) {
+        next({statusCode: 500, message: e.message});
+    }
+}
+
+const getFollowersById = async (req, res, next) => {
+    const {id} = req.params
+    try {
+        const user = await User.findById(id).populate({path: 'followers', select: 'username avatar name lastname'}).select('followers')
         res.status(200).json(user)
 
     } catch (e) {
@@ -204,6 +216,22 @@ const changeCover = async (req, res, next) => {
     }
 }
 
+const getUserStats = async (req, res, next) => {
+    const {id} = req.params
+    try {
+        const user = await User.findById(id)
+        if (!user) return res.status(404).send({message: "No user found with this id"})
+        const milestones = await Milestone.find({userId : id}).countDocuments()
+
+        res.status(200).json({
+            milestones: milestones,
+            user
+        })
+    } catch (e) {
+        next({statusCode: 400, message: e.message});
+    }
+}
+
 
 module.exports = {
     getCurrentUser,
@@ -219,5 +247,7 @@ module.exports = {
     changeAvatar,
     changeCover,
     getLikedPosts,
-    getLikedTrips
+    getLikedTrips,
+    getUserStats,
+    getFollowersById,
 }

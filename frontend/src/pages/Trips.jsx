@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from 'react';
-import {useSession} from "../hooks/useSession";
+import React, {useEffect} from 'react';
 import Spinner from "../components/spinner/Spinner";
 import TripCard from "../components/tripcard/TripCard";
 import Alerts from "../components/alerts/Alerts";
@@ -35,7 +34,7 @@ const Trips = () => {
                         })
                     )}
                 </ul>
-                {!loading && trips.length === 0 && (
+                {!loading && trips && (
                     <div className={'w-full col-span-4'}>
                         <Alerts>Nothing to see yet!</Alerts>
                     </div>)

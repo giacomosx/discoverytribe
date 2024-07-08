@@ -1,19 +1,19 @@
 import React, {useEffect, useState} from 'react';
-import UserListCard from "../userlistcard/UserListCard";
 import axiosApi from "../../api/axiosApi";
-import Alerts from "../alerts/Alerts";
 import ListSkeleton from "../listskeleton/ListSkeleton";
+import Alerts from "../alerts/Alerts";
+import UserListCard from "../userlistcard/UserListCard";
 
-const LatestFollowers = () => {
+const UsersFollowingsPanel = () => {
     const api = new axiosApi()
-    const [followers, setFollowers] = useState([]);
+    const [followings, setFollowings] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null)
 
-    const getFollowers = async () => {
+    const getFollowings = async () => {
         try {
-            const response = await api.get('/user/me/followers')
-            setFollowers(response.followers)
+            const response = await api.get('/user/me/followings')
+            setFollowings(response.followings)
             setLoading(false)
         } catch (error) {
             setError(error)
@@ -24,19 +24,19 @@ const LatestFollowers = () => {
 
 
     useEffect(() => {
-        getFollowers()
+        getFollowings()
         // eslint-disable-next-line
     }, [])
 
     return (
-        <div className="flow-root min-w-52">
+        <>
             {loading && <ListSkeleton/>}
             {error && <Alerts type={'danger'}>Something went wrong!</Alerts>}
-            {!loading && !error && followers.length === 0 ? (
-                <Alerts>Nobody followers yet!</Alerts>
+            {!loading && !error && followings.length === 0 ? (
+                <Alerts>Nobody followings yet!</Alerts>
             ) : (
                 <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-                    {followers.length > 0 && followers.slice(0,5).map((follower) => (
+                    {followings.length > 0 && followings.map((follower) => (
                         <UserListCard key={follower._id}
                                       userId={follower._id}
                                       username={follower.username}
@@ -45,8 +45,8 @@ const LatestFollowers = () => {
                     ))}
                 </ul>
             )}
-        </div>
+        </>
     );
 };
 
-export default LatestFollowers;
+export default UsersFollowingsPanel;

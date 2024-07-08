@@ -17,13 +17,15 @@ const PersonalComps = () => {
                     Share your stories and inspire others with your unique adventures.
                 </CtaCard>
             )}
-            <RightSidebarElement title={'Favorite trips'} viewAllUrl={'/trips/saved'}>
-                <SavedTripsWidget />
+            <RightSidebarElement title={'About my journey'}>
+                <StatisticsCard userId={user._id}/>
             </RightSidebarElement>
-            <RightSidebarElement title={'About your journey'}>
-                <StatisticsCard />
-            </RightSidebarElement>
-            <RightSidebarElement title={'Latest Followers'} viewAllUrl={'/followers'}>
+            {user.liked_trips?.length !== 0 && (
+                <RightSidebarElement title={'Favorite trips'}>
+                    <SavedTripsWidget userId={user._id}/>
+                </RightSidebarElement>
+            )}
+            <RightSidebarElement title={'Latest Followers'} viewAllUrl={'/me/users'}>
                 <LatestFollowers />
             </RightSidebarElement>
         </>

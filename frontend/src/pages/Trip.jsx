@@ -34,7 +34,6 @@ const Trip = () => {
                     setAlreadyLike(true)
                 }
 
-                console.log(trip.likes.length)
             } catch (error) {
                 console.log(error);
                 setError(true)

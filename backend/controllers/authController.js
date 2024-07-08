@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
-
 const register = async (req, res, next) => {
     const {email, password} = req.body;
 
@@ -33,6 +32,7 @@ const register = async (req, res, next) => {
             })
         }
     } catch (err) {
+        console.log(err)
         res.status(500).json({message: err.message});
     }
 }

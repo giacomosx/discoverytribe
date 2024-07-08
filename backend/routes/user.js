@@ -31,5 +31,9 @@ user.route('/:id/unfollow').patch(controller.unfollowUser)
 
 user.route('/:id').get(controller.getUserById)
 
+user.route('/followers/:id').get(controller.getFollowersById)
+
+user.route('/stats/:id').get(controller.getUserStats)
+
 
 module.exports = user

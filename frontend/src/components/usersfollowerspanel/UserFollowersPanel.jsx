@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import UserListCard from "../userlistcard/UserListCard";
 import axiosApi from "../../api/axiosApi";
-import Alerts from "../alerts/Alerts";
 import ListSkeleton from "../listskeleton/ListSkeleton";
+import Alerts from "../alerts/Alerts";
+import UserListCard from "../userlistcard/UserListCard";
+import {useParams} from "react-router-dom";
 
-const LatestFollowers = () => {
+const UserFollowersPanel = () => {
+    const params = useParams();
     const api = new axiosApi()
     const [followers, setFollowers] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -12,7 +14,7 @@ const LatestFollowers = () => {
 
     const getFollowers = async () => {
         try {
-            const response = await api.get('/user/me/followers')
+            const response = await api.get('/user/followers/' + params.id)
             setFollowers(response.followers)
             setLoading(false)
         } catch (error) {
@@ -26,17 +28,17 @@ const LatestFollowers = () => {
     useEffect(() => {
         getFollowers()
         // eslint-disable-next-line
-    }, [])
+    }, [params])
 
     return (
-        <div className="flow-root min-w-52">
+        <>
             {loading && <ListSkeleton/>}
             {error && <Alerts type={'danger'}>Something went wrong!</Alerts>}
-            {!loading && !error && followers.length === 0 ? (
-                <Alerts>Nobody followers yet!</Alerts>
+            {!loading && followers.length === 0 ? (
+                'No followers yet'
             ) : (
                 <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-                    {followers.length > 0 && followers.slice(0,5).map((follower) => (
+                    {followers.length > 0 && followers.map((follower) => (
                         <UserListCard key={follower._id}
                                       userId={follower._id}
                                       username={follower.username}
@@ -45,8 +47,8 @@ const LatestFollowers = () => {
                     ))}
                 </ul>
             )}
-        </div>
+        </>
     );
 };
 
-export default LatestFollowers;
+export default UserFollowersPanel;

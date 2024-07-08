@@ -15,6 +15,8 @@ import LikedTrips from "./pages/LikedTrips";
 import EditUser from "./pages/EditUser";
 import Profile from "./pages/Profile";
 import UserTrip from "./pages/UserTrip";
+import Explore from "./pages/Explore";
+import Users from "./pages/Users";
 
 const App = () => {
     return (
@@ -25,8 +27,10 @@ const App = () => {
                 <Route element={<ProtectedRoutes />}>
                     <Route path={'/me'} element={<Me />} />
                     <Route path={'/me/settings'} element={<EditUser />} />
+                    <Route path={'/explore'} element={<Explore />} />
                     <Route path={'/user/:id'} element={<Profile />} />
                     <Route path={'/user/:userId/trip/:id'} element={<UserTrip />} />
+                    <Route path={'/me/users'} element={<Users />} />
                     <Route path={'/posts'} element={<Posts />} />
                     <Route path={'/post/create'} element={<CreatePost />} />
                     <Route path={'/posts/liked'} element={<LikedPosts />} />

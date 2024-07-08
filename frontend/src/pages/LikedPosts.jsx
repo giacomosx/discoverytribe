@@ -31,6 +31,7 @@ const LikedPosts = () => {
 
     useEffect(() => {
         getPosts()
+        // eslint-disable-next-line
     }, [])
 
     return (
@@ -39,6 +40,7 @@ const LikedPosts = () => {
                 className="h-fit container max-w-5xl">
                 {loading && <Spinner />}
                 {!loading && error && <Alerts type="danger">{response}</Alerts>}
+                {!loading && error && !posts && <Alerts>No posts founded!</Alerts>}
                 {!loading && !error && posts.length > 0 && (
                     <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 xl:grid-cols-3">
                         {/* eslint-disable-next-line array-callback-return */}

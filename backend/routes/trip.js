@@ -4,6 +4,10 @@ const controller = require('../controllers/tripController');
 const {uploadCover} = require('../utils/uploadMedia');
 const sendEmail = require('../utils/sendEmail');
 
+trip.route('/').get(controller.getAllTrips)
+
+trip.route('/most-liked').get(controller.getMostLikedTrips)
+
 trip.route('/:id').get(controller.getTripById)
 
 trip.route('/create').post(controller.createTrip, sendEmail.newTrip)

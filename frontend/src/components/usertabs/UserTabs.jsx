@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import UserPostsPanel from "../userpostspanel/UserPostsPanel";
 import UserTripsPanel from "../usertripspanel/UserTripsPanel";
+import UserFollowersPanel from "../usersfollowerspanel/UserFollowersPanel";
 
 const UserTabs = () => {
     const [activeTab, setActiveTab] = useState('posts');
@@ -49,7 +50,7 @@ const UserTabs = () => {
                 </div>
                 <div className={`${activeTab === 'followers' ? 'visible' : 'hidden'}`}
                      role="tabpanel">
-
+                    <UserFollowersPanel/>
                 </div>
             </div>
         </>

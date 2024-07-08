@@ -42,7 +42,6 @@ const newPost = async (req, res, next) => {
 };
 
 const newTrip = async (req, res, next) => {
-    console.log(req.body);
     const user = await User.findById(req.user.userId);
 
     const msg = {

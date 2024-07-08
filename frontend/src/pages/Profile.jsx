@@ -1,17 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import Layout from "../layout/Layout";
-import {Link, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import AxiosApi from "../api/axiosApi";
 import {useSelector} from "react-redux";
 import {userState} from "../redux/loginSlice";
 import Alerts from "../components/alerts/Alerts";
 import Spinner from "../components/spinner/Spinner";
-import UserTabs from "../components/usertabs/UserTabs";
+import UsersTabs from "../components/usertabs/UserTabs";
+import Button from "../components/button/Button";
 
 const Profile = () => {
     const params = useParams();
     const api = new AxiosApi();
-    const user = useSelector(userState)
+    const userLogged = useSelector(userState)
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [response, setResponse] = useState(null);
@@ -23,7 +24,10 @@ const Profile = () => {
             setLoading(true);
             const user = await api.get('/user/' + params.id);
             setData(user)
-
+            if (user.followers.includes(userLogged._id)) {
+                setFollow(true)
+            }
+            console.log(userLogged)
             console.log(user)
         } catch (error) {
             console.log(error);
@@ -34,13 +38,38 @@ const Profile = () => {
         }
     }
 
+    const followUser = async () => {
+        try {
+            const response = await api.patch(`/user/${params.id}/follow`)
+            if (response) {
+                setFollow(true)
+            }
+        } catch (e) {
+            console.error(e)
+            setFollow(false)
+        }
+    }
+
+    const unFollowUser = async () => {
+        try {
+            const response = await api.patch(`/user/${params.id}/unfollow`)
+            if (response) {
+                setFollow(false)
+            }
+        } catch (e) {
+            console.error(e)
+            setFollow(true)
+        }
+    }
+
     useEffect(() => {
         getUser()
+        // eslint-disable-next-line
     }, [params]);
 
 
     return (
-        <Layout profileLayout>
+        <Layout profileLayout user={params.id} username={data.username}>
             <div className={'space-y-4 max-w-2xl container'}>
                 <section
                     className="bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700  h-fit overflow-hidden">
@@ -76,9 +105,16 @@ const Profile = () => {
                                                       d="M17.8 13.938h-.011a7 7 0 1 0-11.464.144h-.016l.14.171c.1.127.2.251.3.371L12 21l5.13-6.248c.194-.209.374-.429.54-.659l.13-.155Z"/>
                                             </svg>
                                             <span
-                                                className={'truncate max-w-60 md:max-w-xs me-4 font-normal text-gray-400 dark:text-gray-500 '}>{data.location?.location_name}</span>
+                                                className={'truncate max-w-60 md:max-w-xs me-4 font-normal text-gray-400 dark:text-gray-500 '}>{data.location?.location_name || data.location?.location_city + ', ' + data.location?.location_country }</span>
                                         </div>
                                     )}
+                                </div>
+
+                                <div className={'md:pt-8 text-center w-full md:text-end'}>
+                                    {follow ?
+                                        <Button onClick={unFollowUser} variants={'rounded-full'} styleType={'outline'}>Unfollow</Button> :
+                                        <Button onClick={followUser} variants={'rounded-full'}>Follow</Button>
+                                    }
                                 </div>
 
                             </div>
@@ -88,7 +124,7 @@ const Profile = () => {
                         </div>
                     )}
                 </section>
-                <UserTabs/>
+                <UsersTabs/>
             </div>
 
         </Layout>

@@ -1,10 +1,11 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {getTrips} from "./actions/tripsActions";
+import {getTrips, getFilteredTrips} from "./actions/tripsActions";
 
 const initialState = {
     trips: [],
     error: null,
     loading: false,
+    searchResults: [],
 }
 
 const tripsSlice = createSlice({
@@ -23,10 +24,23 @@ const tripsSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload;
             })
+            .addCase(getFilteredTrips.pending, (state, action) => {
+                    state.loading = true;
+                })
+            .addCase(getFilteredTrips.fulfilled, (state, action) => {
+                state.loading = false;
+                state.searchResults = action.payload;
+            })
+            .addCase(getFilteredTrips.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+
     }
 })
 
 export const userTripsState = state => state.tripsState.trips
 export const errorTripsState = state => state.tripsState.error
 export const loadingTripsState = state => state.tripsState.loading
+export const searchResultsState = state => state.tripsState.searchResults
 export default tripsSlice.reducer;

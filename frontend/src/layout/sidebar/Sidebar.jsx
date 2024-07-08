@@ -43,7 +43,7 @@ const Sidebar = () => {
                                       clipRule="evenodd"/>
                             </svg>
 
-                            <span className="ms-3">Explore</span>
+                            <Link to={'/explore'} className={'ms-3'}>Explore</Link>
                         </SidebarMenuItem>
                     </ul>
                     <ul className="space-y-2 font-medium pt-4">
@@ -94,7 +94,7 @@ const Sidebar = () => {
                                       clipRule="evenodd"/>
                             </svg>
 
-                            <span className="ms-3">Users</span>
+                            <Link to={'/me/users'} className={'ms-3'}>Friends</Link>
                         </SidebarMenuItem>
                     </ul>
                 </div>

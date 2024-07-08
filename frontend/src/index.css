@@ -6,6 +6,10 @@
     body {
         @apply bg-gray-50 dark:bg-gray-900;
     }
+
+    /*.landing-bg {
+       @apply bg-[url('https://as2.ftcdn.net/v2/jpg/03/15/08/85/1000_F_315088533_706xMSeuNJK4lnrTDvqRbcurHHkIubmr.jpg')]
+    }*/
 }
 
 @layer components {

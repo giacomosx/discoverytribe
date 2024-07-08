@@ -39,7 +39,7 @@ const Navbar = () => {
                                 </svg>
                             </button>
                         )}
-                        <Link to="/me" className="flex ms-2 md:me-8 items-center space-x-2">
+                        <Link to="/me" className="flex ms-2 items-center space-x-2">
                             <Logo/>
                             <span
                                 className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">DiscoveryTribe</span>
