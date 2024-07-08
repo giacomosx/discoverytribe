@@ -9,8 +9,8 @@ const TripCard = ({trip, variants, description, moreButton}) => {
     const user= useSession()
     const startDate = new Date(trip.start_date).toDateString();
     const endDate = new Date(trip.start_date).toDateString()
-    const navLinkUrl = trip.userId._id === user.decodedSession.userId ? `/trips/${trip._id}` : `/user/${trip.userId._id}/trip/${trip._id}`;
-    console.log(trip);
+    const navLinkUrl = trip.userId === user.decodedSession.userId ? `/trips/${trip._id}` : `/user/${trip.userId}/trip/${trip._id}`;
+    console.log(trip.userId);
     return (
         <li className={`${variants ? variants : ""}`}>
             <div className={'space-y-3.5 flex flex-col justify-between h-full'}>

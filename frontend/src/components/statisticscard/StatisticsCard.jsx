@@ -8,12 +8,14 @@ const StatisticsCard = ({userId}) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [response, setResponse] = useState(null);
-    const [data, setData] = useState({});
+    const [data, setData] = useState(null);
+
+    console.log(userId)
 
     const getUserStatistics = async () => {
         try {
             setLoading(true)
-            const statistics = await api.get('/user/stats/' + userId)
+            const statistics = await api.get('/user/stats/' + userId )
             if (statistics) {
                 setData(statistics)
                 console.log(statistics)
@@ -29,13 +31,11 @@ const StatisticsCard = ({userId}) => {
 
     useEffect(() => {
         getUserStatistics();
-        // eslint-disable-next-line
     }, [userId])
 
     return (
             <div className="p-4 rounded-lg ">
                 {loading && <ListSkeleton />}
-                {error && <Alerts type="danger">{response}</Alerts>}
                 {!loading && !error && data && (
                     <dl className="grid grid-cols-2 gap-8 p-4 mx-auto text-gray-800 dark:text-white ">
                         <div className="flex flex-col items-center justify-center">
@@ -56,6 +56,7 @@ const StatisticsCard = ({userId}) => {
                         </div>
                     </dl>
                 )}
+                {error && <Alerts type="danger">{response}</Alerts>}
             </div>
     );
 };

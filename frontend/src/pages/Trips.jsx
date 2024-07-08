@@ -34,7 +34,7 @@ const Trips = () => {
                         })
                     )}
                 </ul>
-                {!loading && trips && (
+                {!loading || trips.length === 0 && (
                     <div className={'w-full col-span-4'}>
                         <Alerts>Nothing to see yet!</Alerts>
                     </div>)

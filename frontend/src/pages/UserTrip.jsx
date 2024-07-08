@@ -33,8 +33,7 @@ const UserTrip = () => {
                 if (user.liked_trips.includes(trip._id)) {
                     setAlreadyLike(true)
                 }
-
-                console.log(trip.likes.length)
+                console.log(data)
             } catch (error) {
                 console.log(error);
                 setError(true)
@@ -50,7 +49,6 @@ const UserTrip = () => {
             getTrip()
         }, [params])
 
-        console.log(data)
         const handleLike = async () => {
             setLikeCount(likeCount + 1)
             setAlreadyLike(true)
@@ -77,8 +75,9 @@ const UserTrip = () => {
             }
 
         }
+
         return (
-            <Layout profileLayout user={data.userId?._id} username={data.userId?.username}>
+            <Layout profileLayout user={params.userId} username={data.userId?.username}>
                 <div className={'space-y-12 max-w-2xl container'}>
                     <section
                         className="bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700  h-fit overflow-hidden">

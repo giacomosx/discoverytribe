@@ -6,9 +6,11 @@ import LatestFollowers from "../../components/latestfollowers/LatestFollowers";
 import CtaCard from "../../components/ctacard/CtaCard";
 import {useSelector} from "react-redux";
 import {userState} from "../../redux/loginSlice";
+import {useSession} from "../../hooks/useSession";
 
 const PersonalComps = () => {
     const user = useSelector(userState)
+    const {decodedSession} = useSession()
     return (
         <>
             {user.trips?.length === 0 && (
@@ -17,9 +19,11 @@ const PersonalComps = () => {
                     Share your stories and inspire others with your unique adventures.
                 </CtaCard>
             )}
-            <RightSidebarElement title={'About my journey'}>
-                <StatisticsCard userId={user._id}/>
-            </RightSidebarElement>
+            {decodedSession && (
+                <RightSidebarElement title={'About my journey'}>
+                    <StatisticsCard userId={decodedSession.userId}/>
+                </RightSidebarElement>
+            )}
             {user.liked_trips?.length !== 0 && (
                 <RightSidebarElement title={'Favorite trips'}>
                     <SavedTripsWidget userId={user._id}/>

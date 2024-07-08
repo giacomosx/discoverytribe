@@ -6,9 +6,11 @@ import StatisticsCard from "../../components/statisticscard/StatisticsCard";
 const ProfileComps = ({userId, username}) => {
     return (
         <>
-            <RightSidebarElement title={'About @' + username + ' journey'}>
-                <StatisticsCard userId={userId} />
-            </RightSidebarElement>
+            {username && (
+                <RightSidebarElement title={'About @' + username + ' journey'}>
+                    <StatisticsCard userId={userId} />
+                </RightSidebarElement>
+            )}
             <RightSidebarElement title={'Latest Trips'}>
                 <LatestTrips/>
             </RightSidebarElement>
