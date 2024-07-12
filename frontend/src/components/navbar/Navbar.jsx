@@ -69,7 +69,7 @@ const Navbar = () => {
                                 </svg>
                             </button>
                             <div className="hidden w-auto md:block" id="navbar-hamburger">
-                                <ul className="flex flex-col md:flex-row font-medium mt-4 md:mt-0 rounded-lg dark:border-gray-700">
+                                <ul className="flex flex-col md:flex-row font-medium mt-4 md:mt-0 rounded-lg dark:border-gray-700 md:space-x-2">
                                     <li>
                                         <Link to="/"
                                               className="block py-2 px-3 text-white bg-purple-700 rounded dark:bg-purple-600"
