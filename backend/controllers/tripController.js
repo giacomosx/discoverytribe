@@ -24,7 +24,7 @@ const createTrip = async (req, res, next) => {
         if (req.body.public === true) {
             const post = new Post({
                 userId: req.user.userId,
-                content: 'I\'ve recently added a new trip in my profile, check it out',
+                content: `I have recently added a <strong>new trip</strong> in my profile. <a href='${process.env.CLIENT_BASE_URL}/user/${req.user.userId}/trip/${trip._id}'>Check it out ✈️</a>`,
                 public: true
             })
             await post.save()
@@ -89,7 +89,7 @@ const getTripById = async (req, res, next) => {
     try {
         if (!id) return res.status(400).send({message: "No id found"})
 
-        const trip = await Trip.findById(id).populate('milestones userId')
+        const trip = await Trip.findById(id).populate([{path: 'milestones', options: {sort: {end_date: 1}}}, {path: 'userId', select: 'username avatar name'}])
 
         if (!trip) return res.status(400).send({message: "No trip found"})
 
@@ -192,11 +192,11 @@ const getAllTrips = async (req, res, next) => {
                 type : { $regex: query.tripType, $options: 'i' }
             };
             const results = await Trip.find(complexQuery)
-                .populate({path: 'userId', select: 'username avatar name'})
+                .populate({path: 'userId', select: 'username avatar name'}).sort({createdAt: -1});
             return res.status(200).json(results)
         } else {
             const results = await Trip.find()
-                .populate({path: 'userId', select: 'username avatar name'})
+                .populate({path: 'userId', select: 'username avatar name'}).sort({createdAt: -1});
             return res.status(200).json(results)
         }
 

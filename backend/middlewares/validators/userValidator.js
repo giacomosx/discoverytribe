@@ -33,9 +33,9 @@ const registerValidator = async (req, res, next) => {
             password: {
                 trim: true,
                 notEmpty: true,
-                isAlphanumeric: true,
+                isAlphanumeric: false,
                 isLength:{
-                    options: { min: 8}
+                    options: { min: 6}
                 },
                 errorMessage: 'Insert a valid password',
             },
@@ -65,9 +65,9 @@ const loginValidator = async (req, res, next) => {
             password: {
                 trim: true,
                 notEmpty: true,
-                isAlphanumeric: true,
+                isAlphanumeric: false,
                 isLength:{
-                    options: { min: 8}
+                    options: { min: 6}
                 },
                 errorMessage: 'Insert a valid password',
             },

@@ -5,12 +5,12 @@ import {useSession} from "../../hooks/useSession";
 import TripTypeBadge from "../triptypebadge/TripTypeBadge";
 import TripBudgetBadge from "../tripbudgetbadge/TripBudgetBadge";
 
-const TripCard = ({trip, variants, description, moreButton}) => {
+const TripCard = ({trip, variants, description, moreButton, userId}) => {
     const user= useSession()
     const startDate = new Date(trip.start_date).toDateString();
-    const endDate = new Date(trip.start_date).toDateString()
-    const navLinkUrl = trip.userId === user.decodedSession.userId ? `/trips/${trip._id}` : `/user/${trip.userId}/trip/${trip._id}`;
-    console.log(trip.userId);
+    const endDate = new Date(trip.end_date).toDateString()
+    const navLinkUrl = userId === user.decodedSession.userId ? `/trips/${trip._id}` : `/user/${userId}/trip/${trip._id}`;
+
     return (
         <li className={`${variants ? variants : ""}`}>
             <div className={'space-y-3.5 flex flex-col justify-between h-full'}>
@@ -25,7 +25,7 @@ const TripCard = ({trip, variants, description, moreButton}) => {
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                                   d="M17.8 13.938h-.011a7 7 0 1 0-11.464.144h-.016l.14.171c.1.127.2.251.3.371L12 21l5.13-6.248c.194-.209.374-.429.54-.659l.13-.155Z"/>
                         </svg>
-                        <span className={'truncate'}>{trip.destination?.destination_city}, {trip.destination?.destination_country} </span>
+                        <span className={'truncate'}>{trip.destination?.destination_name}{`, ${trip.destination?.destination_country}`}</span>
                     </div>
                     {description && <p className={'text-sm text-gray-700 dark:text-gray-300 mt-2'}>{trip.description}</p>}
                 </div>
@@ -58,7 +58,7 @@ const TripCard = ({trip, variants, description, moreButton}) => {
                                   d="m1 9 4-4-4-4"/>
                         </svg>
                     </NavLink>
-                    {moreButton && trip.userId === user.decodedSession.userId && (
+                    {moreButton && userId === user.decodedSession.userId && (
                         <MoreDropDown editUrl={`/trips/${trip._id}/edit`} itemId={trip._id} typeItem={'trips'}/>
                     )}
                 </div>

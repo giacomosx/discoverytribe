@@ -17,6 +17,8 @@ import Profile from "./pages/Profile";
 import UserTrip from "./pages/UserTrip";
 import Explore from "./pages/Explore";
 import Users from "./pages/Users";
+import EditPost from "./pages/EditPost";
+import Error404 from "./pages/Page404";
 
 const App = () => {
     return (
@@ -33,12 +35,14 @@ const App = () => {
                     <Route path={'/me/users'} element={<Users />} />
                     <Route path={'/posts'} element={<Posts />} />
                     <Route path={'/post/create'} element={<CreatePost />} />
+                    <Route path={'/post/:id/edit'} element={<EditPost />} />
                     <Route path={'/posts/liked'} element={<LikedPosts />} />
                     <Route path={'/trips'} element={<Trips />} />
                     <Route path={'/trips/:id'} element={<Trip />} />
                     <Route path={'/trip/create'} element={<CreateTrip />} />
                     <Route path={'/trips/:id/edit'} element={<EditTrip />} />
                     <Route path={'/trips/saved'} element={<LikedTrips />} />
+                    <Route path={'*'} element={<Error404 />} />
                 </Route>
             </Routes>
         </BrowserRouter>

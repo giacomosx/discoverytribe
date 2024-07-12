@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import ChangeUserCover from "../changeusercover/ChangeUserCover";
 import ChangeUserAvatar from "../changeuseravatar/ChangeUserAvatar";
 import EditUserInfo from '../edituserinfo/EditUserInfo';

@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import axiosApi from "../../api/axiosApi";
 import ListSkeleton from "../listskeleton/ListSkeleton";
 import Alerts from "../alerts/Alerts";
-import UserListCard from "../userlistcard/UserListCard";
+import {Link} from "react-router-dom";
+import Button from "../button/Button";
 
 const UsersFollowingsPanel = () => {
     const api = new axiosApi()
@@ -22,6 +23,17 @@ const UsersFollowingsPanel = () => {
         }
     }
 
+    const unFollowUser = async (id) => {
+        const updateFollowings = await followings.filter(following => {
+            return following._id !== id
+        })
+        setFollowings(updateFollowings)
+        try {
+            const response = await api.patch(`/user/${id}/unfollow`)
+        } catch (e) {
+            console.error(e)
+        }
+    }
 
     useEffect(() => {
         getFollowings()
@@ -36,13 +48,27 @@ const UsersFollowingsPanel = () => {
                 <Alerts>Nobody followings yet!</Alerts>
             ) : (
                 <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-                    {followings.length > 0 && followings.map((follower) => (
-                        <UserListCard key={follower._id}
-                                      userId={follower._id}
-                                      username={follower.username}
-                                      avatar={follower.avatar}
-                        />
-                    ))}
+                    {followings.length > 0 && followings.map((following) => (
+                        <li className="py-3 sm:py-4">
+                            <div className="flex items-center">
+                                <div className="flex-shrink-0">
+                                    <Link to={`/user/${following._id}`}>
+                                        <img className="w-12 h-12 rounded-full" src={following.avatar} alt={following.username}/>
+                                    </Link>
+                                </div>
+                                <div className="flex-1 min-w-0 ms-4">
+                                    <Link to={`/user/${following._id}`} className={'hover:underline'}>
+                                        <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                            {following.username}
+                                        </p>
+                                    </Link>
+                                </div>
+                                    <Button onClick={() => {
+                                        unFollowUser(following._id)
+                                    }} variants={'rounded-full'} styleType={'outline'}>Unfollow</Button>
+                            </div>
+                        </li>
+                        ))}
                 </ul>
             )}
         </>

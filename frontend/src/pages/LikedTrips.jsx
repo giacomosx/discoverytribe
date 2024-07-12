@@ -45,6 +45,7 @@ const LikedPosts = () => {
                         {!loading && trips.length > 0 && (
                             trips.map(trip => {
                                 return <TripCard trip={trip} key={trip._id}
+                                                 userId={trip.userId}
                                                  variants={'bg-white p-2 border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700'}
                                                  moreButton/>
                             })

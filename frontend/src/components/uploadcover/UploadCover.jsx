@@ -12,16 +12,22 @@ const UploadCover = ({preview, tripId}) => {
     const [error, setError] = useState(null);
     const [editCover, setEditCover] = useState(false);
     const [response, setResponse] = useState(null);
+    const [fileSize, setFileSize] = useState(0);
+    const [disabled, setDisabled] = useState(true)
+    const maxSize = 2266274;
 
     const handleCover = (e) => {
         const coverFile = e.target.files[0];
-
         if (coverFile && coverFile.type.startsWith('image/')) {
             const coverReader = new FileReader();
             coverReader.onload = function (e) {
                 setNewPreview(e.target.result);
                 setCover(coverFile);
+                setFileSize(coverFile.size)
             };
+            if (coverFile.size < maxSize) {
+                setDisabled(false)
+            }
             coverReader.onerror = function (e) {
                 setError('Failed to read file');
             };
@@ -31,6 +37,13 @@ const UploadCover = ({preview, tripId}) => {
             setCover(null);
         }
     };
+
+    const resetPreview = () => {
+        setCover(null);
+        setNewPreview(null);
+        setFileSize(0)
+        setDisabled(true)
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -72,16 +85,26 @@ const UploadCover = ({preview, tripId}) => {
             className={'cover p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700'}>
             <div className="flex items-center justify-between mb-2">
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white">Change cover</h2>
-                <button
+                {!editCover ? (
+                    <button
+                        className="text-sm text-purple-600 hover:text-purple-800 dark:text-purple-500 dark:hover:text-purple-700"
+                        onClick={() => {
+                            setEditCover(!editCover)
+                            setPreviewImage(preview)
+                        }}>
+                        Edit
+                    </button>
+                ) : (
+                    <button
                     className="text-sm text-purple-600 hover:text-purple-800 dark:text-purple-500 dark:hover:text-purple-700"
                     onClick={() => {
                         setEditCover(!editCover)
-                        setPreviewImage(null)
-                    }
-                    }
-                >
-                    Edit
-                </button>
+                        setPreviewImage(preview)
+                        setNewPreview(null)
+                }}>
+                Cancel
+            </button>
+                    )}
             </div>
             {!loading && previewImage && !editCover && (
                 <img
@@ -130,18 +153,27 @@ const UploadCover = ({preview, tripId}) => {
                 )}
 
                 {newPreview && (
-                    <img
-                        className="preview rounded-lg h-56 w-full object-cover"
-                        src={newPreview}
-                        alt="Preview"
-                    />
+                    <>
+                        <img
+                            className="preview rounded-lg h-56 w-full object-cover"
+                            src={newPreview}
+                            alt="Preview"/>
+                        {fileSize > maxSize && (
+                            <p className={'text-red-500 dark:text-red-800 text-sm mt-2'}>Too big image!</p>
+                        )}
+                        <button type={'button'}
+                                onClick={resetPreview}
+                                className="text-xs text-gray-800 dark:text-gray-400 underline font-semibold">Change
+                            Image
+                        </button>
+                    </>
                 )}
 
                 {cover && (
                     <div className="justify-between flex mt-4 items-center">
                         <div>
                             {!response && (
-                                <Button variants="rounded shrink-0" type="submit">Update</Button>
+                                <Button variants="rounded shrink-0" type="submit" disabled={disabled}>Update</Button>
                             )}
                             {response && (
                                 <Button variants="rounded shrink-0" type="button" onClick={() => {
@@ -160,7 +192,7 @@ const UploadCover = ({preview, tripId}) => {
                                     <path
                                         d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
                                 </svg>
-                            {response}
+                                {response}
                             </span>
                         )}
                         {error && (
@@ -170,7 +202,7 @@ const UploadCover = ({preview, tripId}) => {
                                     <path
                                         d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
                                 </svg>
-                            {response}
+                                {response}
                             </span>
                         )}
                     </div>

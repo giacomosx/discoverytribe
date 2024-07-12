@@ -28,8 +28,8 @@ const newPost = async (req, res, next) => {
         to: user.email,
         from: "giacomo.bartoli@me.com",
         subject: "Post published 🚀",
-        text: `Good news ${user.username}, you're post has been published! `,
-        html: `Good news ${user.username}, <strong>you're post has been published!</strong>`,
+        text: `Good news ${user.username}, your post has been published! `,
+        html: `Good news ${user.username}, <strong>your post has been published!</strong>`,
     };
     sgMail
     .send(msg)
@@ -48,8 +48,8 @@ const newTrip = async (req, res, next) => {
         to: user.email,
         from: "giacomo.bartoli@me.com",
         subject: "Trip published 🚀",
-        text: `Good news ${user.username}, you're trip ${req.body.name} has been published! `,
-        html: `Good news ${user.username}, you're trip <strong>${req.body.name}</strong> has been published!`,
+        text: `Good news ${user.username}, your trip ${req.body.name} has been published! `,
+        html: `Good news ${user.username}, your trip <strong>${req.body.name}</strong> has been published!`,
     };
     sgMail
         .send(msg)
@@ -68,10 +68,10 @@ const inviteMail = async (req, res, next) => {
         from: "giacomo.bartoli@me.com",
         subject: "DiscoveryTribe Membership",
         text: `Hello ${req.body.name}, you was invited to become a DiscoveryTribe Member, click in the link below to complete the registration
-                http://localhost:5000/auth/register?token=${req.body.token}
+                http://localhost:5000/register?token=${req.body.token}
             `,
         html: `Hello ${req.body.name}, you was invited to become a <strong>DiscoveryTribe Member</strong>. <br />
-                <a href='${process.env.CLIENT_BASE_URL}/api/v1/auth/register?token=${req.body.token}'>Complete the registration now</a>, this link will expires in 1 day`,
+                <a href='${process.env.CLIENT_BASE_URL}/register?token=${req.body.token}'>Complete the registration now</a>, this link will expires in 1 day`,
     };
     sgMail
         .send(msg)

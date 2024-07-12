@@ -7,9 +7,9 @@
         @apply bg-gray-50 dark:bg-gray-900;
     }
 
-    /*.landing-bg {
-       @apply bg-[url('https://res.cloudinary.com/dnbi41kga/image/upload/v1720454434/jar6nb80slq7nvt81obu.jpg')] bg-cover bg-center
-    }*/
+    .auto-post a {
+        @apply text-purple-700 hover:underline dark:text-purple-600;
+    }
 }
 
 @layer components {

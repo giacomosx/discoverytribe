@@ -31,7 +31,7 @@ const Posts = () => {
                     {!loading && posts.length > 0 && posts.map(post => {
                         return <PostCard key={post._id} post={post}/>
                     })}
-                    {!loading || posts.length === 0 && (
+                    {!loading && posts.length === 0 && (
                         <div className={'w-full col-span-4'}>
                             <Alerts>Nothing to see yet!</Alerts>
                         </div>)

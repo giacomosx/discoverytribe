@@ -140,7 +140,7 @@ const UserTrip = () => {
 
                                 </div>
                                 <div className="content p-4 flex items-start justify-between">
-                                    <p className={'text-sm text-gray-700 dark:text-gray-300 '}>{data?.description}</p>
+                                    <p className={'text-sm text-gray-700 dark:text-gray-300 md:me-4'}>{data?.description}</p>
                                     <div>
                                         {alreadyLike ? (
                                             <button

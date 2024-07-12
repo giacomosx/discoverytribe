@@ -1,9 +1,17 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import UsersFollowingsPanel from "../usersfollowingspanel/UsersFollowingsPanel";
 import UsersFollowersPanel from "../userfollowerspanel/UsersFollowersPanel";
+import {getUserInfo} from "../../redux/actions/userActions";
+import {useDispatch} from "react-redux";
 
 const UsersTabs = () => {
     const [activeTab, setActiveTab] = useState('followers');
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getUserInfo());
+    }, [activeTab])
+
     return (
         <>
             <div className="mb-4 border-b border-gray-200 dark:border-gray-700">

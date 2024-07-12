@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Label from "../label/Label";
 import TextInputField from "../textinputfield/TextInputField";
 import Button from "../button/Button";

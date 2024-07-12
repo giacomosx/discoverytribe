@@ -6,7 +6,6 @@ import {useDispatch} from "react-redux";
 import {getUserInfo} from "../../redux/actions/userActions";
 
 const ChangeUserCover = ({preview}) => {
-    console.log(preview)
     const api = new AxiosApi();
     const [cover, setCover] = useState(null);
     const [previewImage, setPreviewImage] = useState(preview);
@@ -15,17 +14,23 @@ const ChangeUserCover = ({preview}) => {
     const [error, setError] = useState(null);
     const [editCover, setEditCover] = useState(false);
     const [response, setResponse] = useState(null);
+    const [fileSize, setFileSize] = useState(0);
+    const [disabled, setDisabled] = useState(true)
+    const maxSize = 2266274;
     const dispatch = useDispatch();
 
     const handleCover = (e) => {
         const coverFile = e.target.files[0];
-
         if (coverFile && coverFile.type.startsWith('image/')) {
             const coverReader = new FileReader();
             coverReader.onload = function (e) {
                 setNewPreview(e.target.result);
                 setCover(coverFile);
+                setFileSize(coverFile.size)
             };
+            if (coverFile.size < maxSize) {
+                setDisabled(false)
+            }
             coverReader.onerror = function (e) {
                 setError('Failed to read file');
             };
@@ -35,6 +40,13 @@ const ChangeUserCover = ({preview}) => {
             setCover(null);
         }
     };
+
+    const resetPreview = () => {
+        setCover(null);
+        setNewPreview(null);
+        setFileSize(0)
+        setDisabled(true)
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -76,16 +88,26 @@ const ChangeUserCover = ({preview}) => {
             className={'cover p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700'}>
             <div className="flex items-center justify-between mb-2">
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white">Change cover</h2>
-                <button
-                    className="text-xs text-gray-800 dark:text-gray-400 underline font-semibold"
-                    onClick={() => {
-                        setEditCover(!editCover)
-                        setPreviewImage(null)
-                    }
-                    }
-                >
-                    Change image
-                </button>
+                {!editCover ? (
+                    <button
+                        className="text-sm text-purple-600 hover:text-purple-800 dark:text-purple-500 dark:hover:text-purple-700"
+                        onClick={() => {
+                            setEditCover(!editCover)
+                            setPreviewImage(preview)
+                        }}>
+                        Edit
+                    </button>
+                ) : (
+                    <button
+                        className="text-sm text-purple-600 hover:text-purple-800 dark:text-purple-500 dark:hover:text-purple-700"
+                        onClick={() => {
+                            setEditCover(!editCover)
+                            setPreviewImage(preview)
+                            setNewPreview(null)
+                        }}>
+                        Cancel
+                    </button>
+                )}
             </div>
             {!loading && previewImage && !editCover && (
                 <img
@@ -134,18 +156,27 @@ const ChangeUserCover = ({preview}) => {
                 )}
 
                 {newPreview && (
-                    <img
-                        className="preview rounded-lg h-56 w-full object-cover"
-                        src={newPreview}
-                        alt="Preview"
-                    />
+                    <>
+                        <img
+                            className="preview rounded-lg h-56 w-full object-cover"
+                            src={newPreview}
+                            alt="Preview"/>
+                        {fileSize > maxSize && (
+                            <p className={'text-red-500 dark:text-red-800 text-sm mt-2'}>Too big image!</p>
+                        )}
+                        <button type={'button'}
+                                onClick={resetPreview}
+                                className="text-xs text-gray-800 dark:text-gray-400 underline font-semibold">Change
+                            Image
+                        </button>
+                    </>
                 )}
 
                 {cover && (
                     <div className="justify-between flex mt-4 items-center">
                         <div>
                             {!response && (
-                                <Button variants="rounded shrink-0" type="submit">Update</Button>
+                                <Button variants="rounded shrink-0" type="submit" disabled={disabled}>Update</Button>
                             )}
                             {response && (
                                 <Button variants="rounded shrink-0" type="button" onClick={() => {

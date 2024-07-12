@@ -13,13 +13,22 @@ const PostForm = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [response, setResponse] = useState(null);
+    const [fileSize, setFileSize] = useState(0);
+    const [disabled, setDisabled] = useState(true)
+    const maxSize = 2266274;
 
+    const resetPreview = () => {
+        setMedia(null);
+        setPreview(null);
+        setFileSize(0)
+        setDisabled(true)
+    }
 
     const handleContent = (e) => {
         setContent(e.target.value);
     }
-    const extractHashtags = async (string) => {
 
+    const extractHashtags = async (string) => {
         const regex = /#\w+/g;
         const matches = await string.match(regex);
         const hashtags = matches ? matches : [];
@@ -33,11 +42,16 @@ const PostForm = () => {
             reader.onload = function (e) {
                 setPreview(e.target.result);
                 setMedia(file);
+                setFileSize(file.size)
             };
+            if (file.size < maxSize) {
+                setDisabled(false)
+            }
             reader.readAsDataURL(file);
         } else {
             setPreview(null);
             setMedia(null);
+
         }
     }
     const handleSubmit = async (e) => {
@@ -95,12 +109,20 @@ const PostForm = () => {
                                 <input id="dropzone-file" onChange={handleFile} type="file" className="hidden"
                                        accept="image/*" required/>
                             </label>
-                            <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX.
-                                600x600px)</p>
+                            <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (600x600px max. 2.2MB)</p>
                         </>
                     ) : (
-                        <img className="rounded-lg max-h-64 object-cover w-full overflow-hidden" src={preview}
-                             alt="Media preview"/>
+                        <>
+                            <img className="rounded-lg max-h-64 object-cover w-full overflow-hidden" src={preview}
+                                 alt="Media preview"/>
+                            {fileSize > maxSize && (
+                                <p className={'text-red-500 dark:text-red-800 text-sm -mt-2'}>Too big image!</p>
+                            )}
+                            <button type={'button'}
+                                    onClick={resetPreview}
+                                    className="text-xs text-gray-800 dark:text-gray-400 underline font-semibold">Change Image
+                            </button>
+                        </>
                     )}
                 </div>
                 <div className="mb-4 space-y-4">
@@ -115,7 +137,7 @@ const PostForm = () => {
                 </div>
                 <div className={'flex items-center justify-between flex-wrap gap-4 columns-2'}>
                     <div className={'max-w-xs'}>
-                        <Button variants={'rounded flex'} type={'submit'}>
+                        <Button variants={` rounded flex`} type={'submit'} disabled={disabled}>
                             <svg className="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <path fillRule="evenodd"
@@ -125,29 +147,29 @@ const PostForm = () => {
                             <span>Add new post</span>
                         </Button>
                     </div>
-                   <div className={'max-w-xs'}>
-                       {loading && <Spinner size={'w-6 h-6'}/>}
-                       {!error && response && (
-                           <span className={'text-green-800 dark:text-green-400 text-sm flex items-center gap-2'}>
+                    <div className={'max-w-xs'}>
+                        {loading && <Spinner size={'w-6 h-6'}/>}
+                        {!error && response && (
+                            <span className={'text-green-800 dark:text-green-400 text-sm flex items-center gap-2'}>
                                     <svg className="flex-shrink-0 w-4 h-4" aria-hidden="true"
                                          xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                         <path
                                             d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
                                     </svg>
-                               {response}
+                                {response}
                                 </span>
-                       )}
-                       {error && (
-                           <span className={'text-red-800 dark:text-red-400 text-sm'}>
+                        )}
+                        {error && (
+                            <span className={'text-red-800 dark:text-red-400 text-sm'}>
                                     <svg className="flex-shrink-0 w-4 h-4" aria-hidden="true"
                                          xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                         <path
                                             d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
                                     </svg>
-                               {response}
+                                {response}
                                 </span>
-                       )}
-                   </div>
+                        )}
+                    </div>
                 </div>
             </form>
 

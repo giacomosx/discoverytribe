@@ -11,6 +11,8 @@ const ChangeUserAvatar = ({data}) => {
     const api = new AxiosApi()
     const [preview, setPreview] = useState(data);
     const [avatar, setAvatar] = useState(null);
+    const [fileSize, setFileSize] = useState(0);
+    const maxSize = 2266274;
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -29,6 +31,7 @@ const ChangeUserAvatar = ({data}) => {
             reader.onload = function (e) {
                 setPreview(e.target.result);
                 setAvatar(file);
+                setFileSize(file.size)
             };
             reader.readAsDataURL(file);
         } else {
@@ -72,8 +75,25 @@ const ChangeUserAvatar = ({data}) => {
             {!loading && !error && (
                 <form onSubmit={handleSubmit}>
                     <div className="flex justify-center flex-col items-center mb-2 space-y-2">
+                        {avatar && (
+                            <div className={'flex flex-end'}>
+                                <button
+                                    className="text-sm text-purple-600 hover:text-purple-800 dark:text-purple-500 dark:hover:text-purple-700"
+                                    onClick={() => {
+                                        setAvatar(null)
+                                        setPreview(data)
+                                    }}>
+                                    Cancel
+                                </button>
+                            </div>
+                        )}
                         <UploadAvatar preview={preview} onChange={handleFile} onClick={resetPreview}/>
-                        {avatar && <Button type={'submit'} variants={'rounded'}>Update</Button>}
+                        {fileSize > maxSize && (
+                            <p className={'text-red-500 dark:text-red-800 text-sm -mt-2'}>Too big image!</p>
+                        )}
+                        {avatar && (fileSize < maxSize) && (
+                            <Button type={'submit'} variants={'rounded'}>Update</Button>
+                        )}
                     </div>
                 </form>
             )

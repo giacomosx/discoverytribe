@@ -19,6 +19,7 @@ const SavedTripsWidget = () => {
             const response = await api.get(`/user/${user.decodedSession.userId}/liked-trips`)
             const data = await response.liked_trips;
             setTrips(data)
+            console.log(data)
         } catch (e) {
             console.log(e)
             setError(true)
@@ -41,7 +42,7 @@ const SavedTripsWidget = () => {
             {!loading && error && !trips && <Alerts>Nothing to see yet!</Alerts>}
             {!loading && trips.length > 0 && (
                 trips.slice(0,3).map(trip => {
-                    return <TripCard trip={trip} key={trip._id} variants={'pt-8'} description={'false'}/>
+                    return <TripCard userId={trip.userId} trip={trip} key={trip._id} variants={'pt-8'} description={'false'}/>
                 })
             )}
         </ul>

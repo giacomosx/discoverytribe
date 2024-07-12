@@ -4,6 +4,7 @@ import {userState} from "../../redux/loginSlice";
 import {useSelector} from "react-redux";
 import Spinner from "../spinner/Spinner";
 import {Link} from "react-router-dom";
+import {renderMarkup} from 'react-render-markup';
 
 const FeedPost = ({content, avatar, postUser, media, initLikes, id, date}) => {
     const api = new axiosApi()
@@ -16,35 +17,40 @@ const FeedPost = ({content, avatar, postUser, media, initLikes, id, date}) => {
     const currentTime = new Date();
 
     const handleLike = async () => {
-        setLoading(true)
+        setAlreadyLikes(true)
+        setLikes([...likes, {
+            _id: user._id,
+            avatar: user.avatar,
+            username: user.username
+        }])
         try {
             const response = await api.patch(`/posts/${id}/like`)
+        } catch (error) {
+            console.error(error)
+            setAlreadyLikes(false)
+            const updatedLikes = await likes.filter(item => {
+                return item._id !== user._id
+            })
+            setLikes(updatedLikes)
+        }
+    }
+
+    const handleUnLike = async () => {
+        setAlreadyLikes(false)
+        const updatedLikes = await likes.filter(item => {
+            return item._id !== user._id
+        })
+        setLikes(updatedLikes)
+        try {
+            const response = await api.patch(`/posts/${id}/unlike`)
+        } catch (error) {
+            console.error(error)
             setAlreadyLikes(true)
             setLikes([...likes, {
                 _id: user._id,
                 avatar: user.avatar,
                 username: user.username
             }])
-        } catch (error) {
-            console.error(error)
-        } finally {
-            setLoading(false)
-        }
-    }
-
-    const handleUnLike = async () => {
-        setLoading(true)
-        try {
-            const response = await api.patch(`/posts/${id}/unlike`)
-            setAlreadyLikes(false)
-            const updatedLikes = await likes.filter(item => {
-                return item._id = !user._id
-            })
-            setLikes(updatedLikes)
-        } catch (error) {
-            console.error(error)
-        }finally {
-            setLoading(false)
         }
 
     }
@@ -64,12 +70,12 @@ const FeedPost = ({content, avatar, postUser, media, initLikes, id, date}) => {
             <div
                 className="items-center justify-between px-4 py-2 space-y-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-600">
                 <div className="flex items-center justify-between">
-                    <span className={'text-gray-500 dark:text-gray-400 text-sm'}><Link to={`/user/${postUser._id}`} className={'hover:underline'}>{postUser.username}</Link></span>
+                    <span className={'text-gray-500 dark:text-gray-400 text-sm'}><Link to={`/user/${postUser._id}`} className={'hover:underline'}>@{postUser.username}</Link></span>
                     <time className="text-xs text-gray-400 sm:mb-0 min-w-fit">{postDate.getDay() === currentTime.getDay() ? 'today' : `${postDate.toDateString()}`}</time>
                 </div>
                 <div className="text-sm text-gray-700 dark:text-gray-300 space-y-4">
                     {media && <img src={media} alt={content} className="rounded-lg w-full max-h-[400px] object-cover"/>}
-                    <p className={''}>{content}</p>
+                    <p className={'auto-post'}>{renderMarkup(content)}</p>
                 </div>
                 <div className={`flex items-center justify-between`}>
                     <div className="flex items-center gap-2">

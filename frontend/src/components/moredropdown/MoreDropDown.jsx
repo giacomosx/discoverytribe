@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import {Link} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {setModalOpen, setItemId, itemIdToDelete, setItemType} from "../../redux/modalSlice";
+import {useDispatch} from "react-redux";
+import {setModalOpen, setItemId, setItemType} from "../../redux/modalSlice";
 
 const MoreDropDown = ({editUrl, onClick, itemId, typeItem}) => {
     const [openMenu, setOpenMenu] = useState(false);
     const dispatch = useDispatch();
+
+    console.log(editUrl)
 
     const handleMenu = () => {
         setOpenMenu(!openMenu);

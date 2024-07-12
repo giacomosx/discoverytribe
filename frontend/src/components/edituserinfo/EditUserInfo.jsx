@@ -20,7 +20,6 @@ const EditUserInfo = ({user}) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [response, setResponse] = useState(null);
-    const [hobbies, setHobbies] = useState([]);
 
     const handleChange = e => {
         setEditDetails({

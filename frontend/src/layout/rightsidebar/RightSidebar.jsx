@@ -1,12 +1,4 @@
 import React from 'react';
-import LatestFollowers from "../../components/latestfollowers/LatestFollowers";
-import RightSidebarElement from "../../components/rightsidebarelement/RightSidebarElement";
-import CtaCard from "../../components/ctacard/CtaCard";
-import StatisticsCard from "../../components/statisticscard/StatisticsCard";
-import {useLocation} from "react-router-dom";
-import LatestTrips from "../../components/latesttrips/LatestTrips";
-import SavedTripsWidget from "../../components/savedtripswidget/SavedTripsWidget";
-import PersonalComps from "../personalcomps/PersonalComps";
 
 const RightSidebar = ({children}) => {
 

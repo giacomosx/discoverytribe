@@ -21,7 +21,7 @@ const UploadAvatar = ({onChange, preview, onClick}) => {
                                required/>
                     </label>
 
-                    <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 400x400px)</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (400x400px max. 2.2MB)</p>
                 </>
             ) : (
                 <img className="w-52 h-52 rounded-full shadow-lg object-cover"

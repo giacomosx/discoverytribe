@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import Label from "../label/Label";
 import TextInputField from "../textinputfield/TextInputField";
 import LocationInputField from "../searchlocation/LocationInputField";
@@ -12,6 +12,10 @@ import Spinner from "../spinner/Spinner";
 import Alerts from "../alerts/Alerts";
 import Timeline from "../timeline/Timeline";
 import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {getUserInfo} from "../../redux/actions/userActions";
+
+
 
 const TripForm = () => {
     const api = new AxiosApi();
@@ -33,6 +37,7 @@ const TripForm = () => {
     const [milestonesCreated, setMilestonesCreated] = useState([]);
 
     const navigate = useNavigate();
+    const dispatch = useDispatch()
 
     const tripTypes = ['relax', 'sport', 'job', 'family', 'honeymoon', 'adventure', 'shopping', 'fun']
 
@@ -290,6 +295,7 @@ const TripForm = () => {
                 <div className="flex justify-end items-center mt-8 border-t border-gray-300 pt-8">
                     <Button onClick={() => {
                         navigate(`/trips/${tripId}`);
+                        dispatch(getUserInfo())
                     }}
                             variants={'rounded'}>Finish</Button>
                 </div>

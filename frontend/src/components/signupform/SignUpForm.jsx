@@ -20,16 +20,21 @@ const SignUpForm = () => {
 
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
-    const [error, setError] = useState(null);
-    const [response, setResponse] = useState(null);
+    const [errors, setErrors] = useState(false);
+    const [response, setResponse] = useState([]);
+    const [fileSize, setFileSize] = useState(0);
+    const maxSize = 2266274;
 
     const handleRetry = () => {
         setActiveTab(0)
-        setError(null)
-        setResponse(null)
+        setErrors(false)
+        setResponse([])
         setLoading(false)
+        setDisabled(true)
+        setFileSize(0)
         resetPreview()
     }
+
     const resetPreview = () => {
         setAvatar(null);
         setPreview(null);
@@ -46,8 +51,12 @@ const SignUpForm = () => {
             [e.target.name]: e.target.value.trim(),
         })
 
-        if (user.name || user.email || user.password) {
-            setDisabled(false)
+        if (user.password) {
+            if (user.password.length >= 6 && user.email && user.username) {
+                setDisabled(false)
+            } else {
+                setDisabled(true)
+            }
         }
     }
     const handleFile = (e) => {
@@ -57,6 +66,7 @@ const SignUpForm = () => {
             reader.onload = function (e) {
                 setPreview(e.target.result);
                 setAvatar(file);
+                setFileSize(file.size)
             };
             reader.readAsDataURL(file);
         } else {
@@ -80,22 +90,20 @@ const SignUpForm = () => {
                 }
             })
             if (createUser) {
-                setLoading(false)
                 setSuccess(true)
+                setLoading(false)
             }
 
         } catch (e) {
             console.log(e)
+            setErrors(true)
             setLoading(false)
-            setError(true)
-            if (e.response.data.error) {
-                setResponse(e.response.data.error)
+            if (e.error) {
+                setResponse([...response, e.error])
             }
-            if (e.response.data.errors) {
-                setError(true)
-                setResponse('Invalid email or password')
+            if (e.errors) {
+                setResponse(e.errors)
             }
-            ;
         }
     }
 
@@ -143,6 +151,7 @@ const SignUpForm = () => {
                                         <TextInputField type={'password'} label="password" name="password"
                                                         onChange={handleChange}
                                                         placeholder={'Insert your password'} required/>
+                                        <p className={'text-xs text-gray-500 dark:text-gray-300 ps-1'}>Min. 6 characters</p>
                                     </div>
 
                                     <Button type={'button'} variants={'rounded'} onClick={nextBtn}
@@ -152,10 +161,13 @@ const SignUpForm = () => {
                             {activeTab === 1 && (
                                 <div className="space-y-6 min-h-[322px] flex flex-col items-center justify-between">
                                     <UploadAvatar onChange={handleFile} preview={preview} onClick={resetPreview}/>
+                                    {fileSize > maxSize && (
+                                        <p className={'text-red-500 dark:text-red-800 text-sm -mt-2'}>Too big image!</p>
+                                    )}
                                     <div className="flex w-full justify-between">
                                         <Button type={'button'} variants={'rounded'} onClick={prevBtn}
                                                 styleType={'outline'}>Back</Button>
-                                        {preview && (
+                                        {preview && (fileSize < maxSize) && (
                                             <Button type={'button'} variants={'rounded'} onClick={nextBtn}>Next</Button>
                                         )}
                                     </div>
@@ -166,7 +178,7 @@ const SignUpForm = () => {
                                     <Spinner/>
                                 </div>
                             )}
-                            {activeTab === 2 && !loading && !error && (
+                            {activeTab === 2 && !loading && !errors && (
                                 <div className="flex flex-col items-center min-h-[322px] justify-between">
                                     <ProfileCard src={preview} username={user.username} email={user.email} />
                                     <div className="flex mt-4 md:mt-6 space-x-6">
@@ -187,10 +199,10 @@ const SignUpForm = () => {
                                     </div>
                                 </div>
                             )}
-                            {activeTab === 2 && !loading && error && (
+                            {activeTab === 2 && !loading && errors && (
                                 <div className={'min-h-[322px] flex flex-col justify-center items-center'}>
                                     <Alerts type={'danger'}>
-                                        {response}
+                                        {response && response.map((item, index) => (<span key={index}>{item.msg || item}</span>))}
                                         <p className={'underline cursor-pointer'} onClick={handleRetry}>Retry</p>
                                     </Alerts>
 
@@ -198,7 +210,7 @@ const SignUpForm = () => {
                             )}
                         </form>
 
-                        {!success && !error && (<div className="text-sm font-medium text-gray-800 dark:text-white">
+                        {!success && !errors && (<div className="text-sm font-medium text-gray-800 dark:text-white">
                             Do you already have an account? <Link to={'/login'}
                                                                   className="text-purple-700 hover:underline dark:text-purple-600">Login</Link>
                         </div>)}

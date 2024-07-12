@@ -20,7 +20,7 @@ const Trip = () => {
         const [alreadyLike, setAlreadyLike] = useState(null);
         const [response, setResponse] = useState(null);
         const startDate = new Date(data.start_date).toDateString();
-        const endDate = new Date(data.start_date).toDateString()
+        const endDate = new Date(data.end_date).toDateString()
         const [likeCount, setLikeCount] = useState(0);
         //const [alreadyLikes, setAlreadyLikes] = useState(false);
 
@@ -140,7 +140,7 @@ const Trip = () => {
 
                                 </div>
                                 <div className="content p-4 flex items-start justify-between">
-                                    <p className={'text-sm text-gray-700 dark:text-gray-300 '}>{data?.description}</p>
+                                    <p className={'text-sm text-gray-700 dark:text-gray-300 md:me-4'}>{data?.description}</p>
                                     <div>
                                         {alreadyLike ? (
                                             <button

@@ -13,7 +13,7 @@ const PostCard = ({post}) => {
             <p className="truncate">{post.content}</p>
                 <div className={'flex items-center justify-between'}>
                     <span className={'block text-xs text-gray-500 dark:text-gray-400'}>Likes: {post.likes.length}</span>
-                    {post.userId === user.decodedSession.userId && <MoreDropDown typeItem={'posts'} itemId={post._id}/>}
+                    {post.userId === user.decodedSession.userId && <MoreDropDown editUrl={`/post/${post._id}/edit`} typeItem={'posts'} itemId={post._id}/>}
                 </div>
             </div>
         </div>

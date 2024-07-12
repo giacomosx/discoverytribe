@@ -3,7 +3,7 @@ import React from 'react';
 const Milestone = ({milestone}) => {
     console.log(milestone)
     const startDate = new Date(milestone.start_date).toDateString();
-    const endDate = new Date(milestone.start_date).toDateString()
+    const endDate = new Date(milestone.end_date).toDateString()
 
     return (
         <li className="mb-10 ms-6 space-y-4">
@@ -44,7 +44,7 @@ const Milestone = ({milestone}) => {
                 </div>
             </div>
             <p className={'text-gray-700 dark:text-gray-400 text-sm'}>{milestone?.description}</p>
-            <button
+            {/*<button
                 className="inline-flex items-center font-medium text-sm text-purple-600 hover:text-purple-800 dark:text-purple-500 dark:hover:text-purple-700">
                 See place
                 <svg className=" w-2.5 h-2.5 ms-2 rtl:rotate-180" aria-hidden="true"
@@ -52,7 +52,7 @@ const Milestone = ({milestone}) => {
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                           d="m1 9 4-4-4-4"/>
                 </svg>
-            </button>
+            </button>*/}
         </li>
     );
 };

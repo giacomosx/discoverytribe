@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import axiosApi from "../../api/axiosApi";
 import CardSkeleton from "../cardskeleton/CardSkeleton";
-import TripCard from "../tripcard/TripCard";
 import {useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {userState} from "../../redux/loginSlice";
+import TripCard from "../tripcard/TripCard";
 
 const LatestTrips = () => {
     const params = useParams();
@@ -29,7 +29,7 @@ const LatestTrips = () => {
     useEffect(() => {
         latestTrips()
         // eslint-disable-next-line
-    }, [])
+    }, [params])
 
 
     return (
@@ -37,7 +37,7 @@ const LatestTrips = () => {
             {loading && <CardSkeleton/>}
             {!loading && trips.length > 0 && (
                 trips.slice(0,3).map(trip => {
-                    return <TripCard trip={trip} key={trip._id} variants={'pt-8'} description={'false'}/>
+                    return <TripCard userId={userId} trip={trip} key={trip._id} variants={'pt-8'} description={'false'}/>
                 })
             )}
         </ul>

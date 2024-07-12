@@ -6,7 +6,6 @@ import {getUserFeed} from "../../redux/actions/feedAction";
 import {dataFeed, isErrorFeed, isLoadingFeed} from "../../redux/userFeedSlice";
 import Spinner from "../spinner/Spinner";
 import Alerts from "../alerts/Alerts";
-import BreadCrumb from "../breadcrumb/BreadCrumb";
 import {Link} from "react-router-dom";
 
 const Feed = () => {
@@ -56,7 +55,7 @@ const Feed = () => {
                         <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">Haven't
                             started your journey with us yet? Write your first post and tell us about yourself, or find
                             inspiration by exploring the profiles of travelers from around the globe.</p>
-                        <span className="inline-block font-semibold text-base lg:text-xl">Ready for an adventure?</span>
+                        <span className="inline-block font-semibold text-base lg:text-xl text-gray-500 dark:text-gray-300">Ready for an adventure?</span>
                         <div className={'flex flex-wrap mt-8 gap-4 items-center justify-center'}>
                             <div
                                 className="bg-white shadow-sm dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 mb-8 max-w-xs flex flex-col items-center">
